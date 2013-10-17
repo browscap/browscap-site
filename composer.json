@@ -1,0 +1,17 @@
+{
+	"name": "browscap/browscap-site",
+	"description": "Website for the Browser Capabilities project",
+	"license": "mit",
+	"authors": [
+		{
+			"name": "James Titcumb",
+			"email": "james@asgrim.com"
+		}
+	],
+	"require": {
+		"php": ">= 5.4"
+	},
+	"autoload": {
+		"psr-0": { "": "src/" }
+	}
+}

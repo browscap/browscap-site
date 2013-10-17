@@ -1,0 +1,80 @@
+/********** GENERAL **********/
+body {
+	background-color: #f8f8ff;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+}
+.clear {
+	clear: both;
+}
+header, div#body, footer {
+	width: 960px;
+	margin: 0 auto;
+}
+header, footer {
+	background-color: #ededff;
+	border: 1px dotted #3b5998;	
+}
+
+h1 {
+	border-bottom: 2px solid black;	
+}
+h2 {
+	color: #3b5998;
+}
+.monospace {
+	font-family: "Courier New", Courier, monospace;
+	color: #3b5998;
+}
+
+/********** HEADER **********/
+header {
+	border-top: none;	
+}
+header > img {
+	float: left;
+	margin: 20px;
+}
+#textLogo {
+	font-size: 40px;
+	color: #3b5998;
+	font-weight: bold;
+	margin: 0;
+	padding: 20px 0 0 0;
+}
+#textLogoSubtitle {
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px 0 0 0;	
+}
+
+
+/********** MAIN **********/
+
+
+
+/********** FOOTER **********/
+footer {
+	margin-top: 30px;
+	font-size: 12px;
+}
+#copyright {
+	margin: 0;
+	padding-top: 20px;
+	text-align: center;
+}
+footer ul {
+	margin: 0;
+	padding: 0 0 20px 0;
+	text-align: center;
+}
+footer ul li {
+	display: inline;
+	padding-left: 10px;
+}
+footer ul li:first-child {
+	padding-left: 0;
+}
