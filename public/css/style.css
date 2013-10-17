@@ -53,7 +53,15 @@ header > img {
 
 
 /********** MAIN **********/
-
+#beta {
+	color: red;
+}
+#beta h1 {
+	border-bottom: 2px solid red;	
+}
+#beta a {
+	color: #8b0000;	
+}
 
 
 /********** FOOTER **********/

@@ -6,6 +6,11 @@ $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
 
 require "../views/header.php"; ?>
 
+<div id="beta">
+	<h1>Warning! New beta site...</h1>
+	<p>This is a beta site - use with caution and maybe don't use these files on production servers! Please report any issues on <a href="https://github.com/browscap/browscap">our GitHub</a> :)</p>
+</div>
+
 <div id="downloads">
 
 	<h1>Downloads</h1>
