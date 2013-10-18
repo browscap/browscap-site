@@ -1,0 +1,135 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "e5222867783afcdd82464217b8c8c590",
+    "packages": [
+        {
+            "name": "browscap/browscap",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/browscap/browscap.git",
+                "reference": "39d96ea54ddf40b51f2152bfbbcefb4fe1498602"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/39d96ea54ddf40b51f2152bfbbcefb4fe1498602",
+                "reference": "39d96ea54ddf40b51f2152bfbbcefb4fe1498602",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.4.0",
+                "symfony/console": "2.2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "bin": [
+                "bin/browscap"
+            ],
+            "type": "application",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Estes",
+                    "email": "f1gm3nt@gmail.com",
+                    "homepage": "http://joshuaestes.me",
+                    "role": "developer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/browscap/browscap/graphs/contributors"
+                },
+                {
+                    "name": "James Titcumb",
+                    "email": "james@asgrim.com",
+                    "homepage": "http://www.jamestitcumb.com"
+                }
+            ],
+            "description": "Browser Capabilities Tools",
+            "homepage": "https://github.com/browscap/browscap",
+            "keywords": [
+                "Browscap"
+            ],
+            "time": "2013-10-17 07:08:11"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.2.9",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "7ec2f86df8a0164d1677368f43a4a548b80a1402"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/7ec2f86df8a0164d1677368f43a4a548b80a1402",
+                "reference": "7ec2f86df8a0164d1677368f43a4a548b80a1402",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com",
+            "time": "2013-09-25 05:58:50"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "browscap/browscap": 20
+    },
+    "platform": {
+        "php": ">= 5.4"
+    },
+    "platform-dev": [
+
+    ]
+}
