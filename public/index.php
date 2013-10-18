@@ -18,11 +18,11 @@ require "../views/header.php"; ?>
 	<h2>ASP Versions</h2>
 	<ul>
 		<li>
-			<p><a href="/stream.php?q=BrowsCapINI">browscap.ini</a> <em>(123 KB)</em></p>
+			<p><a href="/stream.php?q=BrowsCapINI">browscap.ini</a> <em>(628 KB)</em></p>
 			<p>A special version of browscap.ini for PHP users only!</p>
 		</li>
 		<li>
-			<p><a href="/stream.php?q=Full_BrowsCapINI">full_asp_browscap.ini</a> <em>(123 KB)</em></p>
+			<p><a href="/stream.php?q=Full_BrowsCapINI">full_asp_browscap.ini</a> <em>(770 KB)</em></p>
 			<p>A larger version of php_browscap.ini with all the new properties.</p>
 		</li>
 	</ul>
@@ -30,11 +30,11 @@ require "../views/header.php"; ?>
 	<h2>PHP Versions</h2>
 	<ul>
 		<li>
-			<p><a href="/stream.php?q=PHP_BrowsCapINI">php_browscap.ini</a> <em>(123 KB)</em></p>
+			<p><a href="/stream.php?q=PHP_BrowsCapINI">php_browscap.ini</a> <em>(639 KB)</em></p>
 			<p>A special version of browscap.ini for PHP users only!</p>
 		</li>
 		<li>
-			<p><a href="/stream.php?q=Full_PHP_BrowsCapINI">full_php_browscap.ini</a> <em>(123 KB)</em></p>
+			<p><a href="/stream.php?q=Full_PHP_BrowsCapINI">full_php_browscap.ini</a> <em>(788 KB)</em></p>
 			<p>A larger version of php_browscap.ini with all the new properties.</p>
 		</li>
 	</ul>
