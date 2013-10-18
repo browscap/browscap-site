@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e5222867783afcdd82464217b8c8c590",
+    "hash": "58a1e080f15a63a025e949ae55fa5fa2",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "39d96ea54ddf40b51f2152bfbbcefb4fe1498602"
+                "reference": "3fe975b7f8f10464cfc9dfadc02a47f63b8ef910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/39d96ea54ddf40b51f2152bfbbcefb4fe1498602",
-                "reference": "39d96ea54ddf40b51f2152bfbbcefb4fe1498602",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/3fe975b7f8f10464cfc9dfadc02a47f63b8ef910",
+                "reference": "3fe975b7f8f10464cfc9dfadc02a47f63b8ef910",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,58 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2013-10-17 07:08:11"
+            "time": "2013-10-18 07:28:36"
+        },
+        {
+            "name": "browscap/browscap-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/browscap/browscap-php.git",
+                "reference": "f0b5882a3e7c3ec275646290daca8775599de71b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/f0b5882a3e7c3ec275646290daca8775599de71b",
+                "reference": "f0b5882a3e7c3ec275646290daca8775599de71b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "phpbrowscap": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Stoppani",
+                    "email": "jonathan.stoppani@gmail.com"
+                }
+            ],
+            "description": "Standalone replacement for php's native get_browser() function",
+            "homepage": "https://github.com/browscap/browscap-php",
+            "keywords": [
+                "browser",
+                "capabilities",
+                "get_browser",
+                "user agent"
+            ],
+            "time": "2013-09-14 20:33:36"
         },
         {
             "name": "symfony/console",
@@ -124,7 +175,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "browscap/browscap": 20
+        "browscap/browscap": 20,
+        "browscap/browscap-php": 20
     },
     "platform": {
         "php": ">= 5.4"

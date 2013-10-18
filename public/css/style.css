@@ -28,6 +28,22 @@ h2 {
 	font-family: "Courier New", Courier, monospace;
 	color: #3b5998;
 }
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-top: 20px;
+}
+table th, table td {
+	border: 1px solid #dbdbff;
+	padding: 3px 5px;
+	background-color: #fafafa;
+}
+table thead tr th {
+	background-color: #3b5998;
+	color: white;
+}
+table tbody tr td {
+}
 
 /********** HEADER **********/
 header {
@@ -50,6 +66,18 @@ header > img {
 	margin: 0;
 	padding: 5px 0 0 0;	
 }
+header ul {
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+header ul li {
+	display: inline;
+	padding-left: 15px;
+}
+header ul li:first-child {
+	padding-left: 0;
+}
+
 
 
 /********** MAIN **********/
