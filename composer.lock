@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "58a1e080f15a63a025e949ae55fa5fa2",
+    "hash": "3d28ecc7f16b0c6004b8c805a4dc868f",
     "packages": [
         {
             "name": "browscap/browscap",
