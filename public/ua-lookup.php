@@ -21,8 +21,8 @@ if (isset($_POST['ua']))
 	require_once "../vendor/autoload.php";
 
 	$browscap = new phpbrowscap\Browscap(__DIR__ . '/../cache/');
-	$browscap->remoteIniUrl = 'http://browscap.co/stream.php?q=Full_PHP_BrowsCapINI';
-	$browscap->remoteVerUrl = 'http://browscap.co/version-date.php';
+	$browscap->remoteIniUrl = $baseHost  . '/stream.php?q=Full_PHP_BrowsCapINI';
+	$browscap->remoteVerUrl = $baseHost . '/version-date.php';
 
 	$uaInfo = $browscap->getBrowser($ua, true);
 }
