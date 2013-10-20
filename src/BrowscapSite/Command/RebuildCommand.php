@@ -47,8 +47,15 @@ class RebuildCommand extends Command
 
         $this->writeArray('./build/metadata.php', $metadata);
 
-        unlink('./cache/browscap.ini');
-        unlink('./cache/cache.php');
+        $this->niceDelete('./cache/browscap.ini');
+        $this->niceDelete('./cache/cache.php');
+    }
+
+    public function niceDelete($filename)
+    {
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
     }
 
     public function writeArray($filename, $array)
