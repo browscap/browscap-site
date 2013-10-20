@@ -20,8 +20,7 @@ class RebuildCommand extends Command
     {
         $this
             ->setName('rebuild')
-            ->setDescription('Rebuild site metadata and whatnot')
-        ;
+            ->setDescription('Rebuild site metadata and whatnot');
     }
 
     /**
