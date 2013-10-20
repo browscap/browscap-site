@@ -1,5 +1,7 @@
 <?php
 
+$metadata = require_once(__DIR__ . '/../build/metadata.php');
+
 $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
 
 $ua = $_SERVER['HTTP_USER_AGENT'];
@@ -51,7 +53,7 @@ require "../views/header.php"; ?>
 
 	<h1>User Agent Lookup</h1>
 
-	<p>This tool allows you to check what the latest <em>browscap.ini</em> will identify any User Agent as.</p>
+	<p>This tool allows you to check what the latest <em>browscap.ini</em> (<?php echo $metadata['version']; ?>) will identify any User Agent as.</p>
 
 	<form action="" method="POST" style="width: 680px; margin: 0 auto;">
 		<label>User Agent:
