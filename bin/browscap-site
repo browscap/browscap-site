@@ -2,8 +2,8 @@
 <?php
 
 $autoloadPaths = array(
-	__DIR__ . '/../vendor/autoload.php',
-	__DIR__ . '/../../../../vendor/autoload.php'
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../../vendor/autoload.php',
 );
 
 foreach ($autoloadPaths as $path) {

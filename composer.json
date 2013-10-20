@@ -1,32 +1,32 @@
 {
-	"name": "browscap/browscap-site",
-	"type": "application",
-	"description": "Website for the Browser Capabilities project",
+    "name": "browscap/browscap-site",
+    "type": "application",
+    "description": "Website for the Browser Capabilities project",
     "keywords": ["browscap"],
     "homepage": "https://github.com/browscap/browscap-site",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "James Titcumb",
-			"email": "james@asgrim.com"
-		},
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "James Titcumb",
+            "email": "james@asgrim.com"
+        },
         {
             "name": "Contributors",
             "homepage": "https://github.com/browscap/browscap/graphs/contributors"
         }
-	],
+    ],
     "support": {
         "issues": "https://github.com/browscap/browscap-site/issues",
         "source": "https://github.com/browscap/browscap-site"
     },
-	"require": {
-		"php": ">= 5.4",
-		"browscap/browscap": "*@dev",
-		"browscap/browscap-php": "*@dev",
+    "require": {
+        "php": ">= 5.4",
+        "browscap/browscap": "*@dev",
+        "browscap/browscap-php": "*@dev",
         "symfony/console": "2.2.*"
-	},
-	"autoload": {
-		"psr-0": { "": "src/" }
-	},
+    },
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
     "bin": ["bin/browscap"]
 }
