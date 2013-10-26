@@ -42,8 +42,10 @@ class RebuildCommand extends Command
         $metadata['filesizes'] = array();
         $metadata['filesizes']['BrowsCapINI'] = $this->getKbSize('./build/browscap.ini');
         $metadata['filesizes']['Full_BrowsCapINI'] = $this->getKbSize('./build/full_asp_browscap.ini');
+        $metadata['filesizes']['Lite_BrowsCapINI'] = $this->getKbSize('./build/lite_asp_browscap.ini');
         $metadata['filesizes']['PHP_BrowsCapINI'] = $this->getKbSize('./build/php_browscap.ini');
         $metadata['filesizes']['Full_PHP_BrowsCapINI'] = $this->getKbSize('./build/full_php_browscap.ini');
+        $metadata['filesizes']['Lite_PHP_BrowsCapINI'] = $this->getKbSize('./build/lite_php_browscap.ini');
 
         $this->writeArray('./build/metadata.php', $metadata);
 

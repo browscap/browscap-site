@@ -27,6 +27,10 @@ require "../views/header.php"; ?>
             <p><a href="/stream.php?q=Full_BrowsCapINI">full_asp_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Full_BrowsCapINI']; ?> KB)</em></p>
             <p>A larger version of php_browscap.ini with all the new properties.</p>
         </li>
+        <li>
+            <p><a href="/stream.php?q=Lite_BrowsCapINI">lite_asp_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Lite_BrowsCapINI']; ?> KB)</em></p>
+            <p>A smaller version of browscap.ini file containing major browsers &amp; search engines. This file is adequate for most websites.</p>
+        </li>
     </ul>
 
     <h2>PHP Versions</h2>
@@ -39,10 +43,14 @@ require "../views/header.php"; ?>
             <p><a href="/stream.php?q=Full_PHP_BrowsCapINI">full_php_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Full_PHP_BrowsCapINI']; ?> KB)</em></p>
             <p>A larger version of php_browscap.ini with all the new properties.</p>
         </li>
+        <li>
+            <p><a href="/stream.php?q=Lite_PHP_BrowsCapINI">lite_php_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Lite_PHP_BrowsCapINI']; ?> KB)</em></p>
+            <p>A smaller version of php_browscap.ini file containing major browsers &amp; search engines. This file is adequate for most websites.</p>
+        </li>
     </ul>
 
-    <h2>Lite versions &amp; other files</h2>
-    <p>The lite versions &amp; other files are currently not supported. You may follow the progress of re-instating the lite versions <a href="https://github.com/browscap/browscap/issues/16">here</a>.</p>
+    <h2>Other files (XML/CSV/ZIP)</h2>
+    <p>The file versions that used to be available (property-name-docs.xml, browscap.xml, browscap.csv, known_agents.zip, browscap.zip) are currently not supported.</p>
 
 </div>
 

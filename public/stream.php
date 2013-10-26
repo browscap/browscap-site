@@ -22,11 +22,17 @@ switch ($browscapVersion)
     case 'full_browscapini':
         $file = "full_asp_browscap.ini";
         break;
+    case 'lite_browscapini':
+        $file = "lite_asp_browscap.ini";
+        break;
     case 'php_browscapini':
         $file = "php_browscap.ini";
         break;
     case 'full_php_browscapini':
         $file = "full_php_browscap.ini";
+        break;
+    case 'lite_php_browscapini':
+        $file = "lite_php_browscap.ini";
         break;
     default:
         failed('404 Not Found', 'The version requested could not be found');
