@@ -73,6 +73,9 @@ require "../views/header.php"; ?>
         <dt><strong>Download:</strong></dt>
         <dd><span class="monospace"><?php echo $baseHost; ?>/stream.php?q=BrowsCapINI</span> (replace <em>BrowsCapINI</em> with the appropriate version)</dd>
     </dl>
+
+    <h2>Missing User Agents</h2>
+    <p>Please report any missing user agents on <a href="https://github.com/browscap/browscap/issues">our GitHub tracker</a>.</p>
 </div>
 
 <?php require "../views/footer.php"; ?>
