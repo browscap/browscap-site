@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3d28ecc7f16b0c6004b8c805a4dc868f",
+    "hash": "a9ff58700087f2a49515c97e7144ed08",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "0c125388e809978b9c9b53a3ae42000bf642e909"
+                "reference": "b2515e5a7bc9b9f1ca5add2a076d53ea07ac6df4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/0c125388e809978b9c9b53a3ae42000bf642e909",
-                "reference": "0c125388e809978b9c9b53a3ae42000bf642e909",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/b2515e5a7bc9b9f1ca5add2a076d53ea07ac6df4",
+                "reference": "b2515e5a7bc9b9f1ca5add2a076d53ea07ac6df4",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2013-10-19 22:03:33"
+            "time": "2013-10-26 21:26:50"
         },
         {
             "name": "browscap/browscap-php",
