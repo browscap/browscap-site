@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="ua-lookup">
+
+    <h1>User Agent Lookup</h1>
+
+    <p>This tool allows you to check what the latest <em>browscap.ini</em> ({{ version }}) will identify any User Agent as.</p>
+
+    <form action="" method="POST" style="width: 680px; margin: 0 auto;">
+        <label>User Agent:
+            <input type="text" name="ua" value="{{ ua }}" style="width: 500px;" />
+        </label>
+
+        <input type="hidden" name="csrfToken" value="{{ csrfToken }}" />
+        <input type="submit" value="Look up &raquo;" />
+    </form>
+    
+    {% if uaInfo %}
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key, value in uaInfo %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>    
+    {% endif %}
+
+</div>
+    
+{% endblock %}

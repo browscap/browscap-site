@@ -1,81 +1,9 @@
 <?php
 
-$metadata = require_once(__DIR__ . '/../build/metadata.php');
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
-$baseHost = 'http://' . $_SERVER['SERVER_NAME'];
+require_once __DIR__ . '/../vendor/autoload.php';
 
-require "../views/header.php"; ?>
-
-<div id="beta">
-    <h1>Warning! New beta site...</h1>
-    <p>This is a beta site - use with caution and maybe don't use these files on production servers! Please report any issues on <a href="https://github.com/browscap/browscap">our GitHub</a> :)</p>
-</div>
-
-<div id="downloads">
-
-    <h1>Downloads</h1>
-
-    <p>The latest version is <strong><?php echo $metadata['version']; ?></strong></p>
-
-    <h2>ASP Versions</h2>
-    <ul>
-        <li>
-            <p><a href="/stream.php?q=BrowsCapINI">browscap.ini</a> <em>(<?php echo $metadata['filesizes']['BrowsCapINI']; ?> KB)</em></p>
-            <p>A special version of browscap.ini for PHP users only!</p>
-        </li>
-        <li>
-            <p><a href="/stream.php?q=Full_BrowsCapINI">full_asp_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Full_BrowsCapINI']; ?> KB)</em></p>
-            <p>A larger version of php_browscap.ini with all the new properties.</p>
-        </li>
-        <li>
-            <p><a href="/stream.php?q=Lite_BrowsCapINI">lite_asp_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Lite_BrowsCapINI']; ?> KB)</em></p>
-            <p>A smaller version of browscap.ini file containing major browsers &amp; search engines. This file is adequate for most websites.</p>
-        </li>
-    </ul>
-
-    <h2>PHP Versions</h2>
-    <ul>
-        <li>
-            <p><a href="/stream.php?q=PHP_BrowsCapINI">php_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['PHP_BrowsCapINI']; ?> KB)</em></p>
-            <p>A special version of browscap.ini for PHP users only!</p>
-        </li>
-        <li>
-            <p><a href="/stream.php?q=Full_PHP_BrowsCapINI">full_php_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Full_PHP_BrowsCapINI']; ?> KB)</em></p>
-            <p>A larger version of php_browscap.ini with all the new properties.</p>
-        </li>
-        <li>
-            <p><a href="/stream.php?q=Lite_PHP_BrowsCapINI">lite_php_browscap.ini</a> <em>(<?php echo $metadata['filesizes']['Lite_PHP_BrowsCapINI']; ?> KB)</em></p>
-            <p>A smaller version of php_browscap.ini file containing major browsers &amp; search engines. This file is adequate for most websites.</p>
-        </li>
-    </ul>
-
-    <h2>Other files (XML/CSV/ZIP)</h2>
-    <p>The file versions that used to be available (property-name-docs.xml, browscap.xml, browscap.csv, known_agents.zip, browscap.zip) are currently not supported.</p>
-
-</div>
-
-<div id="info">
-
-    <h1>Important Information</h1>
-
-    <h2>Usage with PHP</h2>
-    <p>We highly recommend using the <a href="https://github.com/browscap/browscap-php">browscap-php</a> library from Jonathan Stoppani (<a href="https://github.com/GaretJax">GaretJax</a>).</p>
-
-    <h2>Rate Limiting</h2>
-    <p>Downloading the INI files here implies you agree to our fair usage policy. <em>Any repeat attempts to download the files will be banned.</em> We highly recommend that you request the version URL and compare your current version against the latest version before requesting the download URL.</p>
-
-    <h2>Download URLs</h2>
-    <dl>
-        <dt><strong>Version:</strong></dt>
-        <dd><span class="monospace"><?php echo $baseHost; ?>/version-date.php</span></dd>
-    </dl>
-    <dl>
-        <dt><strong>Download:</strong></dt>
-        <dd><span class="monospace"><?php echo $baseHost; ?>/stream.php?q=BrowsCapINI</span> (replace <em>BrowsCapINI</em> with the appropriate version)</dd>
-    </dl>
-
-    <h2>Missing User Agents</h2>
-    <p>Please report any missing user agents on <a href="https://github.com/browscap/browscap/issues">our GitHub tracker</a>.</p>
-</div>
-
-<?php require "../views/footer.php"; ?>
+$app = new BrowscapSite\BrowscapSiteWeb();
+$app->run();

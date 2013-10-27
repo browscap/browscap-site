@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <title>{% block title %}Browser Capabilities Project{% endblock %}</title>
+        <link rel="stylesheet" href="/css/style.css" />
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <img src="/images/logo100.png" />
+        <p id="textLogo">Browser Capabilities Project</p>
+        <p id="textLogoSubtitle">Providing regularly updated browscap.ini and related downloads since 1998!</p>
+
+        <ul>
+            <li><a href="/">Downloads</a></li>
+            <li><a href="/ua-lookup">UA Lookup</a></li>
+        </ul>
+
+        <div class="clear"></div>
+    </header>
+    <div id="body">
+        {% include 'beta-warning.html' %}
+    	{% block content %}{% endblock %}
+    </div><!-- id="main" -->
+    <footer>
+        {% block footer %}
+            <p id="copyright">&copy; Copyright 1998-2013 &mdash; Browser Capabilities Project</p>
+            <ul>
+                <li><a href="https://github.com/browscap">GitHub</a></li>
+                <li><a href="https://groups.google.com/group/browscap">Discussion Forum</a></li>
+                <li><a href="https://twitter.com/browscap">Twitter</a></li>
+                <li><a href="https://www.facebook.com/browscap">Facebook</a></li>
+            </ul>
+        {% endblock %}
+    </footer>
+</body>
+</html>

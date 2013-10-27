@@ -4,7 +4,7 @@ namespace BrowscapSite;
 
 use Symfony\Component\Console\Application;
 
-class BrowscapSite extends Application
+class BrowscapSiteConsole extends Application
 {
 
     public function __construct()

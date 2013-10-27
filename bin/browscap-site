@@ -13,5 +13,5 @@ foreach ($autoloadPaths as $path) {
     }
 }
 
-$browscap = new \BrowscapSite\BrowscapSite();
+$browscap = new \BrowscapSite\BrowscapSiteConsole();
 $browscap->run();
