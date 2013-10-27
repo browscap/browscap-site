@@ -47,7 +47,7 @@ class UserAgentLookupController
         $csrfToken = $this->csrfSet();
 
         return $this->app['twig']->render('ua-lookup.html', array(
-        	'uaInfo' => $uaInfo,
+            'uaInfo' => $uaInfo,
             'ua' => $ua,
             'csrfToken' => $csrfToken,
             'version' => $metadata['version'],
@@ -65,11 +65,11 @@ class UserAgentLookupController
 
     public function csrfCheck()
     {
-        $csrfToken = $_SESSION['csrfToken'];
+        $csrfToken = isset($_SESSION['csrfToken']) ? $_SESSION['csrfToken'] : null;
         unset($_SESSION['csrfToken']);
 
         if (!isset($_POST['csrfToken']) || !$csrfToken || ($_POST['csrfToken'] != $csrfToken)) {
-        	die("CSRF token not correct...");
+            throw new \Exception("CSRF token not correct...");
         }
     }
 

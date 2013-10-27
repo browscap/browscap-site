@@ -6,7 +6,6 @@ use Symfony\Component\Console\Application;
 
 class BrowscapSiteConsole extends Application
 {
-
     public function __construct()
     {
         parent::__construct('Browscap Website', 'dev-master');

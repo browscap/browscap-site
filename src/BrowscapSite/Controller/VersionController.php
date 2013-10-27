@@ -18,7 +18,7 @@ class VersionController
         $metadata = $this->getMetadata();
 
         return $this->app['twig']->render('version.html', array(
-        	'released' => $metadata['released'],
+            'released' => $metadata['released'],
         ));
     }
 

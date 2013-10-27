@@ -16,7 +16,7 @@ class BrowscapSiteWeb extends SilexApplication
 	{
 		parent::__construct();
 
-		$this['debug'] = true;
+        //$this['debug'] = true;
 
 		$this->defineServices();
 		$this->defineControllers();

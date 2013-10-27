@@ -23,7 +23,7 @@ class DownloadController
         $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
 
         return $this->app['twig']->render('downloads.html', array(
-        	'files' => $files,
+            'files' => $files,
             'version' => $metadata['version'],
             'baseHost' => $baseHost,
         ));
@@ -47,39 +47,39 @@ class DownloadController
     public function getFiles()
     {
         return array(
-        	'asp' => array(
-        	   'BrowsCapINI' => array(
-        	       'name' => 'browscap.ini',
-        	       'size' => null,
-        	       'description' => 'The standard version of browscap.ini file for IIS 5.x and greater.'
-        	    ),
-        	   'Full_BrowsCapINI' => array(
-        	       'name' => 'full_asp_browscap.ini',
-        	       'size' => null,
-        	       'description' => 'A larger version of browscap.ini with all the new properties.'
-        	   ),
-        	   'Lite_BrowsCapINI' => array(
-        	       'name' => 'lite_asp_browscap.ini',
-        	       'size' => null,
-        	       'description' => 'A smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
-        	   ),
+            'asp' => array(
+               'BrowsCapINI' => array(
+                   'name' => 'browscap.ini',
+                   'size' => null,
+                   'description' => 'The standard version of browscap.ini file for IIS 5.x and greater.'
+                ),
+               'Full_BrowsCapINI' => array(
+                   'name' => 'full_asp_browscap.ini',
+                   'size' => null,
+                   'description' => 'A larger version of browscap.ini with all the new properties.'
+               ),
+               'Lite_BrowsCapINI' => array(
+                   'name' => 'lite_asp_browscap.ini',
+                   'size' => null,
+                   'description' => 'A smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
+               ),
             ),
-        	'php' => array(
-        	   'PHP_BrowsCapINI' => array(
-        	       'name' => 'php_browscap.ini',
-        	       'size' => null,
-        	       'description' => 'A special version of browscap.ini for PHP users only!'
-        	    ),
-        	   'Full_PHP_BrowsCapINI' => array(
-        	       'name' => 'full_php_browscap.ini',
-        	       'size' => null,
-        	       'description' => 'A larger version of php_browscap.ini with all the new properties.'
-        	   ),
-        	   'Lite_PHP_BrowsCapINI' => array(
-        	       'name' => 'lite_php_browscap.ini',
-        	       'size' => null,
-        	       'description' => 'A smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
-        	   ),
+            'php' => array(
+               'PHP_BrowsCapINI' => array(
+                   'name' => 'php_browscap.ini',
+                   'size' => null,
+                   'description' => 'A special version of browscap.ini for PHP users only!'
+                ),
+               'Full_PHP_BrowsCapINI' => array(
+                   'name' => 'full_php_browscap.ini',
+                   'size' => null,
+                   'description' => 'A larger version of php_browscap.ini with all the new properties.'
+               ),
+               'Lite_PHP_BrowsCapINI' => array(
+                   'name' => 'lite_php_browscap.ini',
+                   'size' => null,
+                   'description' => 'A smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
+               ),
             ),
         );
     }

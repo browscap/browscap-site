@@ -15,33 +15,33 @@ class StreamController
     {
         // @todo - this is horrendous
         if (!isset($_GET['q'])) {
-        	$this->failed('400 Bad Request', 'The version requested could not be found');
+            $this->failed('400 Bad Request', 'The version requested could not be found');
         }
 
         $browscapVersion = strtolower($_GET['q']);
 
         switch ($browscapVersion)
         {
-        	case 'browscapini':
-        		$file = "browscap.ini";
-        		break;
-        	case 'full_browscapini':
-        		$file = "full_asp_browscap.ini";
-        		break;
-        	case 'lite_browscapini':
-        		$file = "lite_asp_browscap.ini";
-        		break;
-        	case 'php_browscapini':
-        		$file = "php_browscap.ini";
-        		break;
-        	case 'full_php_browscapini':
-        		$file = "full_php_browscap.ini";
-        		break;
-        	case 'lite_php_browscapini':
-        		$file = "lite_php_browscap.ini";
-        		break;
-        	default:
-        		$this->failed('404 Not Found', 'The version requested could not be found');
+            case 'browscapini':
+                $file = "browscap.ini";
+                break;
+            case 'full_browscapini':
+                $file = "full_asp_browscap.ini";
+                break;
+            case 'lite_browscapini':
+                $file = "lite_asp_browscap.ini";
+                break;
+            case 'php_browscapini':
+                $file = "php_browscap.ini";
+                break;
+            case 'full_php_browscapini':
+                $file = "full_php_browscap.ini";
+                break;
+            case 'lite_php_browscapini':
+                $file = "lite_php_browscap.ini";
+                break;
+            default:
+                $this->failed('404 Not Found', 'The version requested could not be found');
         }
 
         $buildDirectory = __DIR__ . '/../../../build/';
@@ -49,7 +49,7 @@ class StreamController
         $fullpath = $buildDirectory . $file;
 
         if (!file_exists($fullpath)) {
-        	$this->failed('500 Internal Server Error', 'The original file for the version requested could not be found');
+            $this->failed('500 Internal Server Error', 'The original file for the version requested could not be found');
         }
 
         header("HTTP/1.0 200 OK");
