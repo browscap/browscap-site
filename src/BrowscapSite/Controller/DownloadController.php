@@ -25,6 +25,7 @@ class DownloadController
         return $this->app['twig']->render('downloads.html', array(
             'files' => $files,
             'version' => $metadata['version'],
+            'releaseDate' => $metadata['released'],
             'baseHost' => $baseHost,
         ));
     }
