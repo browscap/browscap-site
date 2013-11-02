@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "b2515e5a7bc9b9f1ca5add2a076d53ea07ac6df4"
+                "reference": "71ce386e2e5f1a963da8f5756a5e7632510f7028"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/b2515e5a7bc9b9f1ca5add2a076d53ea07ac6df4",
-                "reference": "b2515e5a7bc9b9f1ca5add2a076d53ea07ac6df4",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/71ce386e2e5f1a963da8f5756a5e7632510f7028",
+                "reference": "71ce386e2e5f1a963da8f5756a5e7632510f7028",
                 "shasum": ""
             },
             "require": {
@@ -24,6 +24,7 @@
                 "symfony/console": "2.2.*"
             },
             "require-dev": {
+                "browscap/browscap-php": "*@dev",
                 "phpunit/phpunit": "3.7.*"
             },
             "bin": [
@@ -49,7 +50,7 @@
                     "name": "Joshua Estes",
                     "email": "f1gm3nt@gmail.com",
                     "homepage": "http://joshuaestes.me",
-                    "role": "developer"
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Contributors",
@@ -66,7 +67,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2013-10-26 21:26:50"
+            "time": "2013-11-02 22:53:32"
         },
         {
             "name": "browscap/browscap-php",
@@ -205,21 +206,21 @@
         },
         {
             "name": "silex/silex",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Silex.git",
-                "reference": "b3a7beefa7e9a4d9d81bf207126f181858d4abda"
+                "reference": "47cc7d6545450ef8a91f50c04e8c7b3b04fceae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Silex/zipball/b3a7beefa7e9a4d9d81bf207126f181858d4abda",
-                "reference": "b3a7beefa7e9a4d9d81bf207126f181858d4abda",
+                "url": "https://api.github.com/repos/fabpot/Silex/zipball/47cc7d6545450ef8a91f50c04e8c7b3b04fceae9",
+                "reference": "47cc7d6545450ef8a91f50c04e8c7b3b04fceae9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "pimple/pimple": "1.*",
+                "pimple/pimple": "~1.0",
                 "symfony/event-dispatcher": ">=2.3,<2.5-dev",
                 "symfony/http-foundation": ">=2.3,<2.5-dev",
                 "symfony/http-kernel": ">=2.3,<2.5-dev",
@@ -285,7 +286,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2013-10-11 10:30:06"
+            "time": "2013-10-30 08:53:26"
         },
         {
             "name": "symfony/console",
@@ -625,16 +626,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.14.1",
+            "version": "v1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "8873d7593ad7c120004f177c0fd01459b383c9cb"
+                "reference": "ca445842fcea4f844d68203ffa2d00f5e3cdea64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8873d7593ad7c120004f177c0fd01459b383c9cb",
-                "reference": "8873d7593ad7c120004f177c0fd01459b383c9cb",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/ca445842fcea4f844d68203ffa2d00f5e3cdea64",
+                "reference": "ca445842fcea4f844d68203ffa2d00f5e3cdea64",
                 "shasum": ""
             },
             "require": {
@@ -670,7 +671,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-10-15 19:17:38"
+            "time": "2013-10-30 08:20:53"
         }
     ],
     "packages-dev": [
