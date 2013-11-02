@@ -22,10 +22,12 @@ class DownloadController
 
         $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
 
+        $releaseDate = new \DateTime($metadata['released']);
+
         return $this->app['twig']->render('downloads.html', array(
             'files' => $files,
             'version' => $metadata['version'],
-            'releaseDate' => $metadata['released'],
+            'releaseDate' => $releaseDate->format('jS M Y'),
             'baseHost' => $baseHost,
         ));
     }
