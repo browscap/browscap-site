@@ -20,7 +20,7 @@ class UserAgentLookupController
 
         $browscap = new BrowscapPHP(__DIR__ . '/../../../cache/');
         $browscap->remoteIniUrl = $baseHost  . '/stream?q=Full_PHP_BrowsCapINI';
-        $browscap->remoteVerUrl = $baseHost . '/version-date.php';
+        $browscap->remoteVerUrl = $baseHost . '/version';
 
         return $browscap;
     }
