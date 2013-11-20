@@ -6,4 +6,5 @@ return [
 	   'user' => 'XXX',
 	   'pass' => 'XXX',
     ],
+    'debug' => false,
 ];

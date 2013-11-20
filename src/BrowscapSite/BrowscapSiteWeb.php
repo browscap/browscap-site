@@ -9,14 +9,33 @@ use BrowscapSite\Controller;
 
 class BrowscapSiteWeb extends SilexApplication
 {
+    protected $config;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this['debug'] = true;
+        $this->config = require(__DIR__ . '/../../config/config.php');
+
+        if ($this->getConfig('debug'))
+        {
+            $this['debug'] = true;
+        }
 
         $this->defineServices();
         $this->defineControllers();
+    }
+
+    public function getConfig($key = null)
+    {
+        if (!empty($key))
+        {
+            return $this->config[$key];
+        }
+        else
+        {
+            return $this->config;
+        }
     }
 
     public function defineServices()
@@ -24,8 +43,7 @@ class BrowscapSiteWeb extends SilexApplication
         $this->register(new ServiceControllerServiceProvider());
 
         $this['pdo'] = $this->share(function() {
-            $config = require(__DIR__ . '/../../config/config.php');
-            $dbConfig = $config['db'];
+            $dbConfig = $this->getConfig('db');
             return new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
         });
 
