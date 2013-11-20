@@ -35,11 +35,12 @@ class UserAgentLookupController
         session_start();
 
         if (isset($_POST['ua'])) {
-            $this->csrfCheck();
+            #$this->csrfCheck();
 
             $ua = $_POST['ua'];
 
             $browscap = $this->getBrowscap();
+            $browscap->updateCache();
             $uaInfo = $browscap->getBrowser($ua, true);
             $this->convertBooleansToStrings($uaInfo);
         }
