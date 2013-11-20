@@ -23,12 +23,18 @@ class BrowscapSiteWeb extends SilexApplication
     {
         $this->register(new ServiceControllerServiceProvider());
 
+        $this['pdo'] = $this->share(function() {
+            $config = require(__DIR__ . '/../../config/config.php');
+            $dbConfig = $config['db'];
+            return new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
+        });
+
         $this['downloads.controller'] = $this->share(function() {
             return new Controller\DownloadController($this, $this->getFiles());
         });
 
         $this['stream.controller'] = $this->share(function() {
-            return new Controller\StreamController();
+            return new Controller\StreamController($this['pdo']);
         });
 
         $this['version.controller'] = $this->share(function() {
