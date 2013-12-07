@@ -34,10 +34,15 @@ class ComposerHook
             throw new \Exception("Could not determine build number from package {$requiredPackage}");
         }
 
-        // @todo Get current build number and determine if we really need to make a build at all...
+        $currentBuildNumber = self::getCurrentBuildNumber();
+        if ($buildNumber != $currentBuildNumber)
+        {
+            $event->getIO()->write(sprintf('<info>Generating new Browscap build: %s</info>', $buildNumber));
+            self::createBuild($buildNumber);
+        } else {
+            $event->getIO()->write(sprintf('<info>Current build %s is up to date</info>', $currentBuildNumber));
+        }
 
-        $event->getIO()->write(sprintf('<info>Generating Browscap build: %s</info>', $buildNumber));
-        self::createBuild($buildNumber);
     }
 
     /**
@@ -66,6 +71,19 @@ class ComposerHook
         }
 
         return $buildNumber;
+    }
+
+    public static function getCurrentBuildNumber()
+    {
+        $buildFolder = __DIR__ . '/../../../build/';
+        $metadataFile = $buildFolder . 'metadata.php';
+
+        if (file_exists($metadataFile)) {
+            $metadata = require $metadataFile;
+            return $metadata['version'];
+        } else {
+            return null;
+        }
     }
 
     /**
