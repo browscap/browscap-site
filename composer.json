@@ -30,5 +30,9 @@
     "autoload": {
         "psr-0": { "": "src/" }
     },
-    "bin": ["bin/browscap"]
+    "bin": ["bin/browscap"],
+    "scripts": {
+        "post-install-cmd": ["BrowscapSite\\Tool\\ComposerHook::postInstall"],
+        "post-update-cmd": ["BrowscapSite\\Tool\\ComposerHook::postUpdate"]
+    }
 }

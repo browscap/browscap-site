@@ -1,0 +1,89 @@
+<?php
+
+namespace BrowscapSite\Tool;
+
+use Composer\Script\Event;
+use Composer\Package\PackageInterface;
+use Browscap\Generator\BuildGenerator;
+
+class ComposerHook
+{
+    public static function postInstall(Event $event)
+    {
+        self::postUpdate($event);
+    }
+
+    public static function postUpdate(Event $event)
+    {
+        $composer = $event->getComposer();
+
+        $installed = $event->getComposer()->getRepositoryManager()->getLocalRepository();
+
+        $requiredPackage = 'browscap/browscap';
+
+        $packages = $installed->findPackages($requiredPackage);
+
+        if (!count($packages)) {
+            throw new \Exception("The package {$requiredPackage} does not seem to be installed, and it is required.");
+        }
+
+        $package = reset($packages);
+        $buildNumber = self::determineBuildNumberFromPackage($package);
+
+        if (empty($buildNumber)) {
+            throw new \Exception("Could not determine build number from package {$requiredPackage}");
+        }
+
+        // @todo Get current build number and determine if we really need to make a build at all...
+
+        $event->getIO()->write(sprintf('<info>Generating Browscap build: %s</info>', $buildNumber));
+        self::createBuild($buildNumber);
+    }
+
+    /**
+     * Try to determine the build number from a composer package
+     *
+     * @param \Composer\Package\PackageInterface $package
+     * @return string
+     */
+    public static function determineBuildNumberFromPackage(PackageInterface $package)
+    {
+        if ($package->isDev()) {
+        	$buildNumber = substr($package->getSourceReference(), 0, 8);
+        } else {
+        	$installedVersion = $package->getPrettyVersion();
+
+        	// SemVer supports build numbers, but fall back to just using
+        	// version number if not available; at time of writing, composer
+        	// did not support SemVer build numbers fully:
+        	// @see https://github.com/composer/composer/issues/2422
+        	$plusPos = strpos($installedVersion, '+');
+        	if ($plusPos !== false) {
+        		$buildNumber = substr($installedVersion, ($plusPos + 1));
+        	} else {
+        		$buildNumber = $installedVersion;
+        	}
+        }
+
+        return $buildNumber;
+    }
+
+    /**
+     * Generate a build for build number specified
+     *
+     * @param string $buildNumber
+     */
+    public static function createBuild($buildNumber)
+    {
+        $buildFolder = __DIR__ . '/../../../build/';
+        $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
+
+        // Generate the actual browscap.ini files
+        $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
+        $buildGenerator->generateBuilds($buildNumber);
+
+        // Generate the metadata for the site
+        $rebuilder = new Rebuilder($buildFolder);
+        $rebuilder->rebuild();
+    }
+}
