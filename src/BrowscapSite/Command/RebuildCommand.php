@@ -5,13 +5,22 @@ namespace BrowscapSite\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Browscap\Parser\IniParser;
+use BrowscapSite\Tool\Rebuilder;
 
 /**
  * @author James Titcumb <james@asgrim.com>
  */
 class RebuildCommand extends Command
 {
+    protected $rebuilder;
+
+    public function __construct(Rebuilder $rebuilder)
+    {
+        $this->rebuilder = $rebuilder;
+
+        parent::__construct();
+    }
+
     /**
      * (non-PHPdoc)
      * @see \Symfony\Component\Console\Command\Command::configure()
@@ -29,45 +38,6 @@ class RebuildCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $metadata = array();
-
-        $iniParser = new IniParser('./build/browscap.ini');
-        $fileData = $iniParser->parse();
-
-        $versionData = $fileData['GJK_Browscap_Version'];
-
-        $metadata['version'] = $versionData['Version'];
-        $metadata['released'] = $versionData['Released'];
-
-        $metadata['filesizes'] = array();
-        $metadata['filesizes']['BrowsCapINI'] = $this->getKbSize('./build/browscap.ini');
-        $metadata['filesizes']['Full_BrowsCapINI'] = $this->getKbSize('./build/full_asp_browscap.ini');
-        $metadata['filesizes']['Lite_BrowsCapINI'] = $this->getKbSize('./build/lite_asp_browscap.ini');
-        $metadata['filesizes']['PHP_BrowsCapINI'] = $this->getKbSize('./build/php_browscap.ini');
-        $metadata['filesizes']['Full_PHP_BrowsCapINI'] = $this->getKbSize('./build/full_php_browscap.ini');
-        $metadata['filesizes']['Lite_PHP_BrowsCapINI'] = $this->getKbSize('./build/lite_php_browscap.ini');
-
-        $this->writeArray('./build/metadata.php', $metadata);
-
-        $this->niceDelete('./cache/browscap.ini');
-        $this->niceDelete('./cache/cache.php');
-    }
-
-    public function niceDelete($filename)
-    {
-        if (file_exists($filename)) {
-            unlink($filename);
-        }
-    }
-
-    public function writeArray($filename, $array)
-    {
-        $phpArray = var_export($array, true);
-        file_put_contents($filename, "<?php\n\nreturn " . $phpArray . ";");
-    }
-
-    public function getKbSize($filename)
-    {
-        return round(filesize($filename) / 1024);
+        $this->rebuilder->rebuild();
     }
 }
