@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "7900a81a35226bdc3670656be62de6ee0776372f"
+                "reference": "51e64a7fbdb38b8b812cfd0e585015d6960f6aa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/7900a81a35226bdc3670656be62de6ee0776372f",
-                "reference": "7900a81a35226bdc3670656be62de6ee0776372f",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/51e64a7fbdb38b8b812cfd0e585015d6960f6aa2",
+                "reference": "51e64a7fbdb38b8b812cfd0e585015d6960f6aa2",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2013-12-08 08:26:00"
+            "time": "2013-12-08 09:28:38"
         },
         {
             "name": "browscap/browscap-php",
