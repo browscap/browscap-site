@@ -11,7 +11,7 @@ class BrowscapSiteConsole extends Application
         parent::__construct('Browscap Website', 'dev-master');
 
         $commands = array(
-            new \BrowscapSite\Command\RebuildCommand(),
+            new Command\RebuildCommand(new Tool\Rebuilder(__DIR__ . '/../../build/')),
         );
 
         foreach ($commands as $command) {
