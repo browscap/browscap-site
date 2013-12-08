@@ -54,23 +54,49 @@ class ComposerHook
     public static function determineBuildNumberFromPackage(PackageInterface $package)
     {
         if ($package->isDev()) {
-        	$buildNumber = substr($package->getSourceReference(), 0, 8);
-        } else {
-        	$installedVersion = $package->getPrettyVersion();
 
-        	// SemVer supports build numbers, but fall back to just using
-        	// version number if not available; at time of writing, composer
-        	// did not support SemVer build numbers fully:
-        	// @see https://github.com/composer/composer/issues/2422
-        	$plusPos = strpos($installedVersion, '+');
-        	if ($plusPos !== false) {
-        		$buildNumber = substr($installedVersion, ($plusPos + 1));
-        	} else {
-        		$buildNumber = $installedVersion;
-        	}
+            $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
+
+            if (is_null($buildNumber)) {
+               $buildNumber = substr($package->getSourceReference(), 0, 8);
+            }
+        } else {
+            $installedVersion = $package->getPrettyVersion();
+
+            // SemVer supports build numbers, but fall back to just using
+            // version number if not available; at time of writing, composer
+            // did not support SemVer 2.0.0 build numbers fully:
+            // @see https://github.com/composer/composer/issues/2422
+            $plusPos = strpos($installedVersion, '+');
+            if ($plusPos !== false) {
+                $buildNumber = substr($installedVersion, ($plusPos + 1));
+            } else {
+                $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
+
+                if (is_null($buildNumber)) {
+                   $buildNumber = $installedVersion;
+                }
+            }
         }
 
         return $buildNumber;
+    }
+
+    /**
+     * This is a temporary fallback until Composer supports SemVer 2.0.0 properly
+     *
+     * @return string|NULL
+     */
+    public static function determineBuildNumberFromBrowscapBuildFile()
+    {
+        $buildFile = __DIR__ . '/../../../vendor/browscap/browscap/BUILD';
+
+        if (file_exists($buildFile)) {
+            $buildNumber = file_get_contents($buildFile);
+            return trim($buildNumber);
+        } else {
+            return null;
+        }
     }
 
     public static function getCurrentBuildNumber()
