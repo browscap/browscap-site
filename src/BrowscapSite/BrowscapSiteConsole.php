@@ -12,6 +12,7 @@ class BrowscapSiteConsole extends Application
 
         $commands = array(
             new Command\RebuildCommand(new Tool\Rebuilder(__DIR__ . '/../../build/')),
+            new Command\AutobuildCommand(),
         );
 
         foreach ($commands as $command) {
