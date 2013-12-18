@@ -25,6 +25,11 @@ $ git pull
 $ composer install
 ```
 
+Creating a Browscap Release
+---------------------------
+
+Please see [this wiki article](https://github.com/browscap/browscap/wiki/Public-release-procedure).
+
 Manually building
 -----------------
 
