@@ -89,7 +89,7 @@ class ComposerHook
      */
     public static function determineBuildNumberFromBrowscapBuildFile()
     {
-        $buildFile = __DIR__ . '/../../../vendor/browscap/browscap/BUILD';
+        $buildFile = __DIR__ . '/../../../vendor/browscap/browscap/BUILD_NUMBER';
 
         if (file_exists($buildFile)) {
             $buildNumber = file_get_contents($buildFile);
