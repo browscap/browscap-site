@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "6840397fa0c6176557a32bff039175d42bd9e434"
+                "reference": "25cc183cf63b22f84ccbe0cea969e16a4c265f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/6840397fa0c6176557a32bff039175d42bd9e434",
-                "reference": "6840397fa0c6176557a32bff039175d42bd9e434",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/25cc183cf63b22f84ccbe0cea969e16a4c265f9b",
+                "reference": "25cc183cf63b22f84ccbe0cea969e16a4c265f9b",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                     "name": "Joshua Estes",
                     "email": "f1gm3nt@gmail.com",
                     "homepage": "http://joshuaestes.me",
-                    "role": "developer"
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Contributors",
@@ -72,7 +72,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2014-01-07 09:19:11"
+            "time": "2014-01-11 22:58:52"
         },
         {
             "name": "browscap/browscap-php",
