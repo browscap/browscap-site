@@ -35,14 +35,14 @@ class DownloadController
 
     public function mergeMetadataToFiles($metadata, &$files)
     {
-        $files['asp']['BrowsCapINI']['size'] = $metadata['filesizes']['BrowsCapINI'];
-        $files['asp']['Full_BrowsCapINI']['size'] = $metadata['filesizes']['Full_BrowsCapINI'];
-        $files['asp']['Lite_BrowsCapINI']['size'] = $metadata['filesizes']['Lite_BrowsCapINI'];
-        $files['php']['PHP_BrowsCapINI']['size'] = $metadata['filesizes']['PHP_BrowsCapINI'];
-        $files['php']['Full_PHP_BrowsCapINI']['size'] = $metadata['filesizes']['Full_PHP_BrowsCapINI'];
-        $files['php']['Lite_PHP_BrowsCapINI']['size'] = $metadata['filesizes']['Lite_PHP_BrowsCapINI'];
-        $files['other']['BrowsCapXML']['size'] = $metadata['filesizes']['BrowsCapXML'];
-        $files['other']['BrowsCapCSV']['size'] = $metadata['filesizes']['BrowsCapCSV'];
+        $files['asp']['BrowsCapINI']['size'] = number_format($metadata['filesizes']['BrowsCapINI']);
+        $files['asp']['Full_BrowsCapINI']['size'] = number_format($metadata['filesizes']['Full_BrowsCapINI']);
+        $files['asp']['Lite_BrowsCapINI']['size'] = number_format($metadata['filesizes']['Lite_BrowsCapINI']);
+        $files['php']['PHP_BrowsCapINI']['size'] = number_format($metadata['filesizes']['PHP_BrowsCapINI']);
+        $files['php']['Full_PHP_BrowsCapINI']['size'] = number_format($metadata['filesizes']['Full_PHP_BrowsCapINI']);
+        $files['php']['Lite_PHP_BrowsCapINI']['size'] = number_format($metadata['filesizes']['Lite_PHP_BrowsCapINI']);
+        $files['other']['BrowsCapXML']['size'] = number_format($metadata['filesizes']['BrowsCapXML']);
+        $files['other']['BrowsCapCSV']['size'] = number_format($metadata['filesizes']['BrowsCapCSV']);
     }
 
     public function getMetadata()
