@@ -119,6 +119,18 @@ class BrowscapSiteWeb extends SilexApplication
                    'description' => 'A smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
                ),
             ),
+            'other' => array(
+               'BrowsCapXML' => array(
+                   'name' => 'browscap.xml',
+                   'size' => null,
+                   'description' => 'The standard version of browscap.ini file in XML format.'
+                ),
+               'BrowsCapCSV' => array(
+                   'name' => 'browscap.csv',
+                   'size' => null,
+                   'description' => 'An industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
+               ),
+            ),
         );
     }
 }

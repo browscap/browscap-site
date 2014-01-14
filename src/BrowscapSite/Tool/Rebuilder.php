@@ -55,6 +55,8 @@ class Rebuilder
         $metadata['filesizes']['PHP_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/php_browscap.ini');
         $metadata['filesizes']['Full_PHP_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/full_php_browscap.ini');
         $metadata['filesizes']['Lite_PHP_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/lite_php_browscap.ini');
+        $metadata['filesizes']['BrowsCapXML'] = $this->getKbSize($this->buildDir . '/browscap.xml');
+        $metadata['filesizes']['BrowsCapCSV'] = $this->getKbSize($this->buildDir . '/browscap.csv');
 
         $this->writeArray($this->buildDir . '/metadata.php', $metadata);
 

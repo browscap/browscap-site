@@ -50,6 +50,12 @@ class StreamController
             case 'lite_php_browscapini':
                 $file = "lite_php_browscap.ini";
                 break;
+            case 'browscapxml':
+                $file = "browscap.xml";
+                break;
+            case 'browscapcsv':
+                $file = "browscap.csv";
+                break;
             default:
                 $this->failed('404 Not Found', 'The version requested could not be found');
         }

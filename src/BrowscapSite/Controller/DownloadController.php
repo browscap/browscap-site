@@ -41,6 +41,8 @@ class DownloadController
         $files['php']['PHP_BrowsCapINI']['size'] = $metadata['filesizes']['PHP_BrowsCapINI'];
         $files['php']['Full_PHP_BrowsCapINI']['size'] = $metadata['filesizes']['Full_PHP_BrowsCapINI'];
         $files['php']['Lite_PHP_BrowsCapINI']['size'] = $metadata['filesizes']['Lite_PHP_BrowsCapINI'];
+        $files['other']['BrowsCapXML']['size'] = $metadata['filesizes']['BrowsCapXML'];
+        $files['other']['BrowsCapCSV']['size'] = $metadata['filesizes']['BrowsCapCSV'];
     }
 
     public function getMetadata()

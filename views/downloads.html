@@ -29,7 +29,16 @@
     </ul>
 
     <h2>Other files (XML/CSV/ZIP)</h2>
-    <p>The file versions that used to be available (property-name-docs.xml, browscap.xml, browscap.csv, known_agents.zip, browscap.zip) are currently not supported.</p>
+    <ul>
+        {% for code, file in files.other %}
+        <li>
+            <p><a href="/stream?q={{ code }}">{{ file.name }}</a> <em>({{ file.size }} KB)</em></p>
+            <p>{{ file.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <p>Other file versions that used to be available (property-name-docs.xml, known_agents.zip, browscap.zip) are currently not supported.</p>
 
 </div>
 
