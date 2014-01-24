@@ -44,3 +44,9 @@ The steps are basically:
 
 * Build an initial browscap.ini (using `vendor/bin/browscap build`) - this builds the INI files themselves for the specified version.
 * Generate metadata & remove cache (using `bin/browscap-site rebuild`) - this generates the metadata.php file which browscap-site uses to offer the correct download links and version.
+
+Alternatively, you could try running the `autobuild` command:
+
+```bash
+$ bin/browscap-site autobuild 5021-yyy
+```
