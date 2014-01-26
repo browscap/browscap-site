@@ -48,7 +48,7 @@ class StatsController
         $stmt->execute();
 
         $data = array();
-        $data[] = array('Date', 'Downloads');
+        $data[] = array('Date', 'Number of Downloads');
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $data[] = array(
             	$row['date'],
