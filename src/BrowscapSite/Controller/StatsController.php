@@ -34,7 +34,7 @@ class StatsController
 
         $sql = "
             SELECT
-                DATE_FORMAT(downloadDate, '%Y-%m-%d') AS `date`,
+                DATE_FORMAT(downloadDate, '%m-%d') AS `date`,
                 COUNT(*) AS count
             FROM
             downloadLog

@@ -5,7 +5,6 @@ google.setOnLoadCallback(function () {
 	var options = {
         'width': 960,
         'height': 300,
-        'curveType': 'function',
         'legend': { 'position': 'bottom' },
         'backgroundColor': '#f8f8ff',
         'colors': ['#3b5998']
