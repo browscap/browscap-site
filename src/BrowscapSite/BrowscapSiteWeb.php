@@ -59,6 +59,10 @@ class BrowscapSiteWeb extends SilexApplication
             return new Controller\VersionController($this);
         });
 
+        $this['version.number.controller'] = $this->share(function() {
+            return new Controller\VersionNumberController($this);
+        });
+
         $this['version.xml.controller'] = $this->share(function() {
             return new Controller\VersionXmlController($this->getFiles());
         });
@@ -77,6 +81,7 @@ class BrowscapSiteWeb extends SilexApplication
         $this->get('/', 'downloads.controller:indexAction');
         $this->get('/stream', 'stream.controller:indexAction');
         $this->get('/version', 'version.controller:indexAction');
+        $this->get('/version-number', 'version.number.controller:indexAction');
         $this->get('/version.xml', 'version.xml.controller:indexAction');
         $this->get('/ua-lookup', 'ualookup.controller:indexAction');
         $this->post('/ua-lookup', 'ualookup.controller:indexAction');
