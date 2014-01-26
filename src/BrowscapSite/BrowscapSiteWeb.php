@@ -139,6 +139,11 @@ class BrowscapSiteWeb extends SilexApplication
                    'size' => null,
                    'description' => 'An industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
                ),
+               'BrowsCapZIP' => array(
+                   'name' => 'browscap.zip',
+                   'size' => null,
+                   'description' => 'Combines all the above files into one download that is smaller than all eight files put together.'
+               ),
             ),
         );
     }

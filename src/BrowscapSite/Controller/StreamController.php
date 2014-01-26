@@ -56,6 +56,9 @@ class StreamController
             case 'browscapcsv':
                 $file = "browscap.csv";
                 break;
+            case 'browscapzip':
+                $file = "browscap.zip";
+                break;
             default:
                 $this->failed('404 Not Found', 'The version requested could not be found');
         }
