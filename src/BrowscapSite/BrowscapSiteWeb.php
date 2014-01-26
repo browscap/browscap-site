@@ -59,6 +59,10 @@ class BrowscapSiteWeb extends SilexApplication
             return new Controller\StreamController($this['pdo']);
         });
 
+        $this['stats.controller'] = $this->share(function() {
+            return new Controller\StatsController($this, $this['pdo']);
+        });
+
         $this['version.controller'] = $this->share(function() {
             return new Controller\VersionController($this);
         });
@@ -83,6 +87,7 @@ class BrowscapSiteWeb extends SilexApplication
     public function defineControllers()
     {
         $this->get('/', 'downloads.controller:indexAction');
+        $this->get('/statistics', 'stats.controller:indexAction');
         $this->get('/stream', 'stream.controller:indexAction');
         $this->get('/version', 'version.controller:indexAction');
         $this->get('/version-number', 'version.number.controller:indexAction');

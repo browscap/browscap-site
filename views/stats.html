@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  {{ parent() }}
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="/js/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Statistics</h1>
+    <h3>Downloads in the last 30 days</h3>
+    <div id="theChart" style="width: 960; height: 300;"></div>
+    
+    <script type="text/javascript">
+    {% autoescape false %}
+      var chartData = {{ downloads|json_encode() }};
+    {% endautoescape %}
+    </script>
+
+{% endblock %}
+
