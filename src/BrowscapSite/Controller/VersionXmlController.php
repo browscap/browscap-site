@@ -7,16 +7,18 @@ class VersionXmlController
 {
     protected $baseHost;
     protected $fileList;
+    protected $metadata;
 
-    public function __construct(array $fileList)
+    public function __construct(array $fileList, array $metadata)
     {
         $this->baseHost = 'http://' . $_SERVER['SERVER_NAME'];
         $this->fileList = $fileList;
+        $this->metadata = $metadata;
     }
 
     public function indexAction()
     {
-        $metadata = $this->getMetadata();
+        $metadata = $this->metadata;
 
         $xml = new \DOMDocument();
 
@@ -45,11 +47,6 @@ class VersionXmlController
         $response->headers->set('Content-type', 'text/xml'); #application/rss+xml
         $response->setContent($xml->saveXML());
         return $response;
-    }
-
-    public function getMetadata()
-    {
-        return require_once(__DIR__ . '/../../../build/metadata.php');
     }
 
     public function createTextNode(\DOMDocument $xml, $element, $content)

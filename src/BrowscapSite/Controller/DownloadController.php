@@ -17,7 +17,7 @@ class DownloadController
 
     public function indexAction()
     {
-        $metadata = $this->getMetadata();
+        $metadata = $this->app['metadata'];
 
         $this->mergeMetadataToFiles($metadata, $this->fileList);
 
@@ -43,10 +43,5 @@ class DownloadController
         $files['php']['Lite_PHP_BrowsCapINI']['size'] = number_format($metadata['filesizes']['Lite_PHP_BrowsCapINI']);
         $files['other']['BrowsCapXML']['size'] = number_format($metadata['filesizes']['BrowsCapXML']);
         $files['other']['BrowsCapCSV']['size'] = number_format($metadata['filesizes']['BrowsCapCSV']);
-    }
-
-    public function getMetadata()
-    {
-        return require_once(__DIR__ . '/../../../build/metadata.php');
     }
 }

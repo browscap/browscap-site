@@ -27,7 +27,7 @@ class UserAgentLookupController
 
     public function indexAction()
     {
-        $metadata = $this->getMetadata();
+        $metadata = $this->app['metadata'];
 
         $ua = $_SERVER['HTTP_USER_AGENT'];
         $uaInfo = false;
@@ -80,10 +80,5 @@ class UserAgentLookupController
         $csrfToken = hash('sha256', uniqid() . microtime());
         $_SESSION['csrfToken'] = $csrfToken;
         return $csrfToken;
-    }
-
-    public function getMetadata()
-    {
-        return require_once(__DIR__ . '/../../../build/metadata.php');
     }
 }

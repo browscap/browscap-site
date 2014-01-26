@@ -15,15 +15,10 @@ class VersionNumberController
 
     public function indexAction()
     {
-        $metadata = $this->getMetadata();
+        $metadata = $this->app['metadata'];
 
         return $this->app['twig']->render('version-number.html', array(
             'version' => $metadata['version'],
         ));
-    }
-
-    public function getMetadata()
-    {
-        return require_once(__DIR__ . '/../../../build/metadata.php');
     }
 }

@@ -47,6 +47,10 @@ class BrowscapSiteWeb extends SilexApplication
             return new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
         });
 
+        $this['metadata'] = $this->share(function() {
+            return require_once(__DIR__ . '/../../build/metadata.php');
+        });
+
         $this['downloads.controller'] = $this->share(function() {
             return new Controller\DownloadController($this, $this->getFiles());
         });
@@ -64,7 +68,7 @@ class BrowscapSiteWeb extends SilexApplication
         });
 
         $this['version.xml.controller'] = $this->share(function() {
-            return new Controller\VersionXmlController($this->getFiles());
+            return new Controller\VersionXmlController($this->getFiles(), $this['metadata']);
         });
 
         $this['ualookup.controller'] = $this->share(function() {
