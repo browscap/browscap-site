@@ -21,11 +21,41 @@ class StatsController
 
     public function indexAction()
     {
-        $downloads = $this->getDownloadsPerDay();
-
         return $this->app['twig']->render('stats.html', array(
-            'downloads' => $downloads,
+            'downloadsPerDay' => $this->getDownloadsPerDay(),
+            'downloadsPerMonth' => $this->getDownloadsPerMonth(),
         ));
+    }
+
+    protected function getDownloadsPerMonth()
+    {
+        $cutoff = new \DateTime('24 months ago');
+
+        $sql = "
+            SELECT
+                DATE_FORMAT(downloadDate, '%Y-%m') AS `date`,
+                COUNT(*) AS count
+            FROM
+            downloadLog
+            WHERE
+                downloadDate >= :sinceDate
+            GROUP BY DATE_FORMAT(downloadDate, '%Y-%m')
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
+        $stmt->execute();
+
+        $data = array();
+        $data[] = array('Month', 'Number of Downloads');
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $data[] = array(
+            	$row['date'],
+                (int)$row['count'],
+            );
+        }
+
+        return $data;
     }
 
     protected function getDownloadsPerDay()
