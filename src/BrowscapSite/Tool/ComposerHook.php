@@ -5,6 +5,11 @@ namespace BrowscapSite\Tool;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Browscap\Generator\BuildGenerator;
+use Monolog\ErrorHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class ComposerHook
 {
@@ -122,8 +127,17 @@ class ComposerHook
         $buildFolder = __DIR__ . '/../../../build/';
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
+        // Create a logger
+        $stream = new StreamHandler('php://output', Logger::INFO);
+        $stream->setFormatter(new LineFormatter('%message%' . "\n"));
+
+        $logger = new Logger('browscap');
+        $logger->pushHandler($stream);
+        $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, Logger::NOTICE));
+
         // Generate the actual browscap.ini files
         $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
+        $buildGenerator->setLogger($logger);
         $buildGenerator->generateBuilds($buildNumber);
 
         // Generate the metadata for the site

@@ -23,7 +23,7 @@
         "php": ">= 5.4",
         "browscap/browscap": "*@dev",
         "browscap/browscap-php": "*@dev",
-        "symfony/console": "2.2.*",
+        "symfony/console": "2.4.*",
         "silex/silex": "~1.1",
         "twig/twig": ">= 1.8"
     },
