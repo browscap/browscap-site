@@ -5,6 +5,9 @@ namespace BrowscapSite\Tool;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Browscap\Generator\BuildGenerator;
+use Browscap\Generator\CollectionParser;
+use Browscap\Helper\CollectionCreator;
+use Browscap\Helper\Generator;
 use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
@@ -135,10 +138,19 @@ class ComposerHook
         $logger->pushHandler($stream);
         $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, Logger::NOTICE));
 
+        $collectionCreator = new CollectionCreator();
+        $collectionParser = new CollectionParser();
+        $generatorHelper = new Generator();
+
         // Generate the actual browscap.ini files
         $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
-        $buildGenerator->setLogger($logger);
-        $buildGenerator->generateBuilds($buildNumber);
+        $buildGenerator
+            ->setLogger($logger)
+            ->setCollectionCreator($collectionCreator)
+            ->setCollectionParser($collectionParser)
+            ->setGeneratorHelper($generatorHelper)
+            ->generateBuilds($buildNumber)
+        ;
 
         // Generate the metadata for the site
         $rebuilder = new Rebuilder($buildFolder);
