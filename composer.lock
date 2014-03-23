@@ -15,7 +15,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/95ddaaa2aeb6ba38e29a6f225a754f8d85b30ec6",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/77a3fc1ff1c52181fa8b0bd6030ae3caac6f2618",
                 "reference": "6930ccc",
                 "shasum": ""
             },
@@ -81,12 +81,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap-php.git",
-                "reference": "347453acb6ef9a01c9c03113d283521cd22e35e6"
+                "reference": "4eedb5eadc08b7d1d3295335f297dca95f32e7a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/347453acb6ef9a01c9c03113d283521cd22e35e6",
-                "reference": "347453acb6ef9a01c9c03113d283521cd22e35e6",
+                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/4eedb5eadc08b7d1d3295335f297dca95f32e7a1",
+                "reference": "4eedb5eadc08b7d1d3295335f297dca95f32e7a1",
                 "shasum": ""
             },
             "require": {
@@ -125,7 +125,7 @@
                 "get_browser",
                 "user agent"
             ],
-            "time": "2014-02-25 11:43:34"
+            "time": "2014-03-10 11:43:51"
         },
         {
             "name": "monolog/monolog",
