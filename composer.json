@@ -21,7 +21,7 @@
     },
     "require": {
         "php": ">= 5.4",
-        "browscap/browscap": "dev-master#6930ccc",
+        "browscap/browscap": "dev-master#513444e",
         "browscap/browscap-php": "*@dev",
         "symfony/console": "2.4.*",
         "silex/silex": "~1.1",
