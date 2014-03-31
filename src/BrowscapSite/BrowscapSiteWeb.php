@@ -47,6 +47,10 @@ class BrowscapSiteWeb extends SilexApplication
             return new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
         });
 
+        $this['rateLimiter'] = $this->share(function() {
+            return new Tool\RateLimiter($this['pdo']);
+        });
+
         $this['metadata'] = $this->share(function() {
             return require_once(__DIR__ . '/../../build/metadata.php');
         });
@@ -56,7 +60,7 @@ class BrowscapSiteWeb extends SilexApplication
         });
 
         $this['stream.controller'] = $this->share(function() {
-            return new Controller\StreamController($this['pdo']);
+            return new Controller\StreamController($this['rateLimiter']);
         });
 
         $this['stats.controller'] = $this->share(function() {

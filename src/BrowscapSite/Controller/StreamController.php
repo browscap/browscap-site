@@ -2,16 +2,18 @@
 
 namespace BrowscapSite\Controller;
 
+use BrowscapSite\Tool\RateLimiter;
+
 class StreamController
 {
     /**
-     * @var \PDO
+     * @var \BrowscapSite\Tool\RateLimiter
      */
-    protected $pdo;
+    protected $rateLimiter;
 
-    public function __construct(\PDO $pdo)
+    public function __construct(RateLimiter $rateLimiter)
     {
-        $this->pdo = $pdo;
+        $this->rateLimiter = $rateLimiter;
     }
 
     protected function failed($status, $message)
@@ -71,12 +73,12 @@ class StreamController
             $this->failed('500 Internal Server Error', 'The original file for the version requested could not be found');
         }
 
-        if (!$this->checkLimit($_SERVER['REMOTE_ADDR']))
+        if (!$this->rateLimiter->checkLimit($_SERVER['REMOTE_ADDR']))
         {
             $this->failed('429 Too Many Requests', 'Rate limit exceeded. Please try again later.');
         }
 
-        $this->logDownload($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $browscapVersion);
+        $this->rateLimiter->logDownload($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $browscapVersion);
 
         header("HTTP/1.0 200 OK");
         header("Cache-Control: public");
@@ -86,39 +88,5 @@ class StreamController
         header("Content-Disposition: attachment; filename=" . $file);
         readfile($fullpath);
         die();
-    }
-
-    public function checkLimit($ip)
-    {
-        // This allows for 50 downloads in a 24 hour period
-        $downloadLimit = 50;
-        $cutoff = new \DateTime('24 hours ago');
-
-        $sql = "SELECT COUNT(*) FROM downloadLog WHERE ipAddress = :ip AND downloadDate >= :cutoff";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('ip', $ip);
-        $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
-
-        $stmt->execute();
-        $downloads = (int)$stmt->fetchColumn();
-
-        if ($downloads >= $downloadLimit) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function logDownload($ip, $userAgent, $fileCode)
-    {
-        $sql = "INSERT INTO downloadLog (ipAddress, downloadDate, fileCode, userAgent) VALUES(:ip, NOW(), :fileCode, :ua)";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('ip', $ip);
-        $stmt->bindValue('fileCode', $fileCode);
-        $stmt->bindValue('ua', $userAgent);
-
-        $stmt->execute();
     }
 }
