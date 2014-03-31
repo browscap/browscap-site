@@ -99,6 +99,8 @@ class StreamController
         // Offer the download
         $response = new BinaryFileResponse($fullpath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file);
+        $response->setMaxAge(0);
+        $response->expire();
         return $response;
     }
 
