@@ -51,6 +51,12 @@
 
     <h2>Rate Limiting</h2>
     <p>Downloading the INI files here implies you agree to our fair usage policy. <em>Any repeat attempts to download the files will be banned.</em> We highly recommend that you request the version URL and compare your current version against the latest version before requesting the download URL.</p>
+    <p>We have implemented rate limiting and banning with the following rules:</p>
+    <ul>
+        <li>You may download {{ banConfig.rateLimitDownloads }} files per {{ banConfig.rateLimitPeriod }} hour period. If you exceed this you will be temporarily banned for {{ banConfig.rateLimitPeriod }} hour{{ banConfig.rateLimitPeriod == 1 ? '' : 's' }}.</li>
+        <li>You are allowed up to {{ banConfig.tempBanLimit }} temporary bans in a {{ banConfig.tempBanPeriod }} day period. If you exceed this, you will be permanently banned.</li>
+        <li>If you are permanently banned, please contact us via the <a href="https://groups.google.com/group/browscap">Discussion Forum</a> to discuss your situation.</li>
+    </ul>
 
     <h2>Download URLs</h2>
     <dl>

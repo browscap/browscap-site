@@ -8,11 +8,13 @@ class DownloadController
 {
     protected $app;
     protected $fileList;
+    protected $banConfiguration;
 
-    public function __construct(BrowscapSiteWeb $app, array $fileList)
+    public function __construct(BrowscapSiteWeb $app, array $fileList, array $banConfiguration)
     {
         $this->app = $app;
         $this->fileList = $fileList;
+        $this->banConfiguration = $banConfiguration;
     }
 
     public function indexAction()
@@ -30,6 +32,7 @@ class DownloadController
             'version' => $metadata['version'],
             'releaseDate' => $releaseDate->format('jS M Y'),
             'baseHost' => $baseHost,
+            'banConfig' => $this->banConfiguration,
         ));
     }
 

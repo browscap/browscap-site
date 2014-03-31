@@ -70,7 +70,11 @@ class BrowscapSiteWeb extends SilexApplication
         });
 
         $this['downloads.controller'] = $this->share(function() {
-            return new Controller\DownloadController($this, $this->getFiles());
+            $banConfiguration = $this->getConfig('rateLimiter');
+            if (!$banConfiguration) {
+                throw new \RuntimeException('Rate limit configuration not set');
+            }
+            return new Controller\DownloadController($this, $this->getFiles(), $banConfiguration);
         });
 
         $this['stream.controller'] = $this->share(function() {
