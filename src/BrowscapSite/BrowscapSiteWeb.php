@@ -60,7 +60,7 @@ class BrowscapSiteWeb extends SilexApplication
         });
 
         $this['stream.controller'] = $this->share(function() {
-            return new Controller\StreamController($this['rateLimiter']);
+            return new Controller\StreamController($this['rateLimiter'], $this->getFiles());
         });
 
         $this['stats.controller'] = $this->share(function() {

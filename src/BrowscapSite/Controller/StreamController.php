@@ -11,9 +11,15 @@ class StreamController
      */
     protected $rateLimiter;
 
-    public function __construct(RateLimiter $rateLimiter)
+    /**
+     * @var array
+     */
+    protected $fileList;
+
+    public function __construct(RateLimiter $rateLimiter, array $fileList)
     {
         $this->rateLimiter = $rateLimiter;
+        $this->fileList = $fileList;
     }
 
     protected function failed($status, $message)
@@ -27,42 +33,14 @@ class StreamController
     {
         // @todo - this is horrendous
         if (!isset($_GET['q'])) {
-            $this->failed('400 Bad Request', 'The version requested could not be found');
+            return $this->failed('400 Bad Request', 'The version requested could not be found');
         }
 
         $browscapVersion = strtolower($_GET['q']);
 
-        switch ($browscapVersion)
-        {
-            case 'browscapini':
-                $file = "browscap.ini";
-                break;
-            case 'full_browscapini':
-                $file = "full_asp_browscap.ini";
-                break;
-            case 'lite_browscapini':
-                $file = "lite_asp_browscap.ini";
-                break;
-            case 'php_browscapini':
-                $file = "php_browscap.ini";
-                break;
-            case 'full_php_browscapini':
-                $file = "full_php_browscap.ini";
-                break;
-            case 'lite_php_browscapini':
-                $file = "lite_php_browscap.ini";
-                break;
-            case 'browscapxml':
-                $file = "browscap.xml";
-                break;
-            case 'browscapcsv':
-                $file = "browscap.csv";
-                break;
-            case 'browscapzip':
-                $file = "browscap.zip";
-                break;
-            default:
-                $this->failed('404 Not Found', 'The version requested could not be found');
+        $file = $this->getFilenameFromCode($browscapVersion);
+        if (!$file) {
+            return $this->failed('404 Not Found', 'The version requested could not be found');
         }
 
         $buildDirectory = __DIR__ . '/../../../build/';
@@ -70,12 +48,12 @@ class StreamController
         $fullpath = $buildDirectory . $file;
 
         if (!file_exists($fullpath)) {
-            $this->failed('500 Internal Server Error', 'The original file for the version requested could not be found');
+            return $this->failed('500 Internal Server Error', 'The original file for the version requested could not be found');
         }
 
         if (!$this->rateLimiter->checkLimit($_SERVER['REMOTE_ADDR']))
         {
-            $this->failed('429 Too Many Requests', 'Rate limit exceeded. Please try again later.');
+            return $this->failed('429 Too Many Requests', 'Rate limit exceeded. Please try again later.');
         }
 
         $this->rateLimiter->logDownload($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $browscapVersion);
@@ -88,5 +66,21 @@ class StreamController
         header("Content-Disposition: attachment; filename=" . $file);
         readfile($fullpath);
         die();
+    }
+
+    /**
+     * Convert
+     * @param unknown $browscapCode
+     * @return string|boolean
+     */
+    protected function getFilenameFromCode($browscapCode)
+    {
+        foreach ($this->fileList as $fileset) {
+            foreach ($fileset as $existingCode => $info) {
+                if (strtolower($existingCode) == strtolower($browscapCode)) {
+                    return $info['name'];
+                }
+            }
+        }
     }
 }
