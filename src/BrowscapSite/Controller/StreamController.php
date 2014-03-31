@@ -5,6 +5,8 @@ namespace BrowscapSite\Controller;
 use BrowscapSite\BrowscapSiteWeb;
 use BrowscapSite\Tool\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class StreamController
 {
@@ -81,15 +83,9 @@ class StreamController
         $this->rateLimiter->logDownload($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $browscapVersion);
 
         // Offer the download
-        // @todo refactor this
-        header("HTTP/1.0 200 OK");
-        header("Cache-Control: public");
-        header("Content-Type: application/zip");
-        header("Content-Transfer-Encoding: Binary");
-        header("Content-Length:" . filesize($fullpath));
-        header("Content-Disposition: attachment; filename=" . $file);
-        readfile($fullpath);
-        die();
+        $response = new BinaryFileResponse($fullpath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file);
+        return $response;
     }
 
     /**
