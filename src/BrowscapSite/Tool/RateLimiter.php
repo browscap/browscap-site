@@ -32,7 +32,22 @@ class RateLimiter
      */
     public function isTemporarilyBanned($ip)
     {
-        return $this->isOverLimit($ip);
+        // Check to see if a temporary ban already exists
+        $tempBan = $this->getTemporaryBan($ip);
+        if ($tempBan !== false)
+        {
+            return true;
+        }
+
+        // Check download log to see if we should create a new ban
+        $isOverLimit = $this->isOverLimit($ip);
+        if ($isOverLimit)
+        {
+            $this->createBan($ip, $this->shouldPermanentlyBan($ip));
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -43,33 +58,9 @@ class RateLimiter
      */
     public function isPermanentlyBanned($ip)
     {
-        return false;
-    }
-
-    /**
-     * Check whether an IP has gone over the download limit.
-     *
-     * Returns true if IP is over limit
-     *
-     * @param string $ip
-     * @return boolean
-     */
-    protected function isOverLimit($ip)
-    {
-        // This allows for 50 downloads in a 24 hour period
-        $downloadLimit = 50;
-        $cutoff = new \DateTime('24 hours ago');
-
-        $sql = "SELECT COUNT(*) FROM downloadLog WHERE ipAddress = :ip AND downloadDate >= :cutoff";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('ip', $ip);
-        $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
-
-        $stmt->execute();
-        $downloads = (int)$stmt->fetchColumn();
-
-        if ($downloads >= $downloadLimit) {
+        $permaBan = $this->getPermanentBan($ip);
+        if ($permaBan !== false)
+        {
             return true;
         }
 
@@ -91,6 +82,160 @@ class RateLimiter
         $stmt->bindValue('ip', $ip);
         $stmt->bindValue('fileCode', $fileCode);
         $stmt->bindValue('ua', $userAgent);
+
+        $stmt->execute();
+    }
+
+
+    /**
+     * Check whether an IP has gone over the download limit.
+     *
+     * Returns true if IP is over limit
+     *
+     * @param string $ip
+     * @return boolean
+     */
+    protected function isOverLimit($ip)
+    {
+        $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
+        $rateLimitDownloads = (int)$this->banConfiguration['rateLimitDownloads'];
+
+        $cutoff = new \DateTime($rateLimitPeriod . ' hours ago');
+
+        $sql = "SELECT COUNT(*) FROM downloadLog WHERE ipAddress = :ip AND downloadDate >= :cutoff";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('ip', $ip);
+        $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
+
+        $stmt->execute();
+        $downloads = (int)$stmt->fetchColumn();
+
+        if ($downloads >= $rateLimitDownloads) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Should we permanently ban an IP address
+     *
+     * @param string $ip
+     * @return boolean
+     */
+    protected function shouldPermanentlyBan($ip)
+    {
+        $tempBanLimit = (int)$this->banConfiguration['tempBanLimit'];
+
+        $recentBanCount = $this->getRecentTemporaryBanCount($ip);
+
+        return ($recentBanCount > $tempBanLimit);
+    }
+
+    /**
+     * Get how many temporary bans the IP has received recently
+     *
+     * @param string $ip
+     * @return int
+     */
+    protected function getRecentTemporaryBanCount($ip)
+    {
+        $tempBanPeriod = $this->banConfiguration['tempBanPeriod'];
+
+        $cutoff = new \DateTime($tempBanPeriod . ' days ago');
+
+        $sql = "
+            SELECT
+                COUNT(*)
+            FROM banLog
+            WHERE
+                ipAddress = :ip
+                AND banDate >= :cutoff
+                AND isPermanent = 0";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('ip', $ip);
+        $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
+
+        $stmt->execute();
+        return (int)$stmt->fetchColumn();
+    }
+
+    /**
+     * Get information about any existing temporary ban from the database.
+     *
+     * Returns boolean(false) if no temporary ban exists.
+     *
+     * @param string $ip
+     * @return array|boolean
+     */
+    protected function getTemporaryBan($ip)
+    {
+        $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
+
+        $cutoff = new \DateTime($rateLimitPeriod . ' hour ago');
+
+        $sql = "
+            SELECT
+                banLog.*,
+                DATE_ADD(banDate, INTERVAL 1 HOUR) AS unbanDate
+            FROM banLog
+            WHERE
+                ipAddress = :ip
+                AND banDate >= :cutoff
+                AND isPermanent = 0
+            LIMIT 1";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('ip', $ip);
+        $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+
+    /**
+     * Get information about a permanent ban for an IP address.
+     *
+     * Returns boolean(false) if no permanent ban exists.
+     *
+     * @param string $ip
+     * @return array|boolean
+     */
+    protected function getPermanentBan($ip)
+    {
+        $sql = "
+            SELECT
+                banLog.*
+            FROM banLog
+            WHERE
+                ipAddress = :ip
+                AND isPermanent = 1
+            LIMIT 1";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('ip', $ip);
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+
+    /**
+     * Create a banLog entry
+     *
+     * @param unknown $ip
+     * @param string $permanent
+     */
+    protected function createBan($ip, $permanent = false)
+    {
+        $sql = "INSERT INTO banLog (ipAddress, banDate, isPermanent) VALUES(:ip, NOW(), :permanent)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('ip', $ip);
+        $stmt->bindValue('permanent', $permanent ? '1' : '0');
 
         $stmt->execute();
     }
