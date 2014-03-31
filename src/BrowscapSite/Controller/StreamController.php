@@ -76,11 +76,17 @@ class StreamController
         }
 
         // Check for rate limiting
-        if (!$this->rateLimiter->checkLimit($_SERVER['REMOTE_ADDR']))
+        $remoteAddr = $_SERVER['REMOTE_ADDR'];
+        $remoteUserAgent = $_SERVER['HTTP_USER_AGENT'];
+        if ($this->rateLimiter->isPermanentlyBanned($remoteAddr))
+        {
+            return $this->failed(403, 'Rate limit exceeded. You have been permantly banned for abuse.');
+        }
+        if ($this->rateLimiter->isTemporarilyBanned($remoteAddr))
         {
             return $this->failed(429, 'Rate limit exceeded. Please try again later.');
         }
-        $this->rateLimiter->logDownload($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $browscapVersion);
+        $this->rateLimiter->logDownload($remoteAddr, $remoteUserAgent, $browscapVersion);
 
         // Offer the download
         $response = new BinaryFileResponse($fullpath);

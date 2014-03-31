@@ -14,13 +14,25 @@ class RateLimiter
         $this->pdo = $pdo;
     }
 
+    public function isTemporarilyBanned($ip)
+    {
+        return $this->isOverLimit($ip);
+    }
+
+    public function isPermanentlyBanned($ip)
+    {
+        return false;
+    }
+
     /**
-     * Check whether an IP has gone over the download limit
+     * Check whether an IP has gone over the download limit.
+     *
+     * Returns true if IP is over limit
      *
      * @param string $ip
      * @return boolean
      */
-    public function checkLimit($ip)
+    protected function isOverLimit($ip)
     {
         // This allows for 50 downloads in a 24 hour period
         $downloadLimit = 50;
@@ -36,10 +48,10 @@ class RateLimiter
         $downloads = (int)$stmt->fetchColumn();
 
         if ($downloads >= $downloadLimit) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
