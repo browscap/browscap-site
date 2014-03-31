@@ -58,7 +58,11 @@ class BrowscapSiteWeb extends SilexApplication
         });
 
         $this['rateLimiter'] = $this->share(function() {
-            return new Tool\RateLimiter($this['pdo']);
+            $banConfiguration = $this->getConfig('rateLimiter');
+            if (!$banConfiguration) {
+                throw new \RuntimeException('Rate limit configuration not set');
+            }
+            return new Tool\RateLimiter($this['pdo'], $banConfiguration);
         });
 
         $this['metadata'] = $this->share(function() {

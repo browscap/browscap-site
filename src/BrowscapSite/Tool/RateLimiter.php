@@ -9,9 +9,15 @@ class RateLimiter
      */
     protected $pdo;
 
-    public function __construct(\PDO $pdo)
+    /**
+     * @var array
+     */
+    protected $banConfiguration;
+
+    public function __construct(\PDO $pdo, $banConfiguration)
     {
         $this->pdo = $pdo;
+        $this->banConfiguration = $banConfiguration;
     }
 
     public function isTemporarilyBanned($ip)
