@@ -53,6 +53,14 @@ class StreamController
         return $response;
     }
 
+    public function getRemoteAddr()
+    {
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
     public function indexAction()
     {
         $request = $this->app->getRequest();
@@ -76,7 +84,7 @@ class StreamController
         }
 
         // Check for rate limiting
-        $remoteAddr = $_SERVER['REMOTE_ADDR'];
+        $remoteAddr = $this->getRemoteAddr();
         $remoteUserAgent = $_SERVER['HTTP_USER_AGENT'];
         if ($this->rateLimiter->isPermanentlyBanned($remoteAddr))
         {
