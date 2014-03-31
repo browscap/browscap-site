@@ -89,8 +89,9 @@ class StreamController
     }
 
     /**
-     * Convert
-     * @param unknown $browscapCode
+     * Convert a "download code" to the real filename
+     *
+     * @param string $browscapCode
      * @return string|boolean
      */
     protected function getFilenameFromCode($browscapCode)
@@ -102,5 +103,6 @@ class StreamController
                 }
             }
         }
+        return false;
     }
 }
