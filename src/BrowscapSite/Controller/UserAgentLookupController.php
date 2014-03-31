@@ -34,10 +34,11 @@ class UserAgentLookupController
 
         session_start();
 
-        if (isset($_POST['ua'])) {
+        $request = $this->app->getRequest();
+        if ($request->request->has('ua')) {
             $this->csrfCheck();
 
-            $ua = $_POST['ua'];
+            $ua = $request->request->get('ua');
 
             $browscap = $this->getBrowscap();
             $uaInfo = $browscap->getBrowser($ua, true);
@@ -70,7 +71,10 @@ class UserAgentLookupController
         $csrfToken = isset($_SESSION['csrfToken']) ? $_SESSION['csrfToken'] : null;
         unset($_SESSION['csrfToken']);
 
-        if (!isset($_POST['csrfToken']) || !$csrfToken || ($_POST['csrfToken'] != $csrfToken)) {
+        $request = $this->app->getRequest();
+        $requestHasToken = $request->request->has('csrfToken');
+
+        if (!$requestHasToken || !$csrfToken || ($request->request->get('csrfToken') != $csrfToken)) {
             throw new \Exception("CSRF token not correct...");
         }
     }
