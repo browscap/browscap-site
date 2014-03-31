@@ -20,11 +20,27 @@ class RateLimiter
         $this->banConfiguration = $banConfiguration;
     }
 
+    /**
+     * Check to see if an IP is temp banned.
+     *
+     * If the IP is not banned, it checks the download rate, and if it exceeds
+     * it, we ban them. If they have exceeded the temporary ban rate, we will
+     * permanently ban them.
+     *
+     * @param string $ip
+     * @return boolean
+     */
     public function isTemporarilyBanned($ip)
     {
         return $this->isOverLimit($ip);
     }
 
+    /**
+     * Check to see if an IP is permanently banned
+     *
+     * @param string $ip
+     * @return boolean
+     */
     public function isPermanentlyBanned($ip)
     {
         return false;
