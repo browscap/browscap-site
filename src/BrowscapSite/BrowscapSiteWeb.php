@@ -38,6 +38,16 @@ class BrowscapSiteWeb extends SilexApplication
         }
     }
 
+    /**
+     * Get the HTTP request
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest()
+    {
+        return $this['request'];
+    }
+
     public function defineServices()
     {
         $this->register(new ServiceControllerServiceProvider());
@@ -60,7 +70,8 @@ class BrowscapSiteWeb extends SilexApplication
         });
 
         $this['stream.controller'] = $this->share(function() {
-            return new Controller\StreamController($this['rateLimiter'], $this->getFiles());
+            $buildDirectory = __DIR__ . '/../../build/';
+            return new Controller\StreamController($this, $this['rateLimiter'], $this->getFiles(), $buildDirectory);
         });
 
         $this['stats.controller'] = $this->share(function() {

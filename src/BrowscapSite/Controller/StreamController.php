@@ -2,10 +2,16 @@
 
 namespace BrowscapSite\Controller;
 
+use BrowscapSite\BrowscapSiteWeb;
 use BrowscapSite\Tool\RateLimiter;
 
 class StreamController
 {
+    /**
+     * @var \BrowscapSite\BrowscapSiteWeb
+     */
+    protected $app;
+
     /**
      * @var \BrowscapSite\Tool\RateLimiter
      */
@@ -16,10 +22,17 @@ class StreamController
      */
     protected $fileList;
 
-    public function __construct(RateLimiter $rateLimiter, array $fileList)
+    /**
+     * @var string
+     */
+    protected $buildDirectory;
+
+    public function __construct(BrowscapSiteWeb $app, RateLimiter $rateLimiter, array $fileList, $buildDirectory)
     {
+        $this->app = $app;
         $this->rateLimiter = $rateLimiter;
         $this->fileList = $fileList;
+        $this->buildDirectory = $buildDirectory;
     }
 
     protected function failed($status, $message)
@@ -31,33 +44,35 @@ class StreamController
 
     public function indexAction()
     {
-        // @todo - this is horrendous
-        if (!isset($_GET['q'])) {
+        $request = $this->app->getRequest();
+
+        if (!$request->query->has('q')) {
             return $this->failed('400 Bad Request', 'The version requested could not be found');
         }
 
-        $browscapVersion = strtolower($_GET['q']);
+        $browscapVersion = strtolower($request->query->get('q'));
 
+        // Convert requested short code to the filename
         $file = $this->getFilenameFromCode($browscapVersion);
         if (!$file) {
             return $this->failed('404 Not Found', 'The version requested could not be found');
         }
 
-        $buildDirectory = __DIR__ . '/../../../build/';
-
-        $fullpath = $buildDirectory . $file;
-
+        // Check the file to be downloaded exists
+        $fullpath = $this->buildDirectory . $file;
         if (!file_exists($fullpath)) {
             return $this->failed('500 Internal Server Error', 'The original file for the version requested could not be found');
         }
 
+        // Check for rate limiting
         if (!$this->rateLimiter->checkLimit($_SERVER['REMOTE_ADDR']))
         {
             return $this->failed('429 Too Many Requests', 'Rate limit exceeded. Please try again later.');
         }
-
         $this->rateLimiter->logDownload($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $browscapVersion);
 
+        // Offer the download
+        // @todo refactor this
         header("HTTP/1.0 200 OK");
         header("Cache-Control: public");
         header("Content-Type: application/zip");
