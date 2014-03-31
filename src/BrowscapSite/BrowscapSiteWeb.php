@@ -30,7 +30,7 @@ class BrowscapSiteWeb extends SilexApplication
     {
         if (!empty($key))
         {
-            return $this->config[$key];
+            return isset($this->config[$key]) ? $this->config[$key] : false;
         }
         else
         {
