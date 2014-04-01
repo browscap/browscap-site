@@ -56,6 +56,7 @@
         <li>You may download {{ banConfig.rateLimitDownloads }} files per {{ banConfig.rateLimitPeriod }} hour period. If you exceed this you will be temporarily banned for {{ banConfig.rateLimitPeriod }} hour{{ banConfig.rateLimitPeriod == 1 ? '' : 's' }}.</li>
         <li>You are allowed up to {{ banConfig.tempBanLimit }} temporary bans in a {{ banConfig.tempBanPeriod }} day period. If you exceed this, you will be permanently banned.</li>
         <li>If you are permanently banned, please contact us via the <a href="https://groups.google.com/group/browscap">Discussion Forum</a> to discuss your situation.</li>
+        <li>Rate limiting is not applied to requests to <span class="monospace">/version</span> or <span class="monospace">/version-number</span> requests.</li>
     </ul>
 
     <h2>Download URLs</h2>
