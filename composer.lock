@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "16ca024400a9442ca4014cf928a57bfd",
+    "hash": "91b8a8d5aeea4830d67f8dcf82cdd83b",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "c2aaa532"
+                "reference": "96b7d242"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/browscap/browscap/zipball/8bf740cbba52fc5ffce7deba5f212cffe8bd5542",
-                "reference": "c2aaa532",
+                "reference": "96b7d242",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2014-06-17 07:15:50"
+            "time": "2014-07-02 09:09:28"
         },
         {
             "name": "browscap/browscap-php",
@@ -82,12 +82,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap-php.git",
-                "reference": "1d64d648e034495abb63a0d79e5b4ca57c0bb999"
+                "reference": "5179e417dfad56a4f1e2c808afa09de25fbb9f23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/1d64d648e034495abb63a0d79e5b4ca57c0bb999",
-                "reference": "1d64d648e034495abb63a0d79e5b4ca57c0bb999",
+                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/5179e417dfad56a4f1e2c808afa09de25fbb9f23",
+                "reference": "5179e417dfad56a4f1e2c808afa09de25fbb9f23",
                 "shasum": ""
             },
             "require": {
@@ -97,11 +97,6 @@
                 "phpunit/phpunit": "*"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "phpbrowscap": "src/",
@@ -116,6 +111,15 @@
                 {
                     "name": "Jonathan Stoppani",
                     "email": "jonathan.stoppani@gmail.com"
+                },
+                {
+                    "name": "James Titcumb",
+                    "email": "james@asgrim.com",
+                    "homepage": "http://www.jamestitcumb.com"
+                },
+                {
+                    "name": "Thomas Mueller",
+                    "email": "t_mueller_stolzenhain@yahoo.de"
                 }
             ],
             "description": "Standalone replacement for php's native get_browser() function",
@@ -126,7 +130,7 @@
                 "get_browser",
                 "user agent"
             ],
-            "time": "2014-05-17 05:42:09"
+            "time": "2014-06-23 08:01:01"
         },
         {
             "name": "monolog/monolog",
@@ -282,16 +286,16 @@
         },
         {
             "name": "silex/silex",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "aed7cb81eef9ba1082204027a0e3b60440a212e0"
+                "reference": "cb9fd447c168640ae14862cfffa1fa23d3a24fe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/aed7cb81eef9ba1082204027a0e3b60440a212e0",
-                "reference": "aed7cb81eef9ba1082204027a0e3b60440a212e0",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/cb9fd447c168640ae14862cfffa1fa23d3a24fe9",
+                "reference": "cb9fd447c168640ae14862cfffa1fa23d3a24fe9",
                 "shasum": ""
             },
             "require": {
@@ -364,7 +368,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2014-03-29 14:15:59"
+            "time": "2014-07-01 10:16:56"
         },
         {
             "name": "symfony/console",
