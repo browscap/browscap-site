@@ -13,6 +13,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Browscap\Writer\Factory\FullCollectionFactory;
 
 class ComposerHook
 {
@@ -131,7 +132,7 @@ class ComposerHook
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
         // Create a logger
-        $stream = new StreamHandler('php://output', Logger::INFO);
+        $stream = new StreamHandler('php://output', Logger::NOTICE);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
 
         $logger = new Logger('browscap');
@@ -139,17 +140,17 @@ class ComposerHook
         $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, Logger::NOTICE));
 
         $collectionCreator = new CollectionCreator();
-        $collectionParser = new CollectionParser();
-        $generatorHelper = new Generator();
+
+        $writerCollectionFactory = new FullCollectionFactory();
+        $writerCollection        = $writerCollectionFactory->createCollection($logger, $buildFolder);
 
         // Generate the actual browscap.ini files
         $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
         $buildGenerator
             ->setLogger($logger)
             ->setCollectionCreator($collectionCreator)
-            ->setCollectionParser($collectionParser)
-            ->setGeneratorHelper($generatorHelper)
-            ->generateBuilds($buildNumber)
+            ->setWriterCollection($writerCollection)
+            ->run($buildNumber)
         ;
 
         // Generate the metadata for the site
