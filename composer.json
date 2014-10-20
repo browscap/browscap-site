@@ -22,7 +22,7 @@
     "require": {
         "php": ">= 5.4",
         "browscap/browscap": "dev-master#0a62361e",
-        "browscap/browscap-php": "*@dev",
+        "browscap/browscap-php": "~2.0",
         "symfony/console": "~2.4",
         "silex/silex": "~1.1",
         "twig/twig": "~1.8"
