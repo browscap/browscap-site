@@ -21,11 +21,11 @@
     },
     "require": {
         "php": ">= 5.4",
-        "browscap/browscap": "dev-master#c82de491",
+        "browscap/browscap": "dev-master#0a62361e",
         "browscap/browscap-php": "*@dev",
-        "symfony/console": "2.4.*",
+        "symfony/console": "~2.4",
         "silex/silex": "~1.1",
-        "twig/twig": ">= 1.8"
+        "twig/twig": "~1.8"
     },
     "autoload": {
         "psr-0": { "": "src/" }
