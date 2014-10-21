@@ -88,11 +88,11 @@ class StreamController
         $remoteUserAgent = $_SERVER['HTTP_USER_AGENT'];
         if ($this->rateLimiter->isPermanentlyBanned($remoteAddr))
         {
-            return $this->failed(403, 'Rate limit exceeded. You have been permantly banned for abuse.');
+            return $this->failed(403, 'Rate limit exceeded for ' . $remoteAddr . '. You have been permantly banned for abuse.');
         }
         if ($this->rateLimiter->isTemporarilyBanned($remoteAddr))
         {
-            return $this->failed(429, 'Rate limit exceeded. Please try again later.');
+            return $this->failed(429, 'Rate limit exceeded for ' . $remoteAddr . '. Please try again later.');
         }
         $this->rateLimiter->logDownload($remoteAddr, $remoteUserAgent, $browscapVersion);
 
