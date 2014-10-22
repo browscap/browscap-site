@@ -2,3 +2,5 @@ vendor
 .buildpath
 .settings
 .project
+build
+build-*

@@ -123,6 +123,22 @@ class ComposerHook
         }
     }
 
+    private static function moveSymlink($buildNumber)
+    {
+        $buildLink = __DIR__ . '/../../../build';
+
+        if (file_exists($buildLink) && !is_link($buildLink)) {
+            throw new \RuntimeException("Build folder '{$buildLink}' was not a symbolic link");
+        } else if (file_exists($buildLink) && is_link($buildLink)) {
+            unlink($buildLink);
+        }
+
+        $target = realpath($buildLink . '-' . $buildNumber);
+        if (!symlink($target, $buildLink)) {
+            throw new \RuntimeException("Unable to create symbolic link for target '{$target}'");
+        }
+    }
+
     /**
      * Generate a build for build number specified
      *
@@ -130,8 +146,13 @@ class ComposerHook
      */
     public static function createBuild($buildNumber, IOInterface $io = null)
     {
-        $buildFolder = __DIR__ . '/../../../build/';
+        $buildFolder = __DIR__ . '/../../../build-' . $buildNumber . '/';
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
+
+        if (!file_exists($buildFolder)) {
+            if ($io) $io->write('  - Creating build folder');
+            mkdir($buildFolder, 0775, true);
+        }
 
         // Create a logger
         if ($io) $io->write('  - Setting up logging');
@@ -162,5 +183,9 @@ class ComposerHook
         if ($io) $io->write('  - Generating metadata');
         $rebuilder = new Rebuilder($buildFolder);
         $rebuilder->rebuild();
+
+        // Update the symlink
+        if ($io) $io->write('  - Updating symlink to point to ' . $buildNumber);
+        self::moveSymlink($buildNumber);
     }
 }
