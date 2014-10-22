@@ -167,6 +167,11 @@ class BrowscapSiteWeb extends SilexApplication
                    'size' => null,
                    'description' => 'An industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
                ),
+               'BrowsCapJSON' => array(
+                   'name' => 'browscap.json',
+                   'size' => null,
+                   'description' => 'A JSON (JavaScript Object Notation) version of browscap.ini. Usually used with JavaScript.'
+               ),
                'BrowsCapZIP' => array(
                    'name' => 'browscap.zip',
                    'size' => null,
