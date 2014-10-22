@@ -4,6 +4,7 @@ namespace BrowscapSite\Tool;
 
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
+use Composer\IO\IOInterface;
 use Browscap\Generator\BuildGenerator;
 use Browscap\Generator\CollectionParser;
 use Browscap\Helper\CollectionCreator;
@@ -47,7 +48,8 @@ class ComposerHook
         if ($buildNumber != $currentBuildNumber)
         {
             $event->getIO()->write(sprintf('<info>Generating new Browscap build: %s</info>', $buildNumber));
-            self::createBuild($buildNumber);
+            self::createBuild($buildNumber, $event->getIO());
+            $event->getIO()->write(sprintf('<info>All done</info>', $buildNumber));
         } else {
             $event->getIO()->write(sprintf('<info>Current build %s is up to date</info>', $currentBuildNumber));
         }
@@ -126,12 +128,13 @@ class ComposerHook
      *
      * @param string $buildNumber
      */
-    public static function createBuild($buildNumber)
+    public static function createBuild($buildNumber, IOInterface $io = null)
     {
         $buildFolder = __DIR__ . '/../../../build/';
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
         // Create a logger
+        if ($io) $io->write('  - Setting up logging');
         $stream = new StreamHandler('php://output', Logger::NOTICE);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
 
@@ -141,10 +144,12 @@ class ComposerHook
 
         $collectionCreator = new CollectionCreator();
 
+        if ($io) $io->write('  - Creating writer collection');
         $writerCollectionFactory = new FullCollectionFactory();
         $writerCollection        = $writerCollectionFactory->createCollection($logger, $buildFolder);
 
         // Generate the actual browscap.ini files
+        if ($io) $io->write('  - Creating actual build');
         $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
         $buildGenerator
             ->setLogger($logger)
@@ -154,6 +159,7 @@ class ComposerHook
         ;
 
         // Generate the metadata for the site
+        if ($io) $io->write('  - Generating metadata');
         $rebuilder = new Rebuilder($buildFolder);
         $rebuilder->rebuild();
     }

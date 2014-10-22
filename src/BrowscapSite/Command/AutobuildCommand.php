@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use BrowscapSite\Tool\ComposerHook;
+use Composer\IO\ConsoleIO;
 
 /**
  * @author James Titcumb <james@asgrim.com>
@@ -31,7 +32,14 @@ class AutobuildCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new ConsoleIO($input, $output, $this->getHelperSet());
+
         $version = $input->getArgument('version');
-        ComposerHook::createBuild($version);
+
+        $io->write('<info>Generating build for version ' . $version . '</info>');
+
+        ComposerHook::createBuild($version, $io);
+
+        $io->write('<info>All done.</info>');
     }
 }

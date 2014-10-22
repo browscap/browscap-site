@@ -25,7 +25,8 @@
         "browscap/browscap-php": "~2.0",
         "symfony/console": "~2.4",
         "silex/silex": "~1.1",
-        "twig/twig": "~1.8"
+        "twig/twig": "~1.8",
+        "composer/composer": "dev-master"
     },
     "autoload": {
         "psr-0": { "": "src/" }
