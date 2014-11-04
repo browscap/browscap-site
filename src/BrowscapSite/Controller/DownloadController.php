@@ -46,6 +46,7 @@ class DownloadController
         $files['php']['Lite_PHP_BrowsCapINI']['size'] = number_format($metadata['filesizes']['Lite_PHP_BrowsCapINI']);
         $files['other']['BrowsCapXML']['size'] = number_format($metadata['filesizes']['BrowsCapXML']);
         $files['other']['BrowsCapCSV']['size'] = number_format($metadata['filesizes']['BrowsCapCSV']);
+        $files['other']['BrowsCapJSON']['size'] = number_format($metadata['filesizes']['BrowsCapJSON']);
         $files['other']['BrowsCapZIP']['size'] = number_format($metadata['filesizes']['BrowsCapZIP']);
     }
 }

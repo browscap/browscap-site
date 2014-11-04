@@ -126,51 +126,56 @@ class BrowscapSiteWeb extends SilexApplication
                'BrowsCapINI' => array(
                    'name' => 'browscap.ini',
                    'size' => null,
-                   'description' => 'The standard version of browscap.ini file for IIS 5.x and greater.'
+                   'description' => 'This is the standard version of browscap.ini file for IIS 5.x and greater.'
                 ),
                'Full_BrowsCapINI' => array(
                    'name' => 'full_asp_browscap.ini',
                    'size' => null,
-                   'description' => 'A larger version of browscap.ini with all the new properties.'
+                   'description' => 'This is a larger version of browscap.ini with all the new properties.'
                ),
                'Lite_BrowsCapINI' => array(
                    'name' => 'lite_asp_browscap.ini',
                    'size' => null,
-                   'description' => 'A smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
+                   'description' => 'This is a smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
                ),
             ),
             'php' => array(
                'PHP_BrowsCapINI' => array(
                    'name' => 'php_browscap.ini',
                    'size' => null,
-                   'description' => 'A special version of browscap.ini for PHP users only!'
+                   'description' => 'This is a special version of browscap.ini for PHP users only!'
                 ),
                'Full_PHP_BrowsCapINI' => array(
                    'name' => 'full_php_browscap.ini',
                    'size' => null,
-                   'description' => 'A larger version of php_browscap.ini with all the new properties.'
+                   'description' => 'This is a larger version of php_browscap.ini with all the new properties.'
                ),
                'Lite_PHP_BrowsCapINI' => array(
                    'name' => 'lite_php_browscap.ini',
                    'size' => null,
-                   'description' => 'A smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
+                   'description' => 'This is a smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
                ),
             ),
             'other' => array(
                'BrowsCapXML' => array(
                    'name' => 'browscap.xml',
                    'size' => null,
-                   'description' => 'The standard version of browscap.ini file in XML format.'
+                   'description' => 'This is the standard version of browscap.ini file in XML format.'
                 ),
                'BrowsCapCSV' => array(
                    'name' => 'browscap.csv',
                    'size' => null,
-                   'description' => 'An industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
+                   'description' => 'This is an industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
+               ),
+               'BrowsCapJSON' => array(
+                   'name' => 'browscap.json',
+                   'size' => null,
+                   'description' => 'This is a JSON (JavaScript Object Notation) version of browscap.ini. This is usually used with JavaScript.'
                ),
                'BrowsCapZIP' => array(
                    'name' => 'browscap.zip',
                    'size' => null,
-                   'description' => 'Combines all the above files into one download that is smaller than all eight files put together.'
+                   'description' => 'This archive combines all the above files into one download that is smaller than all eight files put together.'
                ),
             ),
         );
