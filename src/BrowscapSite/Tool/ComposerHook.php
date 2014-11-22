@@ -154,14 +154,16 @@ class ComposerHook
             mkdir($buildFolder, 0775, true);
         }
 
+        $logLevel = isset($_ENV['BC_BUILD_LOG']) ? $_ENV['BC_BUILD_LOG'] : Logger::NOTICE;
+
         // Create a logger
         if ($io) $io->write('  - Setting up logging');
-        $stream = new StreamHandler('php://output', Logger::NOTICE);
+        $stream = new StreamHandler('php://output', $logLevel);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
 
         $logger = new Logger('browscap');
         $logger->pushHandler($stream);
-        $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, Logger::NOTICE));
+        $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
         $collectionCreator = new CollectionCreator();
 
