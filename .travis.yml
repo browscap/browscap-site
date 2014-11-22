@@ -11,7 +11,7 @@ matrix:
 
 before_script:
   - composer self-update
-  - BC_BUILD_LOG=100 composer install --dev --prefer-source
+  - BC_BUILD_LOG=200 composer install --dev --prefer-source
 
 # script:
 #   - phpunit --coverage-text --coverage-clover=coverage.clover --colors --verbose
