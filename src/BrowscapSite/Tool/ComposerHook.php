@@ -154,7 +154,7 @@ class ComposerHook
             mkdir($buildFolder, 0775, true);
         }
 
-        $logLevel = isset($_ENV['BC_BUILD_LOG']) ? $_ENV['BC_BUILD_LOG'] : Logger::NOTICE;
+        $logLevel = getenv('BC_BUILD_LOG') ? getenv('BC_BUILD_LOG') : Logger::NOTICE;
         if ($io) $io->write('  - Log level set to ' . $logLevel);
 
         // Create a logger
