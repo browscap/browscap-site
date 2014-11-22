@@ -1,7 +1,5 @@
 language: php
 
-env: BC_BUILD_LOG=100
-
 php:
   - 5.5
   - 5.6
