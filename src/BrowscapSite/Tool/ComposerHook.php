@@ -155,6 +155,7 @@ class ComposerHook
         }
 
         $logLevel = isset($_ENV['BC_BUILD_LOG']) ? $_ENV['BC_BUILD_LOG'] : Logger::NOTICE;
+        if ($io) $io->write('  - Log level set to ' . $logLevel);
 
         // Create a logger
         if ($io) $io->write('  - Setting up logging');
