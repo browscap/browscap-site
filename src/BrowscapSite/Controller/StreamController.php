@@ -55,8 +55,12 @@ class StreamController
 
     public function getRemoteAddr()
     {
+        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            return $_SERVER['HTTP_CF_CONNECTING_IP'];
+        }
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+            $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            return $ips[0];
         }
         return $_SERVER['REMOTE_ADDR'];
     }
@@ -85,7 +89,7 @@ class StreamController
 
         // Check for rate limiting
         $remoteAddr = $this->getRemoteAddr();
-        $remoteUserAgent = $_SERVER['HTTP_USER_AGENT'];
+        $remoteUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown UA';
         if ($this->rateLimiter->isPermanentlyBanned($remoteAddr))
         {
             return $this->failed(403, 'Rate limit exceeded for ' . $remoteAddr . '. You have been permantly banned for abuse.');
