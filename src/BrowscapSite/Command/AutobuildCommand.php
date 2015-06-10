@@ -18,7 +18,7 @@ class AutobuildCommand extends Command
      * (non-PHPdoc)
      * @see \Symfony\Component\Console\Command\Command::configure()
      */
-    protected function configure()
+    public function configure()
     {
         $this
             ->setName('autobuild')
@@ -30,7 +30,7 @@ class AutobuildCommand extends Command
      * (non-PHPdoc)
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
 

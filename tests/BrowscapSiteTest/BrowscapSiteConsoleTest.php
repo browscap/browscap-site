@@ -6,6 +6,9 @@ use PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Application;
 use BrowscapSite\BrowscapSiteConsole;
 
+/**
+ * @covers \BrowscapSite\BrowscapSiteConsole
+ */
 class BrowscapSiteConsoleTest extends PHPUnit_Framework_TestCase
 {
     /**

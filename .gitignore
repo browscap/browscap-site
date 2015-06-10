@@ -1,6 +1,7 @@
 vendor
 .buildpath
 .settings
+.idea
 .project
 build
 build-*
