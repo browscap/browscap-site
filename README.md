@@ -1,6 +1,8 @@
 browscap-site
 =================
 
+[![Build Status](https://travis-ci.org/browscap/browscap-site.svg?branch=master)](https://travis-ci.org/browscap/browscap-site) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/browscap/browscap-site/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/browscap/browscap-site/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/browscap/browscap-site/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/browscap/browscap-site/?branch=master)
+
 This is the website for the Browser Capabilities Project.
 
 Installation
