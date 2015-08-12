@@ -1,22 +1,25 @@
 language: php
+sudo: false
+
+env:
+  global:
+    secure: NyApmv9wlUj4Z2f3r3qbsp7bp6zQXvhnE57XooaZQVkzszGx34+SM0ng0/k0oet8HhQl7t3KLTTVhUu0e74gp3zJ31hmjosFOWtunOBYeXxIom21x70dne9+ngVP69rBQ1b/zrcfLq54ntcYNP0ZCMgoZaL5ufiRqUk0Pptq3+s=
 
 php:
-  - 5.5
   - 5.6
   - hhvm
 
-matrix:
-    allow_failures:
-        - php: hhvm
-
 before_script:
-  - composer self-update
-  - BC_BUILD_LOG=200 composer install --dev --prefer-source
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar self-update
+  - php composer.phar config -g github-oauth.github.com $GITHUB_TOKEN
+  - BC_BUILD_LOG=200 php composer.phar install --dev --prefer-dist
+  - cp config/config.php.travis config/config.php
+  - mysql -e 'create database browscap;'
+  - mysql browscap < db/create002.sql
 
-# script:
-#   - phpunit --coverage-text --coverage-clover=coverage.clover --colors --verbose
+script:
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover --colors --verbose
 
-# after_script:
-#   - wget https://scrutinizer-ci.com/ocular.phar
-#   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
+after_script:
+  - if [ $TRAVIS_PHP_VERSION = 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
