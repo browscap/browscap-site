@@ -19,7 +19,6 @@ class BrowscapSiteWebTest extends PHPUnit_Framework_TestCase
         $app = new BrowscapSiteWeb();
 
         $this->assertInstanceOf(SilexApp::class, $app);
-        $this->assertNotEmpty($app['debug']);
     }
 
     /**
