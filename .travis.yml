@@ -6,7 +6,7 @@ env:
     secure: NyApmv9wlUj4Z2f3r3qbsp7bp6zQXvhnE57XooaZQVkzszGx34+SM0ng0/k0oet8HhQl7t3KLTTVhUu0e74gp3zJ31hmjosFOWtunOBYeXxIom21x70dne9+ngVP69rBQ1b/zrcfLq54ntcYNP0ZCMgoZaL5ufiRqUk0Pptq3+s=
 
 php:
-#  - 5.6
+  - 5.6
   - hhvm
 
 before_script:
