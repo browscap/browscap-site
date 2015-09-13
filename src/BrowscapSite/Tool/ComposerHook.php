@@ -142,9 +142,23 @@ class ComposerHook
     }
 
     /**
+     * Write a log message, if IO interface provided
+     *
+     * @param string $message
+     * @param IOInterface|null $io
+     */
+    private static function log($message, IOInterface $io = null)
+    {
+        if ($io) {
+            $io->write($message);
+        }
+    }
+
+    /**
      * Generate a build for build number specified.
      *
      * @param string $buildNumber
+     * @param IOInterface|null $io
      */
     public static function createBuild($buildNumber, IOInterface $io = null)
     {
@@ -152,21 +166,15 @@ class ComposerHook
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
         if (!file_exists($buildFolder)) {
-            if ($io) {
-                $io->write('  - Creating build folder');
-            }
+            self::log('  - Creating build folder', $io);
             mkdir($buildFolder, 0775, true);
         }
 
         $logLevel = getenv('BC_BUILD_LOG') ? getenv('BC_BUILD_LOG') : Logger::NOTICE;
-        if ($io) {
-            $io->write('  - Log level set to ' . $logLevel);
-        }
+        self::log('  - Log level set to ' . $logLevel, $io);
 
         // Create a logger
-        if ($io) {
-            $io->write('  - Setting up logging');
-        }
+        self::log('  - Setting up logging', $io);
         $stream = new StreamHandler('php://output', $logLevel);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
 
@@ -176,16 +184,12 @@ class ComposerHook
 
         $collectionCreator = new CollectionCreator();
 
-        if ($io) {
-            $io->write('  - Creating writer collection');
-        }
+        self::log('  - Creating writer collection', $io);
         $writerCollectionFactory = new FullCollectionFactory();
         $writerCollection        = $writerCollectionFactory->createCollection($logger, $buildFolder);
 
         // Generate the actual browscap.ini files
-        if ($io) {
-            $io->write('  - Creating actual build');
-        }
+        self::log('  - Creating actual build', $io);
         $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
         $buildGenerator
             ->setLogger($logger)
@@ -195,16 +199,12 @@ class ComposerHook
         ;
 
         // Generate the metadata for the site
-        if ($io) {
-            $io->write('  - Generating metadata');
-        }
+        self::log('  - Generating metadata', $io);
         $rebuilder = new Rebuilder($buildFolder);
         $rebuilder->rebuild();
 
         // Update the symlink
-        if ($io) {
-            $io->write('  - Updating symlink to point to ' . $buildNumber);
-        }
+        self::log('  - Updating symlink to point to ' . $buildNumber, $io);
         self::moveSymlink($buildNumber);
     }
 }
