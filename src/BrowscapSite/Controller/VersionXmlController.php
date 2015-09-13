@@ -25,7 +25,7 @@ class VersionXmlController
 
     public function indexAction(Request $request)
     {
-        $baseUrl = $request->getHttpHost();
+        $baseUrl = $request->getSchemeAndHttpHost();
         $metadata = $this->metadata;
 
         $xml = new \DOMDocument();

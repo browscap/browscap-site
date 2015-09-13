@@ -17,7 +17,7 @@ class UserAgentLookupController
 
     public function getBrowscap(Request $request)
     {
-        $baseHost = $request->getHttpHost();
+        $baseHost = $request->getSchemeAndHttpHost();
 
         $browscap = new BrowscapPHP(__DIR__ . '/../../../cache/');
         $browscap->remoteIniUrl = $baseHost . '/stream?q=Full_PHP_BrowsCapINI';
