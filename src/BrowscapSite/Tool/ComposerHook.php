@@ -44,19 +44,17 @@ class ComposerHook
         }
 
         $currentBuildNumber = self::getCurrentBuildNumber();
-        if ($buildNumber != $currentBuildNumber)
-        {
+        if ($buildNumber != $currentBuildNumber) {
             $event->getIO()->write(sprintf('<info>Generating new Browscap build: %s</info>', $buildNumber));
             self::createBuild($buildNumber, $event->getIO());
             $event->getIO()->write(sprintf('<info>All done</info>', $buildNumber));
         } else {
             $event->getIO()->write(sprintf('<info>Current build %s is up to date</info>', $currentBuildNumber));
         }
-
     }
 
     /**
-     * Try to determine the build number from a composer package
+     * Try to determine the build number from a composer package.
      *
      * @param \Composer\Package\PackageInterface $package
      * @return string
@@ -64,7 +62,6 @@ class ComposerHook
     public static function determineBuildNumberFromPackage(PackageInterface $package)
     {
         if ($package->isDev()) {
-
             $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
 
             if (is_null($buildNumber)) {
@@ -93,7 +90,7 @@ class ComposerHook
     }
 
     /**
-     * This is a temporary fallback until Composer supports SemVer 2.0.0 properly
+     * This is a temporary fallback until Composer supports SemVer 2.0.0 properly.
      *
      * @return string|NULL
      */
@@ -134,7 +131,7 @@ class ComposerHook
 
         if (file_exists($buildLink) && !is_link($buildLink)) {
             throw new \RuntimeException("Build folder '{$buildLink}' was not a symbolic link");
-        } else if (file_exists($buildLink) && is_link($buildLink)) {
+        } elseif (file_exists($buildLink) && is_link($buildLink)) {
             unlink($buildLink);
         }
 
@@ -145,7 +142,7 @@ class ComposerHook
     }
 
     /**
-     * Generate a build for build number specified
+     * Generate a build for build number specified.
      *
      * @param string $buildNumber
      */

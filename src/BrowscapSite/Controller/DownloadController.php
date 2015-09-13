@@ -27,13 +27,13 @@ class DownloadController
 
         $releaseDate = new \DateTime($metadata['released']);
 
-        return $this->app['twig']->render('downloads.html', array(
+        return $this->app['twig']->render('downloads.html', [
             'files' => $this->fileList,
             'version' => $metadata['version'],
             'releaseDate' => $releaseDate->format('jS M Y'),
             'baseHost' => $baseHost,
             'banConfig' => $this->banConfiguration,
-        ));
+        ]);
     }
 
     public function mergeMetadataToFiles($metadata, &$files)

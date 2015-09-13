@@ -47,12 +47,12 @@ class UserAgentLookupController
 
         $csrfToken = $this->csrfSet();
 
-        return $this->app['twig']->render('ua-lookup.html', array(
+        return $this->app['twig']->render('ua-lookup.html', [
             'uaInfo' => $uaInfo,
             'ua' => $ua,
             'csrfToken' => $csrfToken,
             'version' => $metadata['version'],
-        ));
+        ]);
     }
 
     public function convertBooleansToStrings(&$uaInfo)
@@ -77,7 +77,7 @@ class UserAgentLookupController
         $requestHasToken = $request->request->has('csrfToken');
 
         if (!$requestHasToken || !$csrfToken || ($request->request->get('csrfToken') != $csrfToken)) {
-            throw new \Exception("CSRF token not correct...");
+            throw new \Exception('CSRF token not correct...');
         }
     }
 

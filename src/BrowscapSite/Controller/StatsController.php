@@ -21,10 +21,10 @@ class StatsController
 
     public function indexAction()
     {
-        return $this->app['twig']->render('stats.html', array(
+        return $this->app['twig']->render('stats.html', [
             'downloadsPerDay' => $this->getDownloadsPerDay(),
             'downloadsPerMonth' => $this->getDownloadsPerMonth(),
-        ));
+        ]);
     }
 
     protected function getDownloadsPerMonth()
@@ -46,13 +46,13 @@ class StatsController
         $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
         $stmt->execute();
 
-        $data = array();
-        $data[] = array('Month', 'Number of Downloads');
+        $data = [];
+        $data[] = ['Month', 'Number of Downloads'];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $data[] = array(
+            $data[] = [
                 $row['date'],
                 (int)$row['count'],
-            );
+            ];
         }
 
         return $data;
@@ -77,13 +77,13 @@ class StatsController
         $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
         $stmt->execute();
 
-        $data = array();
-        $data[] = array('Date', 'Number of Downloads');
+        $data = [];
+        $data[] = ['Date', 'Number of Downloads'];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $data[] = array(
-            	$row['date'],
+            $data[] = [
+                $row['date'],
                 (int)$row['count'],
-            );
+            ];
         }
 
         return $data;

@@ -22,7 +22,7 @@ class RebuildCommand extends Command
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      * @see \Symfony\Component\Console\Command\Command::configure()
      */
     protected function configure()
@@ -33,7 +33,7 @@ class RebuildCommand extends Command
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output)
