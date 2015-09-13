@@ -27,58 +27,74 @@ class StatsController
         ]);
     }
 
-    protected function getDownloadsPerMonth()
+    /**
+     * May only contain values valid in a MySQL date format string e.g. %Y-%m-%d
+     *
+     * @param $format
+     * @return mixed
+     */
+    private function sanitiseDateFormat($format)
     {
-        $cutoff = new \DateTime('24 months ago');
-
-        $sql = "
-            SELECT
-                DATE_FORMAT(downloadDate, '%Y-%m') AS `date`,
-                COUNT(*) AS count
-            FROM
-            downloadLog
-            WHERE
-                downloadDate >= :sinceDate
-            GROUP BY DATE_FORMAT(downloadDate, '%Y-%m')
-        ";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
-        $stmt->execute();
-
-        $data = [];
-        $data[] = ['Month', 'Number of Downloads'];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $data[] = [
-                $row['date'],
-                (int)$row['count'],
-            ];
-        }
-
-        return $data;
+        return preg_replace('/[^%a-zA-Z-]/', '', $format);
     }
 
-    protected function getDownloadsPerDay()
+    /**
+     * @return array
+     */
+    private function getDownloadsPerMonth()
     {
-        $cutoff = new \DateTime('30 days ago');
+        return $this->getDownloadStats(
+            new \DateTime('24 months ago'),
+            '%Y-%m',
+            '%Y-%m',
+            'Month'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getDownloadsPerDay()
+    {
+        return $this->getDownloadStats(
+            new \DateTime('30 days ago'),
+            '%m-%d',
+            '%Y-%m-%d',
+            'Date'
+        );
+    }
+
+    /**
+     * Fetch some download stats
+     *
+     * @param \DateTime $since
+     * @param string $selectDateFormat
+     * @param string $groupDateFormat
+     * @param string $columnName
+     * @return array
+     */
+    private function getDownloadStats(\DateTime $since, $selectDateFormat, $groupDateFormat, $columnName)
+    {
+        $selectDateFormat = $this->sanitiseDateFormat($selectDateFormat);
+        $groupDateFormat = $this->sanitiseDateFormat($groupDateFormat);
 
         $sql = "
             SELECT
-                DATE_FORMAT(downloadDate, '%m-%d') AS `date`,
+                DATE_FORMAT(downloadDate, '" . $selectDateFormat . "') AS `date`,
                 COUNT(*) AS count
             FROM
             downloadLog
             WHERE
                 downloadDate >= :sinceDate
-            GROUP BY DATE_FORMAT(downloadDate, '%Y-%m-%d')
+            GROUP BY DATE_FORMAT(downloadDate, '" . $groupDateFormat . "')
         ";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
+        $stmt->bindValue('sinceDate', $since->format('Y-m-d ') . ' 00:00:00');
         $stmt->execute();
 
         $data = [];
-        $data[] = ['Date', 'Number of Downloads'];
+        $data[] = [$columnName, 'Number of Downloads'];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $data[] = [
                 $row['date'],
