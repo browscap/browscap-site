@@ -6,10 +6,7 @@ use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Composer\IO\IOInterface;
 use Browscap\Generator\BuildGenerator;
-use Browscap\Generator\CollectionParser;
 use Browscap\Helper\CollectionCreator;
-use Browscap\Helper\Generator;
-use Monolog\ErrorHandler;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
@@ -23,10 +20,12 @@ class ComposerHook
         self::postUpdate($event);
     }
 
+    /**
+     * @param Event $event
+     * @throws \Exception
+     */
     public static function postUpdate(Event $event)
     {
-        $composer = $event->getComposer();
-
         $installed = $event->getComposer()->getRepositoryManager()->getLocalRepository();
 
         $requiredPackage = 'browscap/browscap';
@@ -69,7 +68,7 @@ class ComposerHook
             $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
 
             if (is_null($buildNumber)) {
-               $buildNumber = substr($package->getSourceReference(), 0, 8);
+                $buildNumber = substr($package->getSourceReference(), 0, 8);
             }
         } else {
             $installedVersion = $package->getPrettyVersion();
@@ -85,7 +84,7 @@ class ComposerHook
                 $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
 
                 if (is_null($buildNumber)) {
-                   $buildNumber = $installedVersion;
+                    $buildNumber = $installedVersion;
                 }
             }
         }
@@ -110,6 +109,9 @@ class ComposerHook
         }
     }
 
+    /**
+     * @return string|null
+     */
     public static function getCurrentBuildNumber()
     {
         $buildFolder = __DIR__ . '/../../../build/';
@@ -123,6 +125,9 @@ class ComposerHook
         }
     }
 
+    /**
+     * @param string $buildNumber
+     */
     private static function moveSymlink($buildNumber)
     {
         $buildLink = __DIR__ . '/../../../build';
@@ -150,15 +155,21 @@ class ComposerHook
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
         if (!file_exists($buildFolder)) {
-            if ($io) $io->write('  - Creating build folder');
+            if ($io) {
+                $io->write('  - Creating build folder');
+            }
             mkdir($buildFolder, 0775, true);
         }
 
         $logLevel = getenv('BC_BUILD_LOG') ? getenv('BC_BUILD_LOG') : Logger::NOTICE;
-        if ($io) $io->write('  - Log level set to ' . $logLevel);
+        if ($io) {
+            $io->write('  - Log level set to ' . $logLevel);
+        }
 
         // Create a logger
-        if ($io) $io->write('  - Setting up logging');
+        if ($io) {
+            $io->write('  - Setting up logging');
+        }
         $stream = new StreamHandler('php://output', $logLevel);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
 
@@ -168,12 +179,16 @@ class ComposerHook
 
         $collectionCreator = new CollectionCreator();
 
-        if ($io) $io->write('  - Creating writer collection');
+        if ($io) {
+            $io->write('  - Creating writer collection');
+        }
         $writerCollectionFactory = new FullCollectionFactory();
         $writerCollection        = $writerCollectionFactory->createCollection($logger, $buildFolder);
 
         // Generate the actual browscap.ini files
-        if ($io) $io->write('  - Creating actual build');
+        if ($io) {
+            $io->write('  - Creating actual build');
+        }
         $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
         $buildGenerator
             ->setLogger($logger)
@@ -183,12 +198,16 @@ class ComposerHook
         ;
 
         // Generate the metadata for the site
-        if ($io) $io->write('  - Generating metadata');
+        if ($io) {
+            $io->write('  - Generating metadata');
+        }
         $rebuilder = new Rebuilder($buildFolder);
         $rebuilder->rebuild();
 
         // Update the symlink
-        if ($io) $io->write('  - Updating symlink to point to ' . $buildNumber);
+        if ($io) {
+            $io->write('  - Updating symlink to point to ' . $buildNumber);
+        }
         self::moveSymlink($buildNumber);
     }
 }

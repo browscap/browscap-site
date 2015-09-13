@@ -30,6 +30,12 @@ class StreamController
      */
     protected $buildDirectory;
 
+    /**
+     * @param BrowscapSiteWeb $app
+     * @param RateLimiter $rateLimiter
+     * @param array $fileList
+     * @param string $buildDirectory
+     */
     public function __construct(BrowscapSiteWeb $app, RateLimiter $rateLimiter, array $fileList, $buildDirectory)
     {
         $this->app = $app;
@@ -53,6 +59,9 @@ class StreamController
         return $response;
     }
 
+    /**
+     * @return string
+     */
     public function getRemoteAddr()
     {
         if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {

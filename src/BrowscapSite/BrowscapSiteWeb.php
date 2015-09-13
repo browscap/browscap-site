@@ -17,8 +17,7 @@ class BrowscapSiteWeb extends SilexApplication
 
         $this->config = require(__DIR__ . '/../../config/config.php');
 
-        if ($this->getConfig('debug'))
-        {
+        if ($this->getConfig('debug')) {
             $this['debug'] = true;
         }
 
@@ -28,12 +27,9 @@ class BrowscapSiteWeb extends SilexApplication
 
     public function getConfig($key = null)
     {
-        if (!empty($key))
-        {
+        if (!empty($key)) {
             return isset($this->config[$key]) ? $this->config[$key] : false;
-        }
-        else
-        {
+        } else {
             return $this->config;
         }
     }
@@ -123,60 +119,60 @@ class BrowscapSiteWeb extends SilexApplication
     {
         return array(
             'asp' => array(
-               'BrowsCapINI' => array(
+                'BrowsCapINI' => array(
                    'name' => 'browscap.ini',
                    'size' => null,
                    'description' => 'This is the standard version of browscap.ini file for IIS 5.x and greater.'
                 ),
-               'Full_BrowsCapINI' => array(
+                'Full_BrowsCapINI' => array(
                    'name' => 'full_asp_browscap.ini',
                    'size' => null,
                    'description' => 'This is a larger version of browscap.ini with all the new properties.'
-               ),
-               'Lite_BrowsCapINI' => array(
+                ),
+                'Lite_BrowsCapINI' => array(
                    'name' => 'lite_asp_browscap.ini',
                    'size' => null,
                    'description' => 'This is a smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
-               ),
+                ),
             ),
             'php' => array(
-               'PHP_BrowsCapINI' => array(
+                'PHP_BrowsCapINI' => array(
                    'name' => 'php_browscap.ini',
                    'size' => null,
                    'description' => 'This is a special version of browscap.ini for PHP users only!'
                 ),
-               'Full_PHP_BrowsCapINI' => array(
+                'Full_PHP_BrowsCapINI' => array(
                    'name' => 'full_php_browscap.ini',
                    'size' => null,
                    'description' => 'This is a larger version of php_browscap.ini with all the new properties.'
-               ),
-               'Lite_PHP_BrowsCapINI' => array(
+                ),
+                'Lite_PHP_BrowsCapINI' => array(
                    'name' => 'lite_php_browscap.ini',
                    'size' => null,
                    'description' => 'This is a smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
-               ),
+                ),
             ),
             'other' => array(
-               'BrowsCapXML' => array(
+                'BrowsCapXML' => array(
                    'name' => 'browscap.xml',
                    'size' => null,
                    'description' => 'This is the standard version of browscap.ini file in XML format.'
                 ),
-               'BrowsCapCSV' => array(
+                'BrowsCapCSV' => array(
                    'name' => 'browscap.csv',
                    'size' => null,
                    'description' => 'This is an industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
-               ),
-               'BrowsCapJSON' => array(
+                ),
+                'BrowsCapJSON' => array(
                    'name' => 'browscap.json',
                    'size' => null,
                    'description' => 'This is a JSON (JavaScript Object Notation) version of browscap.ini. This is usually used with JavaScript.'
-               ),
-               'BrowsCapZIP' => array(
+                ),
+                'BrowsCapZIP' => array(
                    'name' => 'browscap.zip',
                    'size' => null,
                    'description' => 'This archive combines all the above files into one download that is smaller than all eight files put together.'
-               ),
+                ),
             ),
         );
     }

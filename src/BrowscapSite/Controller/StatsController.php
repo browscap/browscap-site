@@ -50,7 +50,7 @@ class StatsController
         $data[] = array('Month', 'Number of Downloads');
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $data[] = array(
-            	$row['date'],
+                $row['date'],
                 (int)$row['count'],
             );
         }

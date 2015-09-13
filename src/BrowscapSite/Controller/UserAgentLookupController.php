@@ -19,7 +19,7 @@ class UserAgentLookupController
         $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
 
         $browscap = new BrowscapPHP(__DIR__ . '/../../../cache/');
-        $browscap->remoteIniUrl = $baseHost  . '/stream?q=Full_PHP_BrowsCapINI';
+        $browscap->remoteIniUrl = $baseHost . '/stream?q=Full_PHP_BrowsCapINI';
         $browscap->remoteVerUrl = $baseHost . '/version';
 
         return $browscap;
@@ -66,7 +66,9 @@ class UserAgentLookupController
 
     public function csrfCheck()
     {
-        if ($this->app->getConfig('debug')) return;
+        if ($this->app->getConfig('debug')) {
+            return;
+        }
 
         $csrfToken = isset($_SESSION['csrfToken']) ? $_SESSION['csrfToken'] : null;
         unset($_SESSION['csrfToken']);

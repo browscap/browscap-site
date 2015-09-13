@@ -226,8 +226,8 @@ class RateLimiter
     /**
      * Create a banLog entry
      *
-     * @param unknown $ip
-     * @param string $permanent
+     * @param string $ip
+     * @param boolean $permanent
      */
     protected function createBan($ip, $permanent = false)
     {
