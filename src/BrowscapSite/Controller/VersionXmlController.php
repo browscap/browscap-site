@@ -2,23 +2,30 @@
 
 namespace BrowscapSite\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class VersionXmlController
 {
-    protected $baseHost;
-    protected $fileList;
-    protected $metadata;
+    /**
+     * @var array
+     */
+    private $fileList;
+
+    /**
+     * @var array
+     */
+    private $metadata;
 
     public function __construct(array $fileList, array $metadata)
     {
-        $this->baseHost = 'http://' . $_SERVER['SERVER_NAME'];
         $this->fileList = $fileList;
         $this->metadata = $metadata;
     }
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $baseUrl = $request->getHttpHost();
         $metadata = $this->metadata;
 
         $xml = new \DOMDocument();
@@ -31,7 +38,7 @@ class VersionXmlController
         $rss->appendChild($channel);
 
         $channel->appendChild($this->createTextNode($xml, 'title', 'Browser Capabilities Project Update Service'));
-        $channel->appendChild($this->createTextNode($xml, 'link', $this->baseHost));
+        $channel->appendChild($this->createTextNode($xml, 'link', $baseUrl));
         $channel->appendChild($this->createTextNode($xml, 'description', 'The Browser Capabilities Project maintains and freely distributes a regularly updated browscap.ini file. The project\'s data is also available in many other formats that make it useful in a variety of situations. Last updated: ' . $metadata['released']));
         $channel->appendChild($this->createTextNode($xml, 'language', 'en-US'));
         $channel->appendChild($this->createTextNode($xml, 'pubDate', $metadata['released']));
@@ -40,7 +47,7 @@ class VersionXmlController
 
         foreach ($this->fileList as $format => $files) {
             foreach ($files as $fileCode => $fileInfo) {
-                $channel->appendChild($this->createFileItem($xml, $metadata['released'], $metadata['version'], $fileCode, $fileInfo));
+                $channel->appendChild($this->createFileItem($xml, $metadata['released'], $metadata['version'], $fileCode, $fileInfo, $baseUrl));
             }
         }
 
@@ -50,7 +57,7 @@ class VersionXmlController
         return $response;
     }
 
-    public function createTextNode(\DOMDocument $xml, $element, $content)
+    private function createTextNode(\DOMDocument $xml, $element, $content)
     {
         $element = $xml->createElement($element);
         $elementContent = $xml->createTextNode($content);
@@ -58,12 +65,12 @@ class VersionXmlController
         return $element;
     }
 
-    public function createFileItem(\DOMDocument $xml, $pubDate, $version, $fileCode, array $fileInfo)
+    private function createFileItem(\DOMDocument $xml, $pubDate, $version, $fileCode, array $fileInfo, $baseUrl)
     {
         $item = $xml->createElement('item');
 
         $item->appendChild($this->createTextNode($xml, 'title', $fileInfo['name']));
-        $item->appendChild($this->createTextNode($xml, 'link', $this->baseHost . '/stream?q=' . $fileCode));
+        $item->appendChild($this->createTextNode($xml, 'link', $baseUrl . '/stream?q=' . $fileCode));
         $item->appendChild($this->createTextNode($xml, 'description', $fileInfo['description']));
         $item->appendChild($this->createTextNode($xml, 'pubDate', $pubDate));
 

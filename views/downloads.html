@@ -62,12 +62,12 @@
     <h2>Download URLs</h2>
     <dl>
         <dt><strong>Version:</strong></dt>
-        <dd><span class="monospace">{{ baseHost }}/version</span></dd>
-        <dd><span class="monospace">{{ baseHost }}/version-number</span></dd>
+        <dd><span class="monospace">{{ app.request.getHttpHost() }}/version</span></dd>
+        <dd><span class="monospace">{{ app.request.getHttpHost() }}/version-number</span></dd>
     </dl>
     <dl>
         <dt><strong>Download:</strong></dt>
-        <dd><span class="monospace">{{ baseHost }}/stream?q=BrowsCapINI</span> (replace <em>BrowsCapINI</em> with the appropriate version)</dd>
+        <dd><span class="monospace">{{ app.request.getHttpHost() }}/stream?q=BrowsCapINI</span> (replace <em>BrowsCapINI</em> with the appropriate version)</dd>
     </dl>
 
     <h2>Missing User Agents</h2>

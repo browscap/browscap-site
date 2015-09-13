@@ -4,6 +4,7 @@ namespace BrowscapSite\Controller;
 
 use BrowscapSite\BrowscapSiteWeb;
 use phpbrowscap\Browscap as BrowscapPHP;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserAgentLookupController
 {
@@ -14,9 +15,9 @@ class UserAgentLookupController
         $this->app = $app;
     }
 
-    public function getBrowscap()
+    public function getBrowscap(Request $request)
     {
-        $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
+        $baseHost = $request->getHttpHost();
 
         $browscap = new BrowscapPHP(__DIR__ . '/../../../cache/');
         $browscap->remoteIniUrl = $baseHost . '/stream?q=Full_PHP_BrowsCapINI';
@@ -28,19 +29,19 @@ class UserAgentLookupController
     public function indexAction()
     {
         $metadata = $this->app['metadata'];
+        $request = $this->app->getRequest();
 
-        $ua = $_SERVER['HTTP_USER_AGENT'];
+        $ua = $request->server->get('HTTP_USER_AGENT');
         $uaInfo = false;
 
         session_start();
 
-        $request = $this->app->getRequest();
         if ($request->request->has('ua')) {
             $this->csrfCheck();
 
             $ua = $request->request->get('ua');
 
-            $browscap = $this->getBrowscap();
+            $browscap = $this->getBrowscap($request);
             $uaInfo = $browscap->getBrowser($ua, true);
             $this->convertBooleansToStrings($uaInfo);
         }

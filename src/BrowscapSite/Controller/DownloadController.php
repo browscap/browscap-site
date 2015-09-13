@@ -23,15 +23,12 @@ class DownloadController
 
         $this->mergeMetadataToFiles($metadata, $this->fileList);
 
-        $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
-
         $releaseDate = new \DateTime($metadata['released']);
 
         return $this->app['twig']->render('downloads.html', [
             'files' => $this->fileList,
             'version' => $metadata['version'],
             'releaseDate' => $releaseDate->format('jS M Y'),
-            'baseHost' => $baseHost,
             'banConfig' => $this->banConfiguration,
         ]);
     }
