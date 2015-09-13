@@ -74,7 +74,7 @@ class BrowscapSiteWeb extends SilexApplication
 
         $this['stream.controller'] = $this->share(function () {
             $buildDirectory = __DIR__ . '/../../build/';
-            return new Controller\StreamController($this, $this['rateLimiter'], $this->getFiles(), $buildDirectory);
+            return new Controller\StreamController($this['rateLimiter'], $this->getFiles(), $buildDirectory);
         });
 
         $this['stats.controller'] = $this->share(function () {

@@ -4,17 +4,14 @@ namespace BrowscapSite\Controller;
 
 use BrowscapSite\BrowscapSiteWeb;
 use BrowscapSite\Tool\RateLimiter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 class StreamController
 {
-    /**
-     * @var \BrowscapSite\BrowscapSiteWeb
-     */
-    protected $app;
-
     /**
      * @var \BrowscapSite\Tool\RateLimiter
      */
@@ -31,14 +28,12 @@ class StreamController
     protected $buildDirectory;
 
     /**
-     * @param BrowscapSiteWeb $app
      * @param RateLimiter $rateLimiter
      * @param array $fileList
      * @param string $buildDirectory
      */
-    public function __construct(BrowscapSiteWeb $app, RateLimiter $rateLimiter, array $fileList, $buildDirectory)
+    public function __construct(RateLimiter $rateLimiter, array $fileList, $buildDirectory)
     {
-        $this->app = $app;
         $this->rateLimiter = $rateLimiter;
         $this->fileList = $fileList;
         $this->buildDirectory = $buildDirectory;
@@ -60,24 +55,27 @@ class StreamController
     }
 
     /**
+     * @param ServerBag $serverBag
      * @return string
      */
-    public function getRemoteAddr()
+    public function getRemoteAddr(ServerBag $serverBag)
     {
-        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            return $_SERVER['HTTP_CF_CONNECTING_IP'];
+        if ($serverBag->has('HTTP_CF_CONNECTING_IP')) {
+            return $serverBag->get('HTTP_CF_CONNECTING_IP');
         }
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        if ($serverBag->has('HTTP_X_FORWARDED_FOR')) {
+            $ips = explode(',', $serverBag->get('HTTP_X_FORWARDED_FOR'));
             return $ips[0];
         }
-        return $_SERVER['REMOTE_ADDR'];
+        return $serverBag->get('REMOTE_ADDR');
     }
 
-    public function indexAction()
+    /**
+     * @param Request $request
+     * @return BinaryFileResponse|Response
+     */
+    public function indexAction(Request $request)
     {
-        $request = $this->app->getRequest();
-
         if (!$request->query->has('q')) {
             return $this->failed(400, 'The version requested could not be found');
         }
@@ -91,14 +89,14 @@ class StreamController
         }
 
         // Check the file to be downloaded exists
-        $fullpath = $this->buildDirectory . $file;
-        if (!file_exists($fullpath)) {
+        $fullPath = $this->buildDirectory . $file;
+        if (!file_exists($fullPath)) {
             return $this->failed(500, 'The original file for the version requested could not be found');
         }
 
         // Check for rate limiting
-        $remoteAddr = $this->getRemoteAddr();
-        $remoteUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown UA';
+        $remoteAddr = $this->getRemoteAddr($request->server);
+        $remoteUserAgent = $request->server->has('HTTP_USER_AGENT') ? $request->server->get('HTTP_USER_AGENT') : 'Unknown UA';
         if ($this->rateLimiter->isPermanentlyBanned($remoteAddr)) {
             return $this->failed(403, 'Rate limit exceeded for ' . $remoteAddr . '. You have been permantly banned for abuse.');
         }
@@ -108,7 +106,7 @@ class StreamController
         $this->rateLimiter->logDownload($remoteAddr, $remoteUserAgent, $browscapVersion);
 
         // Offer the download
-        $response = new BinaryFileResponse($fullpath);
+        $response = new BinaryFileResponse($fullPath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file);
         $response->setMaxAge(0);
         $response->expire();
