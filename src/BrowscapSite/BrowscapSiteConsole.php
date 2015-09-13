@@ -10,10 +10,10 @@ class BrowscapSiteConsole extends Application
     {
         parent::__construct('Browscap Website', 'dev-master');
 
-        $commands = array(
+        $commands = [
             new Command\RebuildCommand(new Tool\Rebuilder(__DIR__ . '/../../build/')),
             new Command\AutobuildCommand(),
-        );
+        ];
 
         foreach ($commands as $command) {
             $this->add($command);

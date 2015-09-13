@@ -38,7 +38,7 @@ class Rebuilder
 
     public function rebuild()
     {
-        $metadata = array();
+        $metadata = [];
 
         $parser = $this->getParser();
         $fileData = $parser->parse();
@@ -48,7 +48,7 @@ class Rebuilder
         $metadata['version'] = $versionData['Version'];
         $metadata['released'] = $versionData['Released'];
 
-        $metadata['filesizes'] = array();
+        $metadata['filesizes'] = [];
         $metadata['filesizes']['BrowsCapINI'] = $this->getKbSize($this->buildDir . '/browscap.ini');
         $metadata['filesizes']['Full_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/full_asp_browscap.ini');
         $metadata['filesizes']['Lite_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/lite_asp_browscap.ini');
@@ -76,7 +76,7 @@ class Rebuilder
     public function writeArray($filename, $array)
     {
         $phpArray = var_export($array, true);
-        file_put_contents($filename, "<?php\n\nreturn " . $phpArray . ";");
+        file_put_contents($filename, "<?php\n\nreturn " . $phpArray . ';');
     }
 
     public function getKbSize($filename)

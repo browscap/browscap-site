@@ -3,6 +3,7 @@
 namespace BrowscapSite\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+
 class VersionXmlController
 {
     protected $baseHost;

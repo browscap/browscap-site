@@ -19,7 +19,7 @@ class UserAgentLookupController
         $baseHost = 'http://' . $_SERVER['SERVER_NAME'];
 
         $browscap = new BrowscapPHP(__DIR__ . '/../../../cache/');
-        $browscap->remoteIniUrl = $baseHost  . '/stream?q=Full_PHP_BrowsCapINI';
+        $browscap->remoteIniUrl = $baseHost . '/stream?q=Full_PHP_BrowsCapINI';
         $browscap->remoteVerUrl = $baseHost . '/version';
 
         return $browscap;
@@ -47,12 +47,12 @@ class UserAgentLookupController
 
         $csrfToken = $this->csrfSet();
 
-        return $this->app['twig']->render('ua-lookup.html', array(
+        return $this->app['twig']->render('ua-lookup.html', [
             'uaInfo' => $uaInfo,
             'ua' => $ua,
             'csrfToken' => $csrfToken,
             'version' => $metadata['version'],
-        ));
+        ]);
     }
 
     public function convertBooleansToStrings(&$uaInfo)
@@ -66,7 +66,9 @@ class UserAgentLookupController
 
     public function csrfCheck()
     {
-        if ($this->app->getConfig('debug')) return;
+        if ($this->app->getConfig('debug')) {
+            return;
+        }
 
         $csrfToken = isset($_SESSION['csrfToken']) ? $_SESSION['csrfToken'] : null;
         unset($_SESSION['csrfToken']);
@@ -75,7 +77,7 @@ class UserAgentLookupController
         $requestHasToken = $request->request->has('csrfToken');
 
         if (!$requestHasToken || !$csrfToken || ($request->request->get('csrfToken') != $csrfToken)) {
-            throw new \Exception("CSRF token not correct...");
+            throw new \Exception('CSRF token not correct...');
         }
     }
 

@@ -1,14 +1,15 @@
 <?php
+
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
  */
 chdir(dirname(__DIR__));
 
-$autoloadPaths = array(
+$autoloadPaths = [
     'vendor/autoload.php',
     '../../autoload.php',
-);
+];
 
 $foundVendorAutoload = false;
 foreach ($autoloadPaths as $path) {

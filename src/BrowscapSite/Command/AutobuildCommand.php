@@ -15,7 +15,7 @@ use Composer\IO\ConsoleIO;
 class AutobuildCommand extends Command
 {
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      * @see \Symfony\Component\Console\Command\Command::configure()
      */
     public function configure()
@@ -23,11 +23,11 @@ class AutobuildCommand extends Command
         $this
             ->setName('autobuild')
             ->setDescription('Combines browscap build and metadata build')
-            ->addArgument('version', InputArgument::REQUIRED, "Version number to apply");
+            ->addArgument('version', InputArgument::REQUIRED, 'Version number to apply');
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
     public function execute(InputInterface $input, OutputInterface $output)

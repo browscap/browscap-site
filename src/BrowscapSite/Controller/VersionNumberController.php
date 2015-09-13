@@ -17,8 +17,8 @@ class VersionNumberController
     {
         $metadata = $this->app['metadata'];
 
-        return $this->app['twig']->render('version-number.html', array(
+        return $this->app['twig']->render('version-number.html', [
             'version' => $metadata['version'],
-        ));
+        ]);
     }
 }

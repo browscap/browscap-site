@@ -30,6 +30,12 @@ class StreamController
      */
     protected $buildDirectory;
 
+    /**
+     * @param BrowscapSiteWeb $app
+     * @param RateLimiter $rateLimiter
+     * @param array $fileList
+     * @param string $buildDirectory
+     */
     public function __construct(BrowscapSiteWeb $app, RateLimiter $rateLimiter, array $fileList, $buildDirectory)
     {
         $this->app = $app;
@@ -39,7 +45,7 @@ class StreamController
     }
 
     /**
-     * Prepare a response object
+     * Prepare a response object.
      *
      * @param int $status
      * @param string $message
@@ -53,6 +59,9 @@ class StreamController
         return $response;
     }
 
+    /**
+     * @return string
+     */
     public function getRemoteAddr()
     {
         if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
@@ -90,12 +99,10 @@ class StreamController
         // Check for rate limiting
         $remoteAddr = $this->getRemoteAddr();
         $remoteUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown UA';
-        if ($this->rateLimiter->isPermanentlyBanned($remoteAddr))
-        {
+        if ($this->rateLimiter->isPermanentlyBanned($remoteAddr)) {
             return $this->failed(403, 'Rate limit exceeded for ' . $remoteAddr . '. You have been permantly banned for abuse.');
         }
-        if ($this->rateLimiter->isTemporarilyBanned($remoteAddr))
-        {
+        if ($this->rateLimiter->isTemporarilyBanned($remoteAddr)) {
             return $this->failed(429, 'Rate limit exceeded for ' . $remoteAddr . '. Please try again later.');
         }
         $this->rateLimiter->logDownload($remoteAddr, $remoteUserAgent, $browscapVersion);
@@ -109,10 +116,10 @@ class StreamController
     }
 
     /**
-     * Convert a "download code" to the real filename
+     * Convert a "download code" to the real filename.
      *
      * @param string $browscapCode
-     * @return string|boolean
+     * @return string|bool
      */
     protected function getFilenameFromCode($browscapCode)
     {

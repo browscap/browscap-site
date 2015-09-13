@@ -21,69 +21,85 @@ class StatsController
 
     public function indexAction()
     {
-        return $this->app['twig']->render('stats.html', array(
+        return $this->app['twig']->render('stats.html', [
             'downloadsPerDay' => $this->getDownloadsPerDay(),
             'downloadsPerMonth' => $this->getDownloadsPerMonth(),
-        ));
+        ]);
     }
 
-    protected function getDownloadsPerMonth()
+    /**
+     * May only contain values valid in a MySQL date format string e.g. %Y-%m-%d
+     *
+     * @param $format
+     * @return mixed
+     */
+    private function sanitiseDateFormat($format)
     {
-        $cutoff = new \DateTime('24 months ago');
+        return preg_replace('/[^%a-zA-Z-]/', '', $format);
+    }
+
+    /**
+     * @return array
+     */
+    private function getDownloadsPerMonth()
+    {
+        return $this->getDownloadStats(
+            new \DateTime('24 months ago'),
+            '%Y-%m',
+            '%Y-%m',
+            'Month'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getDownloadsPerDay()
+    {
+        return $this->getDownloadStats(
+            new \DateTime('30 days ago'),
+            '%m-%d',
+            '%Y-%m-%d',
+            'Date'
+        );
+    }
+
+    /**
+     * Fetch some download stats
+     *
+     * @param \DateTime $since
+     * @param string $selectDateFormat
+     * @param string $groupDateFormat
+     * @param string $columnName
+     * @return array
+     */
+    private function getDownloadStats(\DateTime $since, $selectDateFormat, $groupDateFormat, $columnName)
+    {
+        $selectDateFormat = $this->sanitiseDateFormat($selectDateFormat);
+        $groupDateFormat = $this->sanitiseDateFormat($groupDateFormat);
 
         $sql = "
             SELECT
-                DATE_FORMAT(downloadDate, '%Y-%m') AS `date`,
+                DATE_FORMAT(downloadDate, '" . $selectDateFormat . "') AS `date`,
                 COUNT(*) AS count
             FROM
             downloadLog
             WHERE
                 downloadDate >= :sinceDate
-            GROUP BY DATE_FORMAT(downloadDate, '%Y-%m')
+            GROUP BY DATE_FORMAT(downloadDate, '" . $groupDateFormat . "')
         ";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
+        $stmt->bindValue('sinceDate', $since->format('Y-m-d ') . ' 00:00:00');
         $stmt->execute();
 
-        $data = array();
-        $data[] = array('Month', 'Number of Downloads');
+        $data = [];
+        $data[] = [$columnName, 'Number of Downloads'];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $data[] = array(
-            	$row['date'],
+            $data[] = [
+                $row['date'],
                 (int)$row['count'],
-            );
-        }
-
-        return $data;
-    }
-
-    protected function getDownloadsPerDay()
-    {
-        $cutoff = new \DateTime('30 days ago');
-
-        $sql = "
-            SELECT
-                DATE_FORMAT(downloadDate, '%m-%d') AS `date`,
-                COUNT(*) AS count
-            FROM
-            downloadLog
-            WHERE
-                downloadDate >= :sinceDate
-            GROUP BY DATE_FORMAT(downloadDate, '%Y-%m-%d')
-        ";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('sinceDate', $cutoff->format('Y-m-d ') . ' 00:00:00');
-        $stmt->execute();
-
-        $data = array();
-        $data[] = array('Date', 'Number of Downloads');
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $data[] = array(
-            	$row['date'],
-                (int)$row['count'],
-            );
+            ];
         }
 
         return $data;

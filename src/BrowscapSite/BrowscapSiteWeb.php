@@ -5,7 +5,6 @@ namespace BrowscapSite;
 use Silex\Application as SilexApplication;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
-use BrowscapSite\Controller;
 
 class BrowscapSiteWeb extends SilexApplication
 {
@@ -17,8 +16,7 @@ class BrowscapSiteWeb extends SilexApplication
 
         $this->config = require(__DIR__ . '/../../config/config.php');
 
-        if ($this->getConfig('debug'))
-        {
+        if ($this->getConfig('debug')) {
             $this['debug'] = true;
         }
 
@@ -28,18 +26,15 @@ class BrowscapSiteWeb extends SilexApplication
 
     public function getConfig($key = null)
     {
-        if (!empty($key))
-        {
+        if (!empty($key)) {
             return isset($this->config[$key]) ? $this->config[$key] : false;
-        }
-        else
-        {
+        } else {
             return $this->config;
         }
     }
 
     /**
-     * Get the HTTP request
+     * Get the HTTP request.
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
@@ -52,12 +47,12 @@ class BrowscapSiteWeb extends SilexApplication
     {
         $this->register(new ServiceControllerServiceProvider());
 
-        $this['pdo'] = $this->share(function() {
+        $this['pdo'] = $this->share(function () {
             $dbConfig = $this->getConfig('db');
             return new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
         });
 
-        $this['rateLimiter'] = $this->share(function() {
+        $this['rateLimiter'] = $this->share(function () {
             $banConfiguration = $this->getConfig('rateLimiter');
             if (!$banConfiguration) {
                 throw new \RuntimeException('Rate limit configuration not set');
@@ -65,11 +60,11 @@ class BrowscapSiteWeb extends SilexApplication
             return new Tool\RateLimiter($this['pdo'], $banConfiguration);
         });
 
-        $this['metadata'] = $this->share(function() {
+        $this['metadata'] = $this->share(function () {
             return require_once(__DIR__ . '/../../build/metadata.php');
         });
 
-        $this['downloads.controller'] = $this->share(function() {
+        $this['downloads.controller'] = $this->share(function () {
             $banConfiguration = $this->getConfig('rateLimiter');
             if (!$banConfiguration) {
                 throw new \RuntimeException('Rate limit configuration not set');
@@ -77,34 +72,34 @@ class BrowscapSiteWeb extends SilexApplication
             return new Controller\DownloadController($this, $this->getFiles(), $banConfiguration);
         });
 
-        $this['stream.controller'] = $this->share(function() {
+        $this['stream.controller'] = $this->share(function () {
             $buildDirectory = __DIR__ . '/../../build/';
             return new Controller\StreamController($this, $this['rateLimiter'], $this->getFiles(), $buildDirectory);
         });
 
-        $this['stats.controller'] = $this->share(function() {
+        $this['stats.controller'] = $this->share(function () {
             return new Controller\StatsController($this, $this['pdo']);
         });
 
-        $this['version.controller'] = $this->share(function() {
+        $this['version.controller'] = $this->share(function () {
             return new Controller\VersionController($this);
         });
 
-        $this['version.number.controller'] = $this->share(function() {
+        $this['version.number.controller'] = $this->share(function () {
             return new Controller\VersionNumberController($this);
         });
 
-        $this['version.xml.controller'] = $this->share(function() {
+        $this['version.xml.controller'] = $this->share(function () {
             return new Controller\VersionXmlController($this->getFiles(), $this['metadata']);
         });
 
-        $this['ualookup.controller'] = $this->share(function() {
+        $this['ualookup.controller'] = $this->share(function () {
             return new Controller\UserAgentLookupController($this);
         });
 
-        $this->register(new TwigServiceProvider(), array(
+        $this->register(new TwigServiceProvider(), [
             'twig.path' => __DIR__ . '/../../views',
-        ));
+        ]);
     }
 
     public function defineControllers()
@@ -121,63 +116,63 @@ class BrowscapSiteWeb extends SilexApplication
 
     public function getFiles()
     {
-        return array(
-            'asp' => array(
-               'BrowsCapINI' => array(
-                   'name' => 'browscap.ini',
-                   'size' => null,
-                   'description' => 'This is the standard version of browscap.ini file for IIS 5.x and greater.'
-                ),
-               'Full_BrowsCapINI' => array(
-                   'name' => 'full_asp_browscap.ini',
-                   'size' => null,
-                   'description' => 'This is a larger version of browscap.ini with all the new properties.'
-               ),
-               'Lite_BrowsCapINI' => array(
-                   'name' => 'lite_asp_browscap.ini',
-                   'size' => null,
-                   'description' => 'This is a smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
-               ),
-            ),
-            'php' => array(
-               'PHP_BrowsCapINI' => array(
-                   'name' => 'php_browscap.ini',
-                   'size' => null,
-                   'description' => 'This is a special version of browscap.ini for PHP users only!'
-                ),
-               'Full_PHP_BrowsCapINI' => array(
-                   'name' => 'full_php_browscap.ini',
-                   'size' => null,
-                   'description' => 'This is a larger version of php_browscap.ini with all the new properties.'
-               ),
-               'Lite_PHP_BrowsCapINI' => array(
-                   'name' => 'lite_php_browscap.ini',
-                   'size' => null,
-                   'description' => 'This is a smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.'
-               ),
-            ),
-            'other' => array(
-               'BrowsCapXML' => array(
-                   'name' => 'browscap.xml',
-                   'size' => null,
-                   'description' => 'This is the standard version of browscap.ini file in XML format.'
-                ),
-               'BrowsCapCSV' => array(
-                   'name' => 'browscap.csv',
-                   'size' => null,
-                   'description' => 'This is an industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.'
-               ),
-               'BrowsCapJSON' => array(
-                   'name' => 'browscap.json',
-                   'size' => null,
-                   'description' => 'This is a JSON (JavaScript Object Notation) version of browscap.ini. This is usually used with JavaScript.'
-               ),
-               'BrowsCapZIP' => array(
-                   'name' => 'browscap.zip',
-                   'size' => null,
-                   'description' => 'This archive combines all the above files into one download that is smaller than all eight files put together.'
-               ),
-            ),
-        );
+        return [
+            'asp' => [
+                'BrowsCapINI' => [
+                    'name' => 'browscap.ini',
+                    'size' => null,
+                    'description' => 'This is the standard version of browscap.ini file for IIS 5.x and greater.',
+                ],
+                'Full_BrowsCapINI' => [
+                    'name' => 'full_asp_browscap.ini',
+                    'size' => null,
+                    'description' => 'This is a larger version of browscap.ini with all the new properties.',
+                ],
+                'Lite_BrowsCapINI' => [
+                    'name' => 'lite_asp_browscap.ini',
+                    'size' => null,
+                    'description' => 'This is a smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.',
+                ],
+            ],
+            'php' => [
+                'PHP_BrowsCapINI' => [
+                    'name' => 'php_browscap.ini',
+                    'size' => null,
+                    'description' => 'This is a special version of browscap.ini for PHP users only!',
+                ],
+                'Full_PHP_BrowsCapINI' => [
+                    'name' => 'full_php_browscap.ini',
+                    'size' => null,
+                    'description' => 'This is a larger version of php_browscap.ini with all the new properties.',
+                ],
+                'Lite_PHP_BrowsCapINI' => [
+                    'name' => 'lite_php_browscap.ini',
+                    'size' => null,
+                    'description' => 'This is a smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.',
+                ],
+            ],
+            'other' => [
+                'BrowsCapXML' => [
+                    'name' => 'browscap.xml',
+                    'size' => null,
+                    'description' => 'This is the standard version of browscap.ini file in XML format.',
+                ],
+                'BrowsCapCSV' => [
+                    'name' => 'browscap.csv',
+                    'size' => null,
+                    'description' => 'This is an industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.',
+                ],
+                'BrowsCapJSON' => [
+                    'name' => 'browscap.json',
+                    'size' => null,
+                    'description' => 'This is a JSON (JavaScript Object Notation) version of browscap.ini. This is usually used with JavaScript.',
+                ],
+                'BrowsCapZIP' => [
+                    'name' => 'browscap.zip',
+                    'size' => null,
+                    'description' => 'This archive combines all the above files into one download that is smaller than all eight files put together.',
+                ],
+            ],
+        ];
     }
 }
