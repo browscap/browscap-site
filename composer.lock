@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "045ece8fbfda81ac9fc967e567b97a40",
-    "content-hash": "a624155d71671b4b87e4b26920fc9ecb",
+    "hash": "a51ad54db20018432e2bded42dc0ff24",
+    "content-hash": "9b36f9d3788f5d6c2a54bcc925085fbc",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "1e12025"
+                "reference": "450d1f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/1e12025998d23a91fb85d78a1993ed38ee23022f",
-                "reference": "1e12025",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/450d1f66ded23fbccaf851c1a936afb3493fe29a",
+                "reference": "450d1f6",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2015-10-04 20:29:01"
+            "time": "2015-10-27 18:14:34"
         },
         {
             "name": "browscap/browscap-php",
