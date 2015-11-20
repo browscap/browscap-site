@@ -77,14 +77,14 @@ class UserAgentLookupController
         $request = $this->app->getRequest();
         $requestHasToken = $request->request->has('csrfToken');
 
-        if (!$requestHasToken || !$csrfToken || ($request->request->get('csrfToken') != $csrfToken)) {
+        if (!$requestHasToken || !$csrfToken || !hash_equals($csrfToken, $request->request->get('csrfToken'))) {
             throw new \Exception('CSRF token not correct...');
         }
     }
 
     public function csrfSet()
     {
-        $csrfToken = hash('sha256', uniqid() . microtime());
+        $csrfToken = bin2hex(random_bytes(32));
         $_SESSION['csrfToken'] = $csrfToken;
         return $csrfToken;
     }
