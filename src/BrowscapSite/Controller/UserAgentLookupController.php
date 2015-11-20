@@ -3,8 +3,7 @@
 namespace BrowscapSite\Controller;
 
 use BrowscapSite\BrowscapSiteWeb;
-use phpbrowscap\Browscap as BrowscapPHP;
-use Symfony\Component\HttpFoundation\Request;
+use BrowscapSite\Tool\BrowscapPhpTool;
 
 class UserAgentLookupController
 {
@@ -13,17 +12,6 @@ class UserAgentLookupController
     public function __construct(BrowscapSiteWeb $app)
     {
         $this->app = $app;
-    }
-
-    public function getBrowscap(Request $request)
-    {
-        $baseHost = $request->getSchemeAndHttpHost();
-
-        $browscap = new BrowscapPHP(__DIR__ . '/../../../cache/');
-        $browscap->remoteIniUrl = $baseHost . '/stream?q=Full_PHP_BrowsCapINI';
-        $browscap->remoteVerUrl = $baseHost . '/version';
-
-        return $browscap;
     }
 
     public function indexAction()
@@ -41,8 +29,7 @@ class UserAgentLookupController
 
             $ua = $request->request->get('ua');
 
-            $browscap = $this->getBrowscap($request);
-            $uaInfo = $browscap->getBrowser($ua, true);
+            $uaInfo = (array)(new BrowscapPhpTool())->identify($ua);
             $this->convertBooleansToStrings($uaInfo);
         }
 
