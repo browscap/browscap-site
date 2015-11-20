@@ -20,24 +20,24 @@
         "source": "https://github.com/browscap/browscap-site"
     },
     "require": {
-        "php": ">= 5.5",
+        "php": "^5.5",
         "browscap/browscap": "dev-master#975f6d9",
-        "browscap/browscap-php": "~2.0",
-        "symfony/console": "~2.6",
-        "silex/silex": "~1.2",
-        "twig/twig": "~1.18",
-        "composer/composer": "1.0.0-alpha10",
+        "browscap/browscap-php": "^3.0@beta",
+        "symfony/console": "^2.6",
+        "silex/silex": "^1.2",
+        "twig/twig": "^1.18",
+        "composer/composer": "1.0.0-alpha11",
         "roave/security-advisories": "dev-master",
         "paragonie/random_compat": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.3",
+        "phpunit/phpunit": "^5.0",
         "fabpot/php-cs-fixer": "^1.10"
     },
     "autoload": {
         "psr-0": { "": "src/" }
     },
-    "bin": ["bin/browscap"],
+    "bin": ["bin/browscap-site"],
     "scripts": {
         "post-install-cmd": ["BrowscapSite\\Tool\\ComposerHook::postInstall"],
         "post-update-cmd": ["BrowscapSite\\Tool\\ComposerHook::postUpdate"]
