@@ -206,5 +206,9 @@ class ComposerHook
         // Update the symlink
         self::log('  - Updating symlink to point to ' . $buildNumber, $io);
         self::moveSymlink($buildNumber);
+
+        // Updating browscap.ini cache
+        self::log('  - Updating cache...');
+        (new BrowscapPhpTool())->update();
     }
 }
