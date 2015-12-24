@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6d99b5cd842e2d58e715810efd531cdc",
-    "content-hash": "e65fff66754018f82afc8db514248039",
+    "hash": "96f9f40391d62106599a9eff4ae232a7",
+    "content-hash": "36da705db415a1c06adffad02af5158a",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -13,16 +13,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "975f6d9"
+                "reference": "8e054ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/975f6d90245c2402576c5bba7613966662d19323",
-                "reference": "975f6d9",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/8e054ff4768fa9cce0424437d0ebe5c8457952fe",
+                "reference": "8e054ff",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.13",
+                "monolog/monolog": "~1",
                 "php": ">= 5.5.0",
                 "symfony/console": "~2"
             },
@@ -75,7 +75,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2015-11-20 08:54:53"
+            "time": "2015-12-24 12:59:28"
         },
         {
             "name": "browscap/browscap-php",
@@ -745,7 +745,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e9478830dd1d19ee598ecfb2a6b5e6a4f8f168c2",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8ea5840ad835444627de70a706aabd8c9aa41df8",
                 "reference": "e9478830dd1d19ee598ecfb2a6b5e6a4f8f168c2",
                 "shasum": ""
             },
