@@ -77,6 +77,11 @@ header ul li {
 header ul li:first-child {
 	padding-left: 0;
 }
+.funding {
+	margin: 10px auto;
+	width: 728px;
+	height: 90px;
+}
 
 
 
