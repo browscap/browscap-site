@@ -21,12 +21,12 @@
     },
     "require": {
         "php": "^5.5",
-        "browscap/browscap": "dev-master#72900e7",
+        "browscap/browscap": "dev-master#77aaf9a",
         "browscap/browscap-php": "^3.0@beta",
         "symfony/console": "^2.6",
         "silex/silex": "^1.2",
         "twig/twig": "^1.18",
-        "composer/composer": "1.0.0-alpha11",
+        "composer/composer": "1.0.0-beta1",
         "roave/security-advisories": "dev-master",
         "paragonie/random_compat": "^1.1"
     },
