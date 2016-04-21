@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e4e278656f6ca5079859fe790cfd3cf6",
-    "content-hash": "903bcb2bdf1ec738628715362b29ccf1",
+    "hash": "fe5c0547ecdae3f630ba9769ea6a0dbe",
+    "content-hash": "fd6e237930a47d1ae0fb48413747ef21",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "77aaf9a"
+                "reference": "8976dd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/8251fa1a87262d11d691d6e33e073417ae679f22",
-                "reference": "77aaf9a",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/8976dd6fbf18a14bade2c1e74ea6de5bbb9b03ea",
+                "reference": "8976dd6",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2016-03-15 18:02:49"
+            "time": "2016-04-21 08:43:53"
         },
         {
             "name": "browscap/browscap-php",
@@ -746,7 +746,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/dcdeb1d923b981a55f0a4ce6c2ceac14cb8476f8",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c671d3899901257a98ec4c4fd39685d14112efc7",
                 "reference": "dcdeb1d923b981a55f0a4ce6c2ceac14cb8476f8",
                 "shasum": ""
             },
