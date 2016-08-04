@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5f759199cc5e24d6dec3d085643e3d0d",
-    "content-hash": "2bec5f3e98e92de7394731c4b0ab2901",
+    "hash": "665deadc3478b9bdb157ce9e5d20bf18",
+    "content-hash": "c6ca9a306709ebb64bda679db6c67c61",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "e19a129"
+                "reference": "81e9905"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/e19a1299abde7e37ced96e57d7471b5d8dd95e30",
-                "reference": "e19a129",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/81e9905",
+                "reference": "81e9905",
                 "shasum": ""
             },
             "require": {
@@ -27,21 +27,19 @@
                 "symfony/console": "^2.0 || ^3.0"
             },
             "require-dev": {
-                "browscap/browscap-php": "*@dev",
-                "phpunit/phpunit": "3.7.*"
+                "browscap/browscap-php": "dev-master",
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^5.3",
+                "squizlabs/php_codesniffer": "^2.5"
             },
             "bin": [
                 "bin/browscap"
             ],
             "type": "application",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
             "autoload": {
-                "psr-0": {
-                    "": "src/"
+                "psr-4": {
+                    "Browscap\\": "src/Browscap/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,12 +47,6 @@
                 "MIT"
             ],
             "authors": [
-                {
-                    "name": "Joshua Estes",
-                    "email": "f1gm3nt@gmail.com",
-                    "homepage": "http://joshuaestes.me",
-                    "role": "developer"
-                },
                 {
                     "name": "Contributors",
                     "homepage": "https://github.com/browscap/browscap/graphs/contributors"
@@ -68,6 +60,11 @@
                     "name": "Thomas Müller",
                     "homepage": "https://github.com/mimmi20",
                     "role": "Developer"
+                },
+                {
+                    "name": "Joshua Estes",
+                    "email": "f1gm3nt@gmail.com",
+                    "homepage": "http://joshuaestes.me"
                 }
             ],
             "description": "Browser Capabilities Tools",
@@ -75,7 +72,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2016-06-20 08:39:16"
+            "time": "2016-08-04 09:39:09"
         },
         {
             "name": "browscap/browscap-php",
