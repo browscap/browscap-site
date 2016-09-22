@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSite\Controller;
 
@@ -28,77 +29,49 @@ class StatsController
     }
 
     /**
-     * May only contain values valid in a MySQL date format string e.g. %Y-%m-%d
-     *
-     * @param $format
-     * @return mixed
+     * @return array
      */
-    private function sanitiseDateFormat($format)
+    private function getDownloadsPerMonth() : array
     {
-        return preg_replace('/[^%a-zA-Z-]/', '', $format);
+        return $this->getDownloadStats('downloadsPerMonth', 'monthPeriod', 'Month', 'M Y');
     }
 
     /**
      * @return array
      */
-    private function getDownloadsPerMonth()
+    private function getDownloadsPerDay() : array
     {
-        return $this->getDownloadStats(
-            new \DateTime('24 months ago'),
-            '%Y-%m',
-            '%Y-%m',
-            'Month'
-        );
-    }
-
-    /**
-     * @return array
-     */
-    private function getDownloadsPerDay()
-    {
-        return $this->getDownloadStats(
-            new \DateTime('30 days ago'),
-            '%m-%d',
-            '%Y-%m-%d',
-            'Date'
-        );
+        return $this->getDownloadStats('downloadsLastMonth', 'dayPeriod', 'Date', 'd/m');
     }
 
     /**
      * Fetch some download stats
      *
-     * @param \DateTime $since
-     * @param string $selectDateFormat
-     * @param string $groupDateFormat
-     * @param string $columnName
+     * @param string $tableName Name of the table to grab stats from
+     * @param string $tableColumnName Name of the date column in the DB
+     * @param string $dataColumnName Name of the column for data
+     * @param string $dataColumnFormat Format of the output date
      * @return array
      */
-    private function getDownloadStats(\DateTime $since, $selectDateFormat, $groupDateFormat, $columnName)
-    {
-        $selectDateFormat = $this->sanitiseDateFormat($selectDateFormat);
-        $groupDateFormat = $this->sanitiseDateFormat($groupDateFormat);
-
+    private function getDownloadStats(
+        string $tableName,
+        string $tableColumnName,
+        string $dataColumnName,
+        string $dataColumnFormat
+    ) : array {
         $sql = "
-            SELECT
-                DATE_FORMAT(downloadDate, '" . $selectDateFormat . "') AS `date`,
-                COUNT(*) AS count
-            FROM
-            downloadLog
-            WHERE
-                downloadDate >= :sinceDate
-            GROUP BY DATE_FORMAT(downloadDate, '" . $groupDateFormat . "')
+            SELECT *
+            FROM $tableName
+            ORDER BY $tableColumnName ASC
         ";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue('sinceDate', $since->format('Y-m-d ') . ' 00:00:00');
-        $stmt->execute();
+        $stmt = $this->pdo->query($sql);
 
         $data = [];
-        $data[] = [$columnName, 'Number of Downloads'];
+        $data[] = [$dataColumnName, 'Number of Downloads'];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $data[] = [
-                $row['date'],
-                (int)$row['count'],
+                (new \DateTimeImmutable($row[$tableColumnName]))->format($dataColumnFormat),
+                (int)$row['downloadCount'],
             ];
         }
 

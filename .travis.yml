@@ -16,7 +16,7 @@ before_script:
   - BC_BUILD_LOG=200 php composer.phar install --dev --prefer-dist
   - cp config/config.php.travis config/config.php
   - mysql -e 'create database browscap;'
-  - mysql browscap < db/create002.sql
+  - mysql browscap < db/create004.sql
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover --colors --verbose
