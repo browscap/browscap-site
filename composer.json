@@ -20,7 +20,15 @@
         "source": "https://github.com/browscap/browscap-site"
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
+        "ext-json": "*",
+        "ext-bcmath": "*",
+        "ext-curl": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "ext-mysql": "*",
+        "ext-xml": "*",
+        "ext-zip": "*",
         "browscap/browscap": "dev-master#5a9927c",
         "browscap/browscap-php": "^3.0@beta",
         "symfony/console": "^2.6",
