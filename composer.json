@@ -29,7 +29,7 @@
         "ext-pdo_mysql": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "browscap/browscap": "dev-master#0522fd2",
+        "browscap/browscap": "dev-master#bb28055",
         "browscap/browscap-php": "^3.0@beta",
         "symfony/console": "^2.6",
         "silex/silex": "^1.2",
