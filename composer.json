@@ -29,18 +29,18 @@
         "ext-pdo_mysql": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "browscap/browscap": "dev-master#a231c5d",
-        "browscap/browscap-php": "^3.0@beta",
-        "symfony/console": "^2.6",
-        "silex/silex": "^1.2",
-        "twig/twig": "^1.18",
-        "composer/composer": "1.0.0-beta1",
+        "browscap/browscap": "dev-master#9664a24",
+        "browscap/browscap-php": "^3.0",
+        "symfony/console": "^3.2",
+        "silex/silex": "^1.3",
+        "twig/twig": "^1.33",
+        "composer/composer": "^1.4",
         "roave/security-advisories": "dev-master",
-        "paragonie/random_compat": "^1.1"
+        "paragonie/random_compat": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.0",
-        "friendsofphp/php-cs-fixer": "^1.10"
+        "phpunit/phpunit": "^5.7",
+        "friendsofphp/php-cs-fixer": "^1.13"
     },
     "autoload": {
         "psr-0": { "": "src/" }
