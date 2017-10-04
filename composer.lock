@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0cca770b0d157c84d2583d5ed7b7ec4",
+    "content-hash": "e56837e4d48261577a60a90ce82b45a0",
     "packages": [
         {
             "name": "browscap/browscap",
@@ -12,26 +12,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "15a7de1"
+                "reference": "f0ffbba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/15a7de1",
-                "reference": "15a7de1",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/f0ffbba",
+                "reference": "f0ffbba",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "^1.20",
-                "php": "^7.0",
-                "symfony/console": "^3.2"
+                "monolog/monolog": "^1.23",
+                "php": "^7.1",
+                "symfony/console": "^3.3"
             },
             "require-dev": {
                 "browscap/browscap-php": "^3.1.0",
-                "friendsofphp/php-cs-fixer": "^1.11",
+                "friendsofphp/php-cs-fixer": "^2.6",
                 "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "^5.7",
-                "seld/jsonlint": "^1.5",
-                "squizlabs/php_codesniffer": "^2.8"
+                "phpstan/phpstan": "^0.8.4",
+                "phpunit/phpunit": "^6.2",
+                "seld/jsonlint": "^1.5"
             },
             "bin": [
                 "bin/browscap"
@@ -72,7 +72,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2017-08-07 07:16:20"
+            "time": "2017-10-04 09:04:55"
         },
         {
             "name": "browscap/browscap-php",
