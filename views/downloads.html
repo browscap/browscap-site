@@ -10,22 +10,22 @@
 
     <h2>ASP Versions</h2>
     <ul>
-    	{% for code, file in files.asp %}
-    	<li>
-    	    <p><a href="/stream?q={{ code }}">{{ file.name }}</a> <em>({{ file.size }} KB)</em></p>
-    	    <p>{{ file.description }}</p>
-    	</li>
-    	{% endfor %}
+        {% for code, file in files.asp %}
+        <li>
+            <p><a href="/stream?q={{ code }}">{{ file.name }}</a> <em>({{ file.size }} KB)</em></p>
+            <p>{{ file.description }}</p>
+        </li>
+        {% endfor %}
     </ul>
 
     <h2>PHP Versions</h2>
     <ul>
-    	{% for code, file in files.php %}
-    	<li>
-    	    <p><a href="/stream?q={{ code }}">{{ file.name }}</a> <em>({{ file.size }} KB)</em></p>
-    	    <p>{{ file.description }}</p>
-    	</li>
-    	{% endfor %}
+        {% for code, file in files.php %}
+        <li>
+            <p><a href="/stream?q={{ code }}">{{ file.name }}</a> <em>({{ file.size }} KB)</em></p>
+            <p>{{ file.description }}</p>
+        </li>
+        {% endfor %}
     </ul>
 
     <h2>Other files (XML/CSV/JSON/ZIP)</h2>
