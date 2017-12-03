@@ -77,7 +77,12 @@ class BrowscapSiteWeb extends SilexApplication
 
         $this['stream.controller'] =     function () {
             $buildDirectory = __DIR__ . '/../../build/';
-            return new Controller\StreamController($this['rateLimiter'], $this->getFiles(), $buildDirectory);
+            return new Controller\StreamController(
+                $this['rateLimiter'],
+                $this->getFiles(),
+                $this['metadata'],
+                $buildDirectory
+            );
         };
 
         $this['stats.controller'] =     function () {

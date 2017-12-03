@@ -4,6 +4,7 @@ namespace BrowscapSite\Controller;
 
 use BrowscapSite\BrowscapSiteWeb;
 use BrowscapSite\Tool\RateLimiter;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -28,15 +29,21 @@ class StreamController
     protected $buildDirectory;
 
     /**
+     * @var array
+     */
+    private $metadata;
+
+    /**
      * @param RateLimiter $rateLimiter
      * @param array $fileList
      * @param string $buildDirectory
      */
-    public function __construct(RateLimiter $rateLimiter, array $fileList, $buildDirectory)
+    public function __construct(RateLimiter $rateLimiter, array $fileList, array $metadata, $buildDirectory)
     {
         $this->rateLimiter = $rateLimiter;
         $this->fileList = $fileList;
         $this->buildDirectory = $buildDirectory;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -73,6 +80,7 @@ class StreamController
     /**
      * @param Request $request
      * @return BinaryFileResponse|Response
+     * @throws \InvalidArgumentException
      */
     public function indexAction(Request $request)
     {
@@ -108,8 +116,13 @@ class StreamController
         // Offer the download
         $response = new BinaryFileResponse($fullPath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file);
-        $response->setMaxAge(0);
-        $response->expire();
+        $response->setCache([
+            'etag' => $this->metadata['version'],
+            'last_modified' => new DateTime($this->metadata['released']),
+            'max_age' => 86400,
+            's_maxage' => 86400,
+        ]);
+        $response->isNotModified($request);
         return $response;
     }
 
