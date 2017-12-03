@@ -117,7 +117,7 @@ class StreamController
         $response = new BinaryFileResponse($fullPath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file);
         $response->setCache([
-            'etag' => $this->metadata['version'],
+            'etag' => sha1($this->metadata['version'] . $browscapVersion),
             'last_modified' => new DateTime($this->metadata['released']),
             'max_age' => 86400,
             's_maxage' => 86400,
