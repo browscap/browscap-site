@@ -1,24 +1,23 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSiteTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use BrowscapSite\BrowscapSiteConsole;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * @covers \BrowscapSite\BrowscapSiteConsole
  */
-class BrowscapSiteConsoleTest extends PHPUnit_Framework_TestCase
+class BrowscapSiteConsoleTest extends TestCase
 {
-    /**
-     * @param string $command
-     */
-    private function assertAppHasCommand(Application $app, $command)
+    private function assertAppHasCommand(Application $app, string $command): void
     {
         $cmdObject = $app->get($command);
 
-        self::assertInstanceOf('Symfony\Component\Console\Command\Command', $cmdObject);
+        self::assertInstanceOf(Command::class, $cmdObject);
         self::assertSame($command, $cmdObject->getName());
     }
 

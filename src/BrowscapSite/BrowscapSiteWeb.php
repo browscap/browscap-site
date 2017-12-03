@@ -5,6 +5,7 @@ namespace BrowscapSite;
 use Silex\Application as SilexApplication;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class BrowscapSiteWeb extends SilexApplication
 {
@@ -40,62 +41,64 @@ class BrowscapSiteWeb extends SilexApplication
      */
     public function getRequest()
     {
-        return $this['request'];
+        /** @var RequestStack $stack */
+        $stack = $this['request_stack'];
+        return $stack->getCurrentRequest();
     }
 
     public function defineServices()
     {
         $this->register(new ServiceControllerServiceProvider());
 
-        $this['pdo'] = $this->share(function () {
+        $this['pdo'] = function () {
             $dbConfig = $this->getConfig('db');
             return new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
-        });
+        };
 
-        $this['rateLimiter'] = $this->share(function () {
+        $this['rateLimiter'] = function () {
             $banConfiguration = $this->getConfig('rateLimiter');
             if (!$banConfiguration) {
                 throw new \RuntimeException('Rate limit configuration not set');
             }
             return new Tool\RateLimiter($this['pdo'], $banConfiguration);
-        });
+        };
 
-        $this['metadata'] = $this->share(function () {
-            return require_once(__DIR__ . '/../../build/metadata.php');
-        });
+        $this['metadata'] = function () {
+            return require __DIR__ . '/../../build/metadata.php';
+        };
 
-        $this['downloads.controller'] = $this->share(function () {
+        $this['downloads.controller'] = function () {
             $banConfiguration = $this->getConfig('rateLimiter');
             if (!$banConfiguration) {
                 throw new \RuntimeException('Rate limit configuration not set');
             }
             return new Controller\DownloadController($this, $this->getFiles(), $banConfiguration);
-        });
+        };
 
-        $this['stream.controller'] = $this->share(function () {
+        $this['stream.controller'] =     function () {
             $buildDirectory = __DIR__ . '/../../build/';
             return new Controller\StreamController($this['rateLimiter'], $this->getFiles(), $buildDirectory);
-        });
+        };
 
-        $this['stats.controller'] = $this->share(function () {
+        $this['stats.controller'] =     function () {
             return new Controller\StatsController($this, $this['pdo']);
-        });
+        };
 
-        $this['version.controller'] = $this->share(function () {
+        $this['version.controller'] =     function () {
             return new Controller\VersionController($this);
-        });
+        };
 
-        $this['version.number.controller'] = $this->share(function () {
+        $this['version.number.controller'] =     function () {
             return new Controller\VersionNumberController($this);
-        });
+        };
 
-        $this['version.xml.controller'] = $this->share(function () {
+        $this['version.xml.controller'] =     function () {
             return new Controller\VersionXmlController($this->getFiles(), $this['metadata']);
-        });
+        };
 
-        $this['ualookup.controller'] = $this->share(function () {
+        $this['ualookup.controller'] =     function () {
             return new Controller\UserAgentLookupController($this);
-        });
+        };
 
         $this->register(new TwigServiceProvider(), [
             'twig.path' => __DIR__ . '/../../views',

@@ -30,17 +30,16 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "browscap/browscap": "dev-master#f0ffbba",
-        "browscap/browscap-php": "^3.0",
-        "symfony/console": "^3.2",
-        "silex/silex": "^1.3",
-        "twig/twig": "^1.33",
-        "composer/composer": "^1.4",
-        "roave/security-advisories": "dev-master",
-        "paragonie/random_compat": "^2.0"
+        "browscap/browscap-php": "^3.1",
+        "symfony/console": "^3.3",
+        "silex/silex": "^2.2",
+        "twig/twig": "^2.4",
+        "composer/composer": "^1.5",
+        "roave/security-advisories": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7",
-        "friendsofphp/php-cs-fixer": "^1.13"
+        "phpunit/phpunit": "^6.4",
+        "friendsofphp/php-cs-fixer": "^2.7"
     },
     "autoload": {
         "psr-0": { "": "src/" }

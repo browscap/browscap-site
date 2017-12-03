@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This makes our life easier when dealing with paths. Everything is relative

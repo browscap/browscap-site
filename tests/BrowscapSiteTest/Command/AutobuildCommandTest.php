@@ -1,17 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSiteTest\Command;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use BrowscapSite\Command\AutobuildCommand;
 use Symfony\Component\Console\Input\InputDefinition;
 
 /**
  * @covers \BrowscapSite\Command\AutobuildCommand
  */
-class AutobuildCommandTest extends PHPUnit_Framework_TestCase
+class AutobuildCommandTest extends TestCase
 {
-    public function testConfigureSetsUpCommand()
+    public function testConfigureSetsUpCommand(): void
     {
         /** @var AutobuildCommand $command */
         $command = $this->getMockBuilder(AutobuildCommand::class)
@@ -20,10 +21,10 @@ class AutobuildCommandTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $command->setDefinition(new InputDefinition());
 
-        $this->assertEmpty($command->getName());
+        self::assertEmpty($command->getName());
 
         $command->configure();
 
-        $this->assertSame('autobuild', $command->getName());
+        self::assertSame('autobuild', $command->getName());
     }
 }
