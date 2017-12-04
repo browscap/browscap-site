@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSite\Controller;
 
-use BrowscapSite\BrowscapSiteWeb;
 use BrowscapSite\Tool\RateLimiter;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -28,15 +29,22 @@ class StreamController
     protected $buildDirectory;
 
     /**
+     * @var array
+     */
+    private $metadata;
+
+    /**
      * @param RateLimiter $rateLimiter
      * @param array $fileList
+     * @param array $metadata
      * @param string $buildDirectory
      */
-    public function __construct(RateLimiter $rateLimiter, array $fileList, $buildDirectory)
+    public function __construct(RateLimiter $rateLimiter, array $fileList, array $metadata, string $buildDirectory)
     {
         $this->rateLimiter = $rateLimiter;
         $this->fileList = $fileList;
         $this->buildDirectory = $buildDirectory;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -45,8 +53,10 @@ class StreamController
      * @param int $status
      * @param string $message
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      */
-    protected function failed($status, $message)
+    protected function failed(int $status, string $message) : Response
     {
         $response = new Response();
         $response->setStatusCode($status);
@@ -58,7 +68,7 @@ class StreamController
      * @param ServerBag $serverBag
      * @return string
      */
-    public function getRemoteAddr(ServerBag $serverBag)
+    public function getRemoteAddr(ServerBag $serverBag) : string
     {
         if ($serverBag->has('HTTP_CF_CONNECTING_IP')) {
             return $serverBag->get('HTTP_CF_CONNECTING_IP');
@@ -73,8 +83,10 @@ class StreamController
     /**
      * @param Request $request
      * @return BinaryFileResponse|Response
+     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request) : Response
     {
         if (!$request->query->has('q')) {
             return $this->failed(400, 'The version requested could not be found');
@@ -108,8 +120,13 @@ class StreamController
         // Offer the download
         $response = new BinaryFileResponse($fullPath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file);
-        $response->setMaxAge(0);
-        $response->expire();
+        $response->setCache([
+            'etag' => sha1($this->metadata['version'] . $browscapVersion),
+            'last_modified' => new DateTime($this->metadata['released']),
+            'max_age' => 86400,
+            's_maxage' => 86400,
+        ]);
+        $response->isNotModified($request);
         return $response;
     }
 
@@ -119,11 +136,11 @@ class StreamController
      * @param string $browscapCode
      * @return string|bool
      */
-    protected function getFilenameFromCode($browscapCode)
+    protected function getFilenameFromCode(string $browscapCode)
     {
         foreach ($this->fileList as $fileset) {
             foreach ($fileset as $existingCode => $info) {
-                if (strtolower($existingCode) == strtolower($browscapCode)) {
+                if (strtolower($existingCode) === strtolower($browscapCode)) {
                     return $info['name'];
                 }
             }
