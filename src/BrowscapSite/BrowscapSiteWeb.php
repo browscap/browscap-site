@@ -2,6 +2,7 @@
 
 namespace BrowscapSite;
 
+use Assert\Assert;
 use Silex\Application as SilexApplication;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
@@ -15,7 +16,7 @@ class BrowscapSiteWeb extends SilexApplication
     {
         parent::__construct();
 
-        $this->config = require(__DIR__ . '/../../config/config.php');
+        $this->config = require __DIR__ . '/../../config/config.php';
 
         if ($this->getConfig('debug')) {
             $this['debug'] = true;
@@ -25,13 +26,15 @@ class BrowscapSiteWeb extends SilexApplication
         $this->defineControllers();
     }
 
-    public function getConfig($key = null)
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function getConfig(string $key)
     {
-        if (!empty($key)) {
-            return isset($this->config[$key]) ? $this->config[$key] : false;
-        } else {
-            return $this->config;
-        }
+        Assert::that($this->config)->keyExists($key);
+
+        return $this->config[$key];
     }
 
     /**
