@@ -6,7 +6,7 @@ use Zend\ConfigAggregator\ConfigAggregator;
 use Zend\ConfigAggregator\PhpFileProvider;
 
 $cacheConfig = [
-    'config_cache_path' => 'data/config-cache.php',
+    'config_cache_path' => 'cache/config-cache.php',
 ];
 
 $aggregator = new ConfigAggregator([

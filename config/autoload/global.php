@@ -2,13 +2,9 @@
 declare(strict_types=1);
 
 return [
-    \Zend\ConfigAggregator\ConfigAggregator::ENABLE_CACHE => false,
-    'db' => [
-       'dsn' => 'mysql:dbname=browscap',
-       'user' => 'XXX',
-       'pass' => 'XXX',
-    ],
+    'db' => [],
     'debug' => false,
+    \Zend\ConfigAggregator\ConfigAggregator::ENABLE_CACHE => true,
     'rateLimiter' => [
         'rateLimitDownloads' => 10,    // How many downloads per $rateLimitPeriod
         'rateLimitPeriod' => 1,        // Download limit period in HOURS
