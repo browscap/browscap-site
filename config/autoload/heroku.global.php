@@ -6,7 +6,7 @@ if (!getenv('HEROKU')) {
 }
 
 return [
-    'debug' => false,
+    'debug' => getenv('DEBUG') === '1',
     \Zend\ConfigAggregator\ConfigAggregator::ENABLE_CACHE => true,
     'db' => [
        'dsn' => getenv('CLEARDB_DATABASE_URL'),
