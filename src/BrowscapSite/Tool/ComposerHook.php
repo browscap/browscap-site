@@ -112,7 +112,7 @@ class ComposerHook
      */
     public static function getCurrentBuildNumber()
     {
-        $buildFolder = __DIR__ . '/../../../build/';
+        $buildFolder = __DIR__ . '/../../../vendor/build/';
         $metadataFile = $buildFolder . 'metadata.php';
 
         if (file_exists($metadataFile)) {
@@ -128,7 +128,7 @@ class ComposerHook
      */
     private static function moveSymlink($buildNumber)
     {
-        $buildLink = __DIR__ . '/../../../build';
+        $buildLink = __DIR__ . '/../../../vendor/build';
 
         if (file_exists($buildLink) && !is_link($buildLink)) {
             throw new \RuntimeException("Build folder '{$buildLink}' was not a symbolic link");
@@ -164,7 +164,7 @@ class ComposerHook
      */
     public static function createBuild($buildNumber, IOInterface $io = null)
     {
-        $buildFolder = __DIR__ . '/../../../build-' . $buildNumber . '/';
+        $buildFolder = __DIR__ . '/../../../vendor/build-' . $buildNumber . '/';
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
         if (!file_exists($buildFolder)) {

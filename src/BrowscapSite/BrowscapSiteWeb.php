@@ -67,7 +67,7 @@ class BrowscapSiteWeb extends SilexApplication
         };
 
         $this['metadata'] = function () {
-            return require __DIR__ . '/../../build/metadata.php';
+            return require __DIR__ . '/../../vendor/build/metadata.php';
         };
 
         $this['downloads.controller'] = function () {
@@ -79,7 +79,7 @@ class BrowscapSiteWeb extends SilexApplication
         };
 
         $this['stream.controller'] =     function () {
-            $buildDirectory = __DIR__ . '/../../build/';
+            $buildDirectory = __DIR__ . '/../../vendor/build/';
             return new Controller\StreamController(
                 $this['rateLimiter'],
                 $this->getFiles(),
