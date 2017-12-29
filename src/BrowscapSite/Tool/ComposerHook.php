@@ -2,6 +2,7 @@
 
 namespace BrowscapSite\Tool;
 
+use Browscap\Data\Factory\DataCollectionFactory;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Composer\IO\IOInterface;
@@ -159,6 +160,7 @@ class ComposerHook
      *
      * @param string $buildNumber
      * @param IOInterface|null $io
+     * @throws \BrowscapPHP\Exception
      */
     public static function createBuild($buildNumber, IOInterface $io = null)
     {
@@ -182,21 +184,21 @@ class ComposerHook
         $logger->pushHandler($stream);
         $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
-        $collectionCreator = new CollectionCreator();
-
         self::log('  - Creating writer collection', $io);
         $writerCollectionFactory = new FullCollectionFactory();
         $writerCollection        = $writerCollectionFactory->createCollection($logger, $buildFolder);
+        $dataCollectionFactory   = new DataCollectionFactory($logger);
 
         // Generate the actual browscap.ini files
         self::log('  - Creating actual build', $io);
-        $buildGenerator = new BuildGenerator($resourceFolder, $buildFolder);
-        $buildGenerator
-            ->setLogger($logger)
-            ->setCollectionCreator($collectionCreator)
-            ->setWriterCollection($writerCollection)
-            ->run($buildNumber)
-        ;
+        $buildGenerator = new BuildGenerator(
+            $resourceFolder,
+            $buildFolder,
+            $logger,
+            $writerCollection,
+            $dataCollectionFactory
+        );
+        $buildGenerator->run($buildNumber);
 
         // Generate the metadata for the site
         self::log('  - Generating metadata', $io);

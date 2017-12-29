@@ -4,34 +4,90 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b771c6bd94d637d58d5c9f3313f4c2cc",
+    "content-hash": "16a663e1e3f5d8d21684b24c69c9bec6",
     "packages": [
+        {
+            "name": "beberlei/assert",
+            "version": "v2.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/assert.git",
+                "reference": "fd8dc8f6de4645ccf4d1a0b38a6b8fdaf2e8b337"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/fd8dc8f6de4645ccf4d1a0b38a6b8fdaf2e8b337",
+                "reference": "fd8dc8f6de4645ccf4d1a0b38a6b8fdaf2e8b337",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.1.1",
+                "phpunit/phpunit": "^4.8.35|^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Assert\\": "lib/Assert"
+                },
+                "files": [
+                    "lib/Assert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com",
+                    "role": "Collaborator"
+                }
+            ],
+            "description": "Thin assertion library for input validation in business models.",
+            "keywords": [
+                "assert",
+                "assertion",
+                "validation"
+            ],
+            "time": "2017-11-30T13:25:15+00:00"
+        },
         {
             "name": "browscap/browscap",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "f0ffbba"
+                "reference": "c28498b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/f0ffbba",
-                "reference": "f0ffbba",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/c28498b",
+                "reference": "c28498b",
                 "shasum": ""
             },
             "require": {
+                "beberlei/assert": "^2.7",
                 "monolog/monolog": "^1.23",
                 "php": "^7.1",
+                "seld/jsonlint": "^1.5",
                 "symfony/console": "^3.3"
             },
             "require-dev": {
                 "browscap/browscap-php": "^3.1.0",
-                "friendsofphp/php-cs-fixer": "^2.6",
+                "friendsofphp/php-cs-fixer": "2.7.1",
                 "mikey179/vfsstream": "^1.6",
                 "phpstan/phpstan": "^0.8.4",
-                "phpunit/phpunit": "^6.2",
-                "seld/jsonlint": "^1.5"
+                "phpunit/phpunit": "^6.3"
             },
             "bin": [
                 "bin/browscap"
@@ -72,7 +128,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2017-10-04 09:04:55"
+            "time": "2017-12-29T22:54:22+00:00"
         },
         {
             "name": "browscap/browscap-php",
