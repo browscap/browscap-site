@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "16a663e1e3f5d8d21684b24c69c9bec6",
+    "content-hash": "8758e7cdf3dd47b131572e72e9f03281",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -67,27 +67,30 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "c28498b"
+                "reference": "1ae7325"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/c28498b",
-                "reference": "c28498b",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/1ae7325",
+                "reference": "1ae7325",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^2.7",
+                "beberlei/assert": "^2.8",
                 "monolog/monolog": "^1.23",
                 "php": "^7.1",
-                "seld/jsonlint": "^1.5",
-                "symfony/console": "^3.3"
+                "seld/jsonlint": "^1.6",
+                "symfony/console": "^3.3||^4.0"
             },
             "require-dev": {
                 "browscap/browscap-php": "^3.1.0",
-                "friendsofphp/php-cs-fixer": "2.7.1",
+                "friendsofphp/php-cs-fixer": "^2.9",
                 "mikey179/vfsstream": "^1.6",
-                "phpstan/phpstan": "^0.8.4",
-                "phpunit/phpunit": "^6.3"
+                "phpstan/phpstan": "^0.9",
+                "phpunit/phpunit": "^6.5"
+            },
+            "suggest": {
+                "ext-zip": "to create a zip file containing all other generated files"
             },
             "bin": [
                 "bin/browscap"
@@ -128,7 +131,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2017-12-29T22:54:22+00:00"
+            "time": "2018-03-02T16:17:30+00:00"
         },
         {
             "name": "browscap/browscap-php",
