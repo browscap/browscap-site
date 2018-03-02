@@ -1,0 +1,18 @@
+<?php
+declare(strict_types=1);
+
+return [
+    \Zend\ConfigAggregator\ConfigAggregator::ENABLE_CACHE => false,
+    'db' => [
+       'dsn' => 'mysql:dbname=browscap',
+       'user' => 'XXX',
+       'pass' => 'XXX',
+    ],
+    'debug' => false,
+    'rateLimiter' => [
+        'rateLimitDownloads' => 10,    // How many downloads per $rateLimitPeriod
+        'rateLimitPeriod' => 1,        // Download limit period in HOURS
+        'tempBanPeriod' => 3,        // Tempban period in DAYS
+        'tempBanLimit' => 5,        // How many tempbans allowed in $tempBanPeriod before permaban
+    ],
+];

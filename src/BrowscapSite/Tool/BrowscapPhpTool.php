@@ -29,7 +29,7 @@ class BrowscapPhpTool
 
         $this->remoteIniFile = $remoteIniFile;
         if (null === $this->remoteIniFile) {
-            $this->remoteIniFile = __DIR__ . '/../../../build/full_php_browscap.ini';
+            $this->remoteIniFile = __DIR__ . '/../../../vendor/build/full_php_browscap.ini';
         }
     }
 

@@ -12,7 +12,7 @@ before_script:
   - curl -sS https://getcomposer.org/installer | php
   - php composer.phar config -g github-oauth.github.com $GITHUB_TOKEN
   - BC_BUILD_LOG=400 php -n composer.phar install --prefer-dist
-  - cp config/config.php.travis config/config.php
+  - cp config/autoload/local.php.travis config/autoload/local.php
   - mysql -e 'create database browscap;'
   - mysql browscap < db/create004.sql
 

@@ -112,7 +112,7 @@ class ComposerHook
      */
     public static function getCurrentBuildNumber()
     {
-        $buildFolder = __DIR__ . '/../../../build/';
+        $buildFolder = __DIR__ . '/../../../vendor/build/';
         $metadataFile = $buildFolder . 'metadata.php';
 
         if (file_exists($metadataFile)) {
@@ -120,25 +120,6 @@ class ComposerHook
             return $metadata['version'];
         } else {
             return null;
-        }
-    }
-
-    /**
-     * @param string $buildNumber
-     */
-    private static function moveSymlink($buildNumber)
-    {
-        $buildLink = __DIR__ . '/../../../build';
-
-        if (file_exists($buildLink) && !is_link($buildLink)) {
-            throw new \RuntimeException("Build folder '{$buildLink}' was not a symbolic link");
-        } elseif (file_exists($buildLink) && is_link($buildLink)) {
-            unlink($buildLink);
-        }
-
-        $target = realpath($buildLink . '-' . $buildNumber);
-        if (!symlink($target, $buildLink)) {
-            throw new \RuntimeException("Unable to create symbolic link for target '{$target}'");
         }
     }
 
@@ -164,7 +145,7 @@ class ComposerHook
      */
     public static function createBuild($buildNumber, IOInterface $io = null)
     {
-        $buildFolder = __DIR__ . '/../../../build-' . $buildNumber . '/';
+        $buildFolder = __DIR__ . '/../../../vendor/build/';
         $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
         if (!file_exists($buildFolder)) {
@@ -204,10 +185,6 @@ class ComposerHook
         self::log('  - Generating metadata', $io);
         $rebuilder = new Rebuilder($buildFolder);
         $rebuilder->rebuild();
-
-        // Update the symlink
-        self::log('  - Updating symlink to point to ' . $buildNumber, $io);
-        self::moveSymlink($buildNumber);
 
         // Updating browscap.ini cache
         self::log('  - Updating cache...');
