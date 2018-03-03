@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
-use BrowscapSite\BuildGenerator\UpdateBrowscapVersionUsedFactory;
+use BrowscapSite\BuildGenerator\BuildGeneratorFactory;
 use Composer\Script\Event;
 
 final class ComposerHook
@@ -33,6 +33,6 @@ final class ComposerHook
      */
     public static function postUpdate(Event $event): void
     {
-        (new UpdateBrowscapVersionUsedFactory())->__invoke()->__invoke($event->getIO());
+        (new BuildGeneratorFactory())->__invoke()->__invoke($event->getIO());
     }
 }

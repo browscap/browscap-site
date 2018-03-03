@@ -8,9 +8,8 @@ use Browscap\Generator\GeneratorInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
 use BrowscapSite\Tool\BrowscapPhpTool;
 use Composer\IO\IOInterface;
-use PackageVersions\Versions;
 
-final class UpdateBrowscapVersionUsed
+final class BuildGenerator
 {
     /**
      * @var string

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace BrowscapSite\BuildGenerator;
 
 use Browscap\Data\Factory\DataCollectionFactory;
-use Browscap\Generator\BuildGenerator;
+use Browscap\Generator\BuildGenerator as BrowscapBuildGenerator;
 use Browscap\Parser\IniParser;
 use Browscap\Writer\Factory\FullCollectionFactory;
 use BrowscapSite\Metadata\ArrayMetadataBuilder;
@@ -16,16 +16,16 @@ use Monolog\Logger;
 /**
  * @codeCoverageIgnore
  */
-final class UpdateBrowscapVersionUsedFactory
+final class BuildGeneratorFactory
 {
     private const BUILD_DIRECTORY = __DIR__ . '/../../../vendor/build';
     private const RESOURCE_DIRECTORY = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
     /**
-     * @return UpdateBrowscapVersionUsed
+     * @return BuildGenerator
      * @throws \Exception
      */
-    public function __invoke(): UpdateBrowscapVersionUsed
+    public function __invoke(): BuildGenerator
     {
         $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
 
@@ -36,9 +36,9 @@ final class UpdateBrowscapVersionUsedFactory
         $logger->pushHandler($stream);
         $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
-        return new UpdateBrowscapVersionUsed(
+        return new BuildGenerator(
             self::BUILD_DIRECTORY,
-            new BuildGenerator(
+            new BrowscapBuildGenerator(
                 self::BUILD_DIRECTORY,
                 self::RESOURCE_DIRECTORY,
                 $logger,
