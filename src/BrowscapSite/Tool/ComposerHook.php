@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
+use Browscap\Parser\IniParser;
+use BrowscapSite\Metadata\ArrayMetadataBuilder;
 use Composer\Script\Event;
 
 final class ComposerHook
@@ -35,6 +37,13 @@ final class ComposerHook
      */
     public static function postUpdate(Event $event): void
     {
-        (new UpdateBrowscapVersionUsed(self::BUILD_DIRECTORY, self::RESOURCE_DIRECTORY))->__invoke($event->getIO());
+        (new UpdateBrowscapVersionUsed(
+            self::BUILD_DIRECTORY,
+            self::RESOURCE_DIRECTORY,
+            new ArrayMetadataBuilder(
+                new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
+                self::BUILD_DIRECTORY
+            )
+        ))->__invoke($event->getIO());
     }
 }

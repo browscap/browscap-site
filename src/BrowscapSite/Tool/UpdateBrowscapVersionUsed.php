@@ -8,6 +8,8 @@ use Browscap\Data\Factory\DataCollectionFactory;
 use Browscap\Generator\BuildGenerator;
 use Browscap\Parser\IniParser;
 use Browscap\Writer\Factory\FullCollectionFactory;
+use BrowscapSite\Metadata\ArrayMetadataBuilder;
+use BrowscapSite\Metadata\MetadataBuilder;
 use Composer\IO\IOInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
@@ -27,10 +29,19 @@ final class UpdateBrowscapVersionUsed
      */
     private $resourceDirectory;
 
-    public function __construct(string $buildDirectory, string $resourceDirectory)
-    {
+    /**
+     * @var MetadataBuilder
+     */
+    private $metadataBuilder;
+
+    public function __construct(
+        string $buildDirectory,
+        string $resourceDirectory,
+        MetadataBuilder $metadataBuilder
+    ) {
         $this->buildDirectory = $buildDirectory;
         $this->resourceDirectory = $resourceDirectory;
+        $this->metadataBuilder = $metadataBuilder;
     }
 
     /**
@@ -139,10 +150,7 @@ final class UpdateBrowscapVersionUsed
         $buildGenerator->run((string)$buildNumber);
 
         $io->write('  - Generating metadata');
-        (new RebuildMetadata(
-            new IniParser($this->buildDirectory . '/browscap.ini'),
-            $this->buildDirectory
-        ))->rebuildMetadata();
+        $this->metadataBuilder->build();
 
         $io->write('  - Updating cache');
         (new BrowscapPhpTool())->update();

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace BrowscapSite\Tool;
+namespace BrowscapSite\Metadata;
 
 use Browscap\Parser\ParserInterface;
 
-final class RebuildMetadata
+final class ArrayMetadataBuilder implements MetadataBuilder
 {
     /**
      * @var ParserInterface
@@ -23,7 +23,7 @@ final class RebuildMetadata
         $this->buildDir = $buildDir;
     }
 
-    public function rebuildMetadata(): void
+    public function build(): void
     {
         $metadata = [];
 
