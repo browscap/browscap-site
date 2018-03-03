@@ -5,6 +5,7 @@ namespace BrowscapSite\Tool;
 
 use Assert\Assert;
 use Browscap\Data\Factory\DataCollectionFactory;
+use Browscap\Parser\IniParser;
 use Composer\Script\Event;
 use Composer\IO\IOInterface;
 use Browscap\Generator\BuildGenerator;
@@ -89,7 +90,7 @@ final class ComposerHook
      */
     private static function getCurrentBuildNumber(): ?int
     {
-        $metadataFile = self::BUILD_DIRECTORY . 'metadata.php';
+        $metadataFile = self::BUILD_DIRECTORY . '/metadata.php';
 
         if (!file_exists($metadataFile)) {
             return null;
@@ -154,8 +155,10 @@ final class ComposerHook
 
         // Generate the metadata for the site
         self::log('  - Generating metadata', $io);
-        $rebuilder = new Rebuilder(self::BUILD_DIRECTORY);
-        $rebuilder->rebuild();
+        (new RebuildMetadata(
+            new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
+            self::BUILD_DIRECTORY
+        ))->rebuildMetadata();
 
         // Updating browscap.ini cache
         self::log('  - Updating cache...');
