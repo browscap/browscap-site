@@ -6,7 +6,6 @@ namespace BrowscapSite\Tool;
 use Assert\Assert;
 use Browscap\Data\Factory\DataCollectionFactory;
 use Composer\Script\Event;
-use Composer\Package\PackageInterface;
 use Composer\IO\IOInterface;
 use Browscap\Generator\BuildGenerator;
 use Monolog\Formatter\LineFormatter;
@@ -79,7 +78,7 @@ final class ComposerHook
      * @return int
      * @throws \OutOfBoundsException
      */
-    public static function determineBuildNumberFromPackage(string $packageName): int
+    private static function determineBuildNumberFromPackage(string $packageName): int
     {
         $packageVersion = Versions::getVersion($packageName);
         return self::convertPackageVersionToBuildNumber(substr($packageVersion, 0, strpos($packageVersion, '@')));
@@ -88,7 +87,7 @@ final class ComposerHook
     /**
      * @return int|null
      */
-    public static function getCurrentBuildNumber(): ?int
+    private static function getCurrentBuildNumber(): ?int
     {
         $metadataFile = self::BUILD_DIRECTORY . 'metadata.php';
 
@@ -125,7 +124,7 @@ final class ComposerHook
      * @throws \Exception
      * @throws \Assert\AssertionFailedException
      */
-    public static function createBuild(int $buildNumber, IOInterface $io = null): void
+    private static function createBuild(int $buildNumber, IOInterface $io = null): void
     {
         if (!file_exists(self::BUILD_DIRECTORY)
             && !mkdir(self::BUILD_DIRECTORY, 0775, true)

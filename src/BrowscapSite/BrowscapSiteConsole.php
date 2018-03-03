@@ -16,8 +16,6 @@ class BrowscapSiteConsole extends Application
         $config = require __DIR__ . '/../../config/config.php';
 
         $commands = [
-            new Command\RebuildCommand(new Tool\Rebuilder(__DIR__ . '/../../vendor/build/')),
-            new Command\AutobuildCommand(),
             new Command\GenerateStatisticsCommand(new AnalyseStatistics(
                 new \PDO($config['db']['dsn'], $config['db']['user'], $config['db']['pass'])
             )),
