@@ -61,7 +61,7 @@ final class ArrayMetadataBuilder implements MetadataBuilder
 
     private function writeArray(string $filename, array $array): void
     {
-        file_put_contents($filename, "<?php\n\nreturn " . var_export($array, true) . ';', LOCK_EX);
+        file_put_contents($filename, "<?php\n\nreturn " . var_export($array, true) . ';');
     }
 
     private function getKbSize(string $filename): int

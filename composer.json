@@ -48,6 +48,11 @@
     "autoload": {
         "psr-0": { "": "src/" }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "BrowscapSiteTest\\": "tests/BrowscapSiteTest/"
+        }
+    },
     "bin": ["bin/browscap-site"],
     "scripts": {
         "post-install-cmd": ["BrowscapSite\\Composer\\ComposerHook::postInstall"],

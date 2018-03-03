@@ -56,7 +56,6 @@ final class BuildGenerator
      * @throws \InvalidArgumentException
      * @throws \OutOfBoundsException
      * @throws \Assert\AssertionFailedException
-     * @throws \BrowscapPHP\Exception
      * @throws \Exception
      */
     public function __invoke(SimpleIOInterface $io): void
