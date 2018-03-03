@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
+use Assert\Assert;
 use Browscap\Data\Factory\DataCollectionFactory;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
@@ -22,6 +23,7 @@ final class ComposerHook
 
     /**
      * @param Event $event
+     * @throws \OutOfBoundsException
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \BrowscapPHP\Exception
@@ -35,6 +37,7 @@ final class ComposerHook
 
     /**
      * @param Event $event
+     * @throws \OutOfBoundsException
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \BrowscapPHP\Exception
@@ -42,23 +45,8 @@ final class ComposerHook
      * @throws \Assert\AssertionFailedException
      */
     public static function postUpdate(Event $event): void
-    {
-        $installed = $event->getComposer()->getRepositoryManager()->getLocalRepository();
-
-        $requiredPackage = 'browscap/browscap';
-
-        $packages = $installed->findPackages($requiredPackage);
-
-        if (!count($packages)) {
-            throw new \Exception("The package {$requiredPackage} does not seem to be installed, and it is required.");
-        }
-
-        $package = reset($packages);
-        $buildNumber = self::determineBuildNumberFromPackage($package);
-
-        if (empty($buildNumber)) {
-            throw new \Exception("Could not determine build number from package {$requiredPackage}");
-        }
+    {;
+        $buildNumber = self::determineBuildNumberFromPackage('browscap/browscap');
 
         $currentBuildNumber = self::getCurrentBuildNumber();
         if ($buildNumber !== $currentBuildNumber) {
@@ -80,19 +68,20 @@ final class ComposerHook
      */
     private static function convertPackageVersionToBuildNumber(string $version): int
     {
+        Assert::that($version)->regex('#(\d+\.)(\d+\.)(\d+)#');
         return (int)sprintf('%03d%03d%03d', ...explode('.', $version));
     }
 
     /**
      * Try to determine the build number from a composer package.
      *
-     * @param \Composer\Package\PackageInterface $package
+     * @param string $packageName
      * @return int
      * @throws \OutOfBoundsException
      */
-    public static function determineBuildNumberFromPackage(PackageInterface $package): int
+    public static function determineBuildNumberFromPackage(string $packageName): int
     {
-        return self::convertPackageVersionToBuildNumber(Versions::getVersion($package->getName()));
+        return self::convertPackageVersionToBuildNumber(Versions::getVersion($packageName));
     }
 
     /**
