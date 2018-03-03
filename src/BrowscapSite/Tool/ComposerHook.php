@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
@@ -7,25 +8,40 @@ use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Composer\IO\IOInterface;
 use Browscap\Generator\BuildGenerator;
-use Browscap\Helper\CollectionCreator;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Browscap\Writer\Factory\FullCollectionFactory;
+use PackageVersions\Versions;
 
-class ComposerHook
+final class ComposerHook
 {
-    public static function postInstall(Event $event)
+    private const BUILD_DIRECTORY = __DIR__ . '/../../../vendor/build';
+    private const RESOURCE_DIRECTORY = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
+
+    /**
+     * @param Event $event
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \BrowscapPHP\Exception
+     * @throws \Exception
+     * @throws \Assert\AssertionFailedException
+     */
+    public static function postInstall(Event $event): void
     {
         self::postUpdate($event);
     }
 
     /**
      * @param Event $event
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \BrowscapPHP\Exception
      * @throws \Exception
+     * @throws \Assert\AssertionFailedException
      */
-    public static function postUpdate(Event $event)
+    public static function postUpdate(Event $event): void
     {
         $installed = $event->getComposer()->getRepositoryManager()->getLocalRepository();
 
@@ -45,82 +61,54 @@ class ComposerHook
         }
 
         $currentBuildNumber = self::getCurrentBuildNumber();
-        if ($buildNumber != $currentBuildNumber) {
+        if ($buildNumber !== $currentBuildNumber) {
             $event->getIO()->write(sprintf('<info>Generating new Browscap build: %s</info>', $buildNumber));
             self::createBuild($buildNumber, $event->getIO());
-            $event->getIO()->write(sprintf('<info>All done</info>', $buildNumber));
+            $event->getIO()->write('<info>All done</info>');
         } else {
             $event->getIO()->write(sprintf('<info>Current build %s is up to date</info>', $currentBuildNumber));
         }
     }
 
     /**
+     * Converts a package number e.g. 1.2.3 into a "build number" e.g. 1002003
+     *
+     * There are three digits for each version, so 001002003 becomes 1002003 when cast to int to drop the leading zeros
+     *
+     * @param string $version
+     * @return int
+     */
+    private static function convertPackageVersionToBuildNumber(string $version): int
+    {
+        return (int)sprintf('%03d%03d%03d', ...explode('.', $version));
+    }
+
+    /**
      * Try to determine the build number from a composer package.
      *
      * @param \Composer\Package\PackageInterface $package
-     * @return string
+     * @return int
+     * @throws \OutOfBoundsException
      */
-    public static function determineBuildNumberFromPackage(PackageInterface $package)
+    public static function determineBuildNumberFromPackage(PackageInterface $package): int
     {
-        if ($package->isDev()) {
-            $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
-
-            if (is_null($buildNumber)) {
-                $buildNumber = substr($package->getSourceReference(), 0, 8);
-            }
-        } else {
-            $installedVersion = $package->getPrettyVersion();
-
-            // SemVer supports build numbers, but fall back to just using
-            // version number if not available; at time of writing, composer
-            // did not support SemVer 2.0.0 build numbers fully:
-            // @see https://github.com/composer/composer/issues/2422
-            $plusPos = strpos($installedVersion, '+');
-            if ($plusPos !== false) {
-                $buildNumber = substr($installedVersion, ($plusPos + 1));
-            } else {
-                $buildNumber = self::determineBuildNumberFromBrowscapBuildFile();
-
-                if (is_null($buildNumber)) {
-                    $buildNumber = $installedVersion;
-                }
-            }
-        }
-
-        return $buildNumber;
+        return self::convertPackageVersionToBuildNumber(Versions::getVersion($package->getName()));
     }
 
     /**
-     * This is a temporary fallback until Composer supports SemVer 2.0.0 properly.
-     *
-     * @return string|NULL
+     * @return int|null
      */
-    public static function determineBuildNumberFromBrowscapBuildFile()
+    public static function getCurrentBuildNumber(): ?int
     {
-        $buildFile = __DIR__ . '/../../../vendor/browscap/browscap/BUILD_NUMBER';
+        $metadataFile = self::BUILD_DIRECTORY . 'metadata.php';
 
-        if (file_exists($buildFile)) {
-            $buildNumber = file_get_contents($buildFile);
-            return trim($buildNumber);
-        } else {
+        if (!file_exists($metadataFile)) {
             return null;
         }
-    }
 
-    /**
-     * @return string|null
-     */
-    public static function getCurrentBuildNumber()
-    {
-        $buildFolder = __DIR__ . '/../../../vendor/build/';
-        $metadataFile = $buildFolder . 'metadata.php';
-
-        if (file_exists($metadataFile)) {
-            $metadata = require $metadataFile;
-            return $metadata['version'];
-        } else {
-            return null;
-        }
+        /** @noinspection PhpIncludeInspection */
+        $metadata = require $metadataFile;
+        return (int)$metadata['version'];
     }
 
     /**
@@ -129,7 +117,7 @@ class ComposerHook
      * @param string $message
      * @param IOInterface|null $io
      */
-    private static function log($message, IOInterface $io = null)
+    private static function log($message, IOInterface $io = null): void
     {
         if ($io) {
             $io->write($message);
@@ -141,23 +129,23 @@ class ComposerHook
      *
      * @param string $buildNumber
      * @param IOInterface|null $io
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      * @throws \BrowscapPHP\Exception
+     * @throws \Exception
+     * @throws \Assert\AssertionFailedException
      */
-    public static function createBuild($buildNumber, IOInterface $io = null)
+    public static function createBuild($buildNumber, IOInterface $io = null): void
     {
-        $buildFolder = __DIR__ . '/../../../vendor/build/';
-        $resourceFolder = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
-
-        if (!file_exists($buildFolder)) {
-            self::log('  - Creating build folder', $io);
-            mkdir($buildFolder, 0775, true);
+        if (!file_exists(self::BUILD_DIRECTORY)
+            && !mkdir(self::BUILD_DIRECTORY, 0775, true)
+            && !is_dir(self::BUILD_DIRECTORY)
+        ) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', self::BUILD_DIRECTORY));
         }
 
-        $logLevel = getenv('BC_BUILD_LOG') ? getenv('BC_BUILD_LOG') : Logger::NOTICE;
-        self::log('  - Log level set to ' . $logLevel, $io);
+        $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
 
-        // Create a logger
-        self::log('  - Setting up logging', $io);
         $stream = new StreamHandler('php://output', $logLevel);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
 
@@ -165,25 +153,19 @@ class ComposerHook
         $logger->pushHandler($stream);
         $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
-        self::log('  - Creating writer collection', $io);
-        $writerCollectionFactory = new FullCollectionFactory();
-        $writerCollection        = $writerCollectionFactory->createCollection($logger, $buildFolder);
-        $dataCollectionFactory   = new DataCollectionFactory($logger);
-
-        // Generate the actual browscap.ini files
-        self::log('  - Creating actual build', $io);
+        self::log('  - Creating browscap build', $io);
         $buildGenerator = new BuildGenerator(
-            $resourceFolder,
-            $buildFolder,
+            self::RESOURCE_DIRECTORY,
+            self::BUILD_DIRECTORY,
             $logger,
-            $writerCollection,
-            $dataCollectionFactory
+            (new FullCollectionFactory())->createCollection($logger, self::BUILD_DIRECTORY),
+            new DataCollectionFactory($logger)
         );
         $buildGenerator->run($buildNumber);
 
         // Generate the metadata for the site
         self::log('  - Generating metadata', $io);
-        $rebuilder = new Rebuilder($buildFolder);
+        $rebuilder = new Rebuilder(self::BUILD_DIRECTORY);
         $rebuilder->rebuild();
 
         // Updating browscap.ini cache

@@ -37,7 +37,8 @@
         "composer/composer": "^1.5",
         "roave/security-advisories": "dev-master",
         "beberlei/assert": "^2.8",
-        "zendframework/zend-config-aggregator": "^1.0"
+        "zendframework/zend-config-aggregator": "^1.0",
+        "ocramius/package-versions": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4",
