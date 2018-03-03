@@ -46,7 +46,9 @@
         "mikey179/vfsStream": "^1.6"
     },
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-4": {
+            "BrowscapSite\\": "src/BrowscapSite"
+        }
     },
     "autoload-dev": {
         "psr-4": {
