@@ -1,72 +1,55 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
 use BrowscapPHP\Browscap;
 use BrowscapPHP\BrowscapUpdater;
 use BrowscapPHP\Cache\BrowscapCache;
+use BrowscapPHP\Cache\BrowscapCacheInterface;
 use WurflCache\Adapter\File;
 
-class BrowscapPhpTool
+final class BrowscapPhpTool
 {
-    /**
-     * @var string
-     */
-    private $cacheDirectory;
+    private const CACHE_DIRECTORY = __DIR__ . '/../../../cache/';
+    private const INI_FILE = __DIR__ . '/../../../vendor/build/full_php_browscap.ini';
 
     /**
-     * @var string
+     * @var BrowscapCacheInterface
      */
-    private $remoteIniFile;
+    private $cache;
 
-    public function __construct($cacheDirectory = null, $remoteIniFile = null)
+    public function __construct()
     {
-        $this->cacheDirectory = $cacheDirectory;
-
-        if (null === $this->cacheDirectory) {
-            $this->cacheDirectory = __DIR__ . '/../../../cache/';
-        }
-
-        $this->remoteIniFile = $remoteIniFile;
-        if (null === $this->remoteIniFile) {
-            $this->remoteIniFile = __DIR__ . '/../../../vendor/build/full_php_browscap.ini';
-        }
+        $this->cache = new BrowscapCache(
+            new File([
+                File::DIR => self::CACHE_DIRECTORY,
+            ])
+        );
     }
 
     /**
      * Perform an update from the latest generated build (locally, not from web)
      * @throws \BrowscapPHP\Exception
      */
-    public function update()
+    public function update(): void
     {
         $updater = new BrowscapUpdater();
-        $updater->setCache($this->getCache());
-        $updater->convertFile($this->remoteIniFile);
+        $updater->setCache($this->cache);
+        $updater->convertFile(self::INI_FILE);
     }
 
     /**
      * Identify a user agent
      *
      * @param string $userAgent
-     * @return mixed
+     * @return \stdClass
      * @throws \BrowscapPHP\Exception
      */
-    public function identify($userAgent)
+    public function identify(string $userAgent): object
     {
         $browscap = new Browscap();
-        $browscap->setCache($this->getCache());
+        $browscap->setCache($this->cache);
         return $browscap->getBrowser($userAgent);
-    }
-
-    /**
-     * @return BrowscapCache
-     */
-    private function getCache()
-    {
-        return new BrowscapCache(
-            new File([
-                File::DIR => $this->cacheDirectory,
-            ])
-        );
     }
 }
