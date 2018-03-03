@@ -7,5 +7,5 @@ interface UserAgentTool
 {
     public function update(): void;
 
-    public function identify(string $userAgent): object;
+    public function identify(string $userAgent): \stdClass;
 }

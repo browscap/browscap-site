@@ -40,8 +40,8 @@ final class BuildGeneratorFactory
         return new BuildGenerator(
             self::BUILD_DIRECTORY,
             new BrowscapBuildGenerator(
-                self::BUILD_DIRECTORY,
                 self::RESOURCE_DIRECTORY,
+                self::BUILD_DIRECTORY,
                 $logger,
                 (new FullCollectionFactory())->createCollection($logger, self::BUILD_DIRECTORY),
                 new DataCollectionFactory($logger)

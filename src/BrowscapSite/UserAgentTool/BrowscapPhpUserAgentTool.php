@@ -46,7 +46,7 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
      * @return \stdClass
      * @throws \BrowscapPHP\Exception
      */
-    public function identify(string $userAgent): object
+    public function identify(string $userAgent): \stdClass
     {
         $browscap = new Browscap();
         $browscap->setCache($this->cache);
