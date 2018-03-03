@@ -3,7 +3,7 @@
 namespace BrowscapSite\Controller;
 
 use BrowscapSite\BrowscapSiteWeb;
-use BrowscapSite\Tool\BrowscapPhpTool;
+use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 
 class UserAgentLookupController
 {
@@ -29,7 +29,7 @@ class UserAgentLookupController
 
             $ua = $request->request->get('ua');
 
-            $uaInfo = (array)(new BrowscapPhpTool())->identify($ua);
+            $uaInfo = (array)(new BrowscapPhpUserAgentTool())->identify($ua);
             $this->convertBooleansToStrings($uaInfo);
         }
 

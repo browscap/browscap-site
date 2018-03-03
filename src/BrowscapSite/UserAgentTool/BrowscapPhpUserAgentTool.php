@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BrowscapSite\Tool;
+namespace BrowscapSite\UserAgentTool;
 
 use BrowscapPHP\Browscap;
 use BrowscapPHP\BrowscapUpdater;
@@ -9,7 +9,7 @@ use BrowscapPHP\Cache\BrowscapCache;
 use BrowscapPHP\Cache\BrowscapCacheInterface;
 use WurflCache\Adapter\File;
 
-final class BrowscapPhpTool
+final class BrowscapPhpUserAgentTool implements UserAgentTool
 {
     private const CACHE_DIRECTORY = __DIR__ . '/../../../cache/';
     private const INI_FILE = __DIR__ . '/../../../vendor/build/full_php_browscap.ini';

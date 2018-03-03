@@ -8,6 +8,7 @@ use Browscap\Generator\BuildGenerator as BrowscapBuildGenerator;
 use Browscap\Parser\IniParser;
 use Browscap\Writer\Factory\FullCollectionFactory;
 use BrowscapSite\Metadata\ArrayMetadataBuilder;
+use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
@@ -49,7 +50,8 @@ final class BuildGeneratorFactory
                 new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
                 self::BUILD_DIRECTORY
             ),
-            new OcramiusDeterminePackageVersion()
+            new OcramiusDeterminePackageVersion(),
+            new BrowscapPhpUserAgentTool()
         );
     }
 }

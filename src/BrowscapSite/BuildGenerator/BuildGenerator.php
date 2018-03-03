@@ -7,7 +7,7 @@ use Assert\Assert;
 use Browscap\Generator\GeneratorInterface;
 use BrowscapSite\Composer\SimpleIOInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
-use BrowscapSite\Tool\BrowscapPhpTool;
+use BrowscapSite\UserAgentTool\UserAgentTool;
 
 final class BuildGenerator
 {
@@ -31,16 +31,23 @@ final class BuildGenerator
      */
     private $determinePackageVersion;
 
+    /**
+     * @var UserAgentTool
+     */
+    private $userAgentTool;
+
     public function __construct(
         string $buildDirectory,
         GeneratorInterface $buildGenerator,
         MetadataBuilder $metadataBuilder,
-        DeterminePackageVersion $determinePackageVersion
+        DeterminePackageVersion $determinePackageVersion,
+        UserAgentTool $userAgentTool
     ) {
         $this->buildDirectory = $buildDirectory;
         $this->buildGenerator = $buildGenerator;
         $this->metadataBuilder = $metadataBuilder;
         $this->determinePackageVersion = $determinePackageVersion;
+        $this->userAgentTool = $userAgentTool;
     }
 
     /**
@@ -116,7 +123,6 @@ final class BuildGenerator
      * @param SimpleIOInterface $io
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \BrowscapPHP\Exception
      * @throws \Exception
      * @throws \Assert\AssertionFailedException
      */
@@ -136,6 +142,6 @@ final class BuildGenerator
         $this->metadataBuilder->build();
 
         $io->write('  - Updating cache');
-        (new BrowscapPhpTool())->update();
+        $this->userAgentTool->update();
     }
 }
