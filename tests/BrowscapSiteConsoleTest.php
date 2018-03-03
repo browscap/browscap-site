@@ -25,7 +25,6 @@ class BrowscapSiteConsoleTest extends TestCase
     {
         $app = new BrowscapSiteConsole();
 
-        $this->assertAppHasCommand($app, 'rebuild');
-        $this->assertAppHasCommand($app, 'autobuild');
+        $this->assertAppHasCommand($app, 'generate-statistics');
     }
 }

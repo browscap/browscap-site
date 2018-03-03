@@ -1,47 +1,33 @@
 <?php
+declare(strict_types=1);
 
-namespace BrowscapSite\Tool;
+namespace BrowscapSite\Metadata;
 
 use Browscap\Parser\ParserInterface;
-use Browscap\Parser\IniParser;
 
-class Rebuilder
+final class ArrayMetadataBuilder implements MetadataBuilder
 {
     /**
-     * @var \Browscap\Parser\ParserInterface
+     * @var ParserInterface
      */
-    protected $parser;
+    private $parser;
 
-    protected $buildDir;
+    /**
+     * @var string
+     */
+    private $buildDir;
 
-    public function __construct($buildDir)
+    public function __construct(ParserInterface $parser, string $buildDir)
     {
+        $this->parser = $parser;
         $this->buildDir = $buildDir;
     }
 
-    public function setParser(ParserInterface $parser)
-    {
-        $this->parser = $parser;
-    }
-
-    /**
-     * @return \Browscap\Parser\ParserInterface
-     */
-    public function getParser()
-    {
-        if (!$this->parser) {
-            $this->parser = new IniParser($this->buildDir . '/browscap.ini');
-        }
-
-        return $this->parser;
-    }
-
-    public function rebuild()
+    public function build(): void
     {
         $metadata = [];
 
-        $parser = $this->getParser();
-        $fileData = $parser->parse();
+        $fileData = $this->parser->parse();
 
         $versionData = $fileData['GJK_Browscap_Version'];
 
@@ -66,21 +52,20 @@ class Rebuilder
         $this->niceDelete($this->buildDir . '/../cache/cache.php');
     }
 
-    public function niceDelete($filename)
+    private function niceDelete(string $filename): void
     {
         if (file_exists($filename)) {
             unlink($filename);
         }
     }
 
-    public function writeArray($filename, $array)
+    private function writeArray(string $filename, array $array): void
     {
-        $phpArray = var_export($array, true);
-        file_put_contents($filename, "<?php\n\nreturn " . $phpArray . ';');
+        file_put_contents($filename, "<?php\n\nreturn " . var_export($array, true) . ';');
     }
 
-    public function getKbSize($filename)
+    private function getKbSize(string $filename): int
     {
-        return round(filesize($filename) / 1024);
+        return (int)round(filesize($filename) / 1024);
     }
 }

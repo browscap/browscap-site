@@ -1,18 +1,19 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
 use DateTimeInterface;
+use PDO;
 
 class AnalyseStatistics
 {
     /**
-     * @var \PDO
+     * @var PDO
      */
     private $pdo;
 
-    public function __construct(\PDO $pdo)
+    public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
@@ -21,7 +22,7 @@ class AnalyseStatistics
      * @throws \Exception
      * @return void
      */
-    public function __invoke()
+    public function __invoke(): void
     {
         $this->pdo->beginTransaction();
 
@@ -42,7 +43,7 @@ class AnalyseStatistics
      * @param string $dateFormat
      * @return void
      */
-    private function truncateInsert(string $dataTable, DateTimeInterface $since, string $dateFormat)
+    private function truncateInsert(string $dataTable, DateTimeInterface $since, string $dateFormat): void
     {
         $dataTable = $this->sanitizeTable($dataTable);
         $dateFormat = $this->sanitiseDateFormat($dateFormat);
@@ -70,7 +71,7 @@ class AnalyseStatistics
      * @param string $tableName
      * @return string
      */
-    private function sanitizeTable(string $tableName) : string
+    private function sanitizeTable(string $tableName): string
     {
         return preg_replace('/[^%a-zA-Z]/', '', $tableName);
     }
@@ -81,7 +82,7 @@ class AnalyseStatistics
      * @param string $format
      * @return string
      */
-    private function sanitiseDateFormat(string $format) : string
+    private function sanitiseDateFormat(string $format): string
     {
         return preg_replace('/[^%a-zA-Z0-9-]/', '', $format);
     }

@@ -16,7 +16,7 @@ class BrowscapSiteWeb extends SilexApplication
     {
         parent::__construct();
 
-        $this->config = require __DIR__ . '/../../config/config.php';
+        $this->config = require __DIR__ . '/../config/config.php';
 
         if ($this->getConfig('debug')) {
             $this['debug'] = true;
@@ -67,7 +67,7 @@ class BrowscapSiteWeb extends SilexApplication
         };
 
         $this['metadata'] = function () {
-            return require __DIR__ . '/../../vendor/build/metadata.php';
+            return require __DIR__ . '/../vendor/build/metadata.php';
         };
 
         $this['downloads.controller'] = function () {
@@ -79,7 +79,7 @@ class BrowscapSiteWeb extends SilexApplication
         };
 
         $this['stream.controller'] =     function () {
-            $buildDirectory = __DIR__ . '/../../vendor/build/';
+            $buildDirectory = __DIR__ . '/../vendor/build/';
             return new Controller\StreamController(
                 $this['rateLimiter'],
                 $this->getFiles(),
@@ -109,7 +109,7 @@ class BrowscapSiteWeb extends SilexApplication
         };
 
         $this->register(new TwigServiceProvider(), [
-            'twig.path' => __DIR__ . '/../../views',
+            'twig.path' => __DIR__ . '/../views',
         ]);
     }
 

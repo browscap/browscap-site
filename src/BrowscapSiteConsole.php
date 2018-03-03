@@ -13,11 +13,9 @@ class BrowscapSiteConsole extends Application
         parent::__construct('Browscap Website', 'dev-master');
 
         // @todo Config should come from a shared container, this is terrible
-        $config = require __DIR__ . '/../../config/config.php';
+        $config = require __DIR__ . '/../config/config.php';
 
         $commands = [
-            new Command\RebuildCommand(new Tool\Rebuilder(__DIR__ . '/../../vendor/build/')),
-            new Command\AutobuildCommand(),
             new Command\GenerateStatisticsCommand(new AnalyseStatistics(
                 new \PDO($config['db']['dsn'], $config['db']['user'], $config['db']['pass'])
             )),
