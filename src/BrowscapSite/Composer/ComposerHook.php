@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BrowscapSite\Tool;
+namespace BrowscapSite\Composer;
 
 use BrowscapSite\BuildGenerator\BuildGeneratorFactory;
 use Composer\Script\Event;
@@ -33,6 +33,6 @@ final class ComposerHook
      */
     public static function postUpdate(Event $event): void
     {
-        (new BuildGeneratorFactory())->__invoke()->__invoke($event->getIO());
+        (new BuildGeneratorFactory())->__invoke()->__invoke(new ComposerWrappedSimpleIO($event->getIO()));
     }
 }

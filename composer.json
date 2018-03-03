@@ -42,14 +42,15 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4",
-        "friendsofphp/php-cs-fixer": "^2.7"
+        "friendsofphp/php-cs-fixer": "^2.7",
+        "mikey179/vfsStream": "^1.6"
     },
     "autoload": {
         "psr-0": { "": "src/" }
     },
     "bin": ["bin/browscap-site"],
     "scripts": {
-        "post-install-cmd": ["BrowscapSite\\Tool\\ComposerHook::postInstall"],
-        "post-update-cmd": ["BrowscapSite\\Tool\\ComposerHook::postUpdate"]
+        "post-install-cmd": ["BrowscapSite\\Composer\\ComposerHook::postInstall"],
+        "post-update-cmd": ["BrowscapSite\\Composer\\ComposerHook::postUpdate"]
     }
 }

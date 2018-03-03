@@ -5,9 +5,9 @@ namespace BrowscapSite\BuildGenerator;
 
 use Assert\Assert;
 use Browscap\Generator\GeneratorInterface;
+use BrowscapSite\Composer\SimpleIOInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
 use BrowscapSite\Tool\BrowscapPhpTool;
-use Composer\IO\IOInterface;
 
 final class BuildGenerator
 {
@@ -44,7 +44,7 @@ final class BuildGenerator
     }
 
     /**
-     * @param IOInterface $io
+     * @param SimpleIOInterface $io
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \OutOfBoundsException
@@ -52,7 +52,7 @@ final class BuildGenerator
      * @throws \BrowscapPHP\Exception
      * @throws \Exception
      */
-    public function __invoke(IOInterface $io): void
+    public function __invoke(SimpleIOInterface $io): void
     {
         $packageBuildNumber = $this->determineBuildNumberFromPackage('browscap/browscap');
         $currentBuildNumber = $this->getCurrentBuildNumber();
@@ -113,14 +113,14 @@ final class BuildGenerator
      * Generate a build for build number specified.
      *
      * @param int $buildNumber
-     * @param IOInterface|null $io
+     * @param SimpleIOInterface $io
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \BrowscapPHP\Exception
      * @throws \Exception
      * @throws \Assert\AssertionFailedException
      */
-    private function createBuild(int $buildNumber, IOInterface $io): void
+    private function createBuild(int $buildNumber, SimpleIOInterface $io): void
     {
         if (!file_exists($this->buildDirectory)
             && !mkdir($this->buildDirectory, 0775, true)
