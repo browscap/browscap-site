@@ -1,18 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
-class RateLimiter
+final class RateLimiter
 {
     /**
      * @var \PDO
      */
-    protected $pdo;
+    private $pdo;
 
     /**
      * @var array
      */
-    protected $banConfiguration;
+    private $banConfiguration;
 
     public function __construct(\PDO $pdo, $banConfiguration)
     {
@@ -30,7 +31,7 @@ class RateLimiter
      * @param string $ip
      * @return bool
      */
-    public function isTemporarilyBanned($ip)
+    public function isTemporarilyBanned(string $ip): bool
     {
         // Check to see if a temporary ban already exists
         $tempBan = $this->getTemporaryBan($ip);
@@ -54,14 +55,9 @@ class RateLimiter
      * @param string $ip
      * @return bool
      */
-    public function isPermanentlyBanned($ip)
+    public function isPermanentlyBanned(string $ip): bool
     {
-        $permaBan = $this->getPermanentBan($ip);
-        if ($permaBan !== false) {
-            return true;
-        }
-
-        return false;
+        return $this->getPermanentBan($ip) !== false;
     }
 
     /**
@@ -71,7 +67,7 @@ class RateLimiter
      * @param string $userAgent
      * @param string $fileCode
      */
-    public function logDownload($ip, $userAgent, $fileCode)
+    public function logDownload(string $ip, string $userAgent, string $fileCode): void
     {
         $sql = 'INSERT INTO downloadLog (ipAddress, downloadDate, fileCode, userAgent) VALUES(:ip, NOW(), :fileCode, :ua)';
 
@@ -91,7 +87,7 @@ class RateLimiter
      * @param string $ip
      * @return bool
      */
-    protected function isOverLimit($ip)
+    private function isOverLimit(string $ip): bool
     {
         $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
         $rateLimitDownloads = (int)$this->banConfiguration['rateLimitDownloads'];
@@ -107,11 +103,7 @@ class RateLimiter
         $stmt->execute();
         $downloads = (int)$stmt->fetchColumn();
 
-        if ($downloads >= $rateLimitDownloads) {
-            return true;
-        }
-
-        return false;
+        return $downloads >= $rateLimitDownloads;
     }
 
     /**
@@ -120,7 +112,7 @@ class RateLimiter
      * @param string $ip
      * @return bool
      */
-    protected function shouldPermanentlyBan($ip)
+    private function shouldPermanentlyBan(string $ip): bool
     {
         $tempBanLimit = (int)$this->banConfiguration['tempBanLimit'];
 
@@ -135,7 +127,7 @@ class RateLimiter
      * @param string $ip
      * @return int
      */
-    protected function getRecentTemporaryBanCount($ip)
+    private function getRecentTemporaryBanCount(string $ip): int
     {
         $tempBanPeriod = $this->banConfiguration['tempBanPeriod'];
 
@@ -166,7 +158,7 @@ class RateLimiter
      * @param string $ip
      * @return array|bool
      */
-    protected function getTemporaryBan($ip)
+    private function getTemporaryBan(string $ip)
     {
         $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
 
@@ -200,7 +192,7 @@ class RateLimiter
      * @param string $ip
      * @return array|bool
      */
-    protected function getPermanentBan($ip)
+    private function getPermanentBan(string $ip)
     {
         $sql = '
             SELECT
@@ -225,7 +217,7 @@ class RateLimiter
      * @param string $ip
      * @param bool $permanent
      */
-    protected function createBan($ip, $permanent = false)
+    private function createBan(string $ip, bool $permanent): void
     {
         $sql = 'INSERT INTO banLog (ipAddress, banDate, isPermanent) VALUES(:ip, NOW(), :permanent)';
 
