@@ -47,12 +47,12 @@
     },
     "autoload": {
         "psr-4": {
-            "BrowscapSite\\": "src/BrowscapSite"
+            "BrowscapSite\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "BrowscapSiteTest\\": "tests/BrowscapSiteTest/"
+            "BrowscapSiteTest\\": "tests/"
         }
     },
     "bin": ["bin/browscap-site"],

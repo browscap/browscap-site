@@ -11,8 +11,8 @@ use WurflCache\Adapter\File;
 
 final class BrowscapPhpUserAgentTool implements UserAgentTool
 {
-    private const CACHE_DIRECTORY = __DIR__ . '/../../../cache/';
-    private const INI_FILE = __DIR__ . '/../../../vendor/build/full_php_browscap.ini';
+    private const CACHE_DIRECTORY = __DIR__ . '/../../cache/';
+    private const INI_FILE = __DIR__ . '/../../vendor/build/full_php_browscap.ini';
 
     /**
      * @var BrowscapCacheInterface

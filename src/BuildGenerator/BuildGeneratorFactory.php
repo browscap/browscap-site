@@ -19,8 +19,8 @@ use Monolog\Logger;
  */
 final class BuildGeneratorFactory
 {
-    private const BUILD_DIRECTORY = __DIR__ . '/../../../vendor/build';
-    private const RESOURCE_DIRECTORY = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
+    private const BUILD_DIRECTORY = __DIR__ . '/../../vendor/build';
+    private const RESOURCE_DIRECTORY = __DIR__ . '/../../vendor/browscap/browscap/resources/';
 
     /**
      * @return BuildGenerator
