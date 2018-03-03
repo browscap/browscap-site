@@ -13,6 +13,9 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class UpdateBrowscapVersionUsedFactory
 {
     private const BUILD_DIRECTORY = __DIR__ . '/../../../vendor/build';
@@ -45,7 +48,8 @@ final class UpdateBrowscapVersionUsedFactory
             new ArrayMetadataBuilder(
                 new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
                 self::BUILD_DIRECTORY
-            )
+            ),
+            new OcramiusDeterminePackageVersion()
         );
     }
 }

@@ -27,14 +27,21 @@ final class UpdateBrowscapVersionUsed
      */
     private $metadataBuilder;
 
+    /**
+     * @var DeterminePackageVersion
+     */
+    private $determinePackageVersion;
+
     public function __construct(
         string $buildDirectory,
         GeneratorInterface $buildGenerator,
-        MetadataBuilder $metadataBuilder
+        MetadataBuilder $metadataBuilder,
+        DeterminePackageVersion $determinePackageVersion
     ) {
         $this->buildDirectory = $buildDirectory;
         $this->buildGenerator = $buildGenerator;
         $this->metadataBuilder = $metadataBuilder;
+        $this->determinePackageVersion = $determinePackageVersion;
     }
 
     /**
@@ -83,7 +90,7 @@ final class UpdateBrowscapVersionUsed
      */
     private function determineBuildNumberFromPackage(string $packageName): int
     {
-        $packageVersion = Versions::getVersion($packageName);
+        $packageVersion = $this->determinePackageVersion->__invoke($packageName);
         return $this->convertPackageVersionToBuildNumber(substr($packageVersion, 0, strpos($packageVersion, '@')));
     }
 

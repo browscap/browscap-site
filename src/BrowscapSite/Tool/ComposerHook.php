@@ -8,7 +8,6 @@ use Composer\Script\Event;
 
 final class ComposerHook
 {
-
     /**
      * @param Event $event
      * @throws \OutOfBoundsException
