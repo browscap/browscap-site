@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
-use Browscap\Parser\IniParser;
-use BrowscapSite\Metadata\ArrayMetadataBuilder;
+use BrowscapSite\BuildGenerator\UpdateBrowscapVersionUsedFactory;
 use Composer\Script\Event;
 
 final class ComposerHook
 {
-    private const BUILD_DIRECTORY = __DIR__ . '/../../../vendor/build';
-    private const RESOURCE_DIRECTORY = __DIR__ . '/../../../vendor/browscap/browscap/resources/';
 
     /**
      * @param Event $event
@@ -37,13 +34,6 @@ final class ComposerHook
      */
     public static function postUpdate(Event $event): void
     {
-        (new UpdateBrowscapVersionUsed(
-            self::BUILD_DIRECTORY,
-            self::RESOURCE_DIRECTORY,
-            new ArrayMetadataBuilder(
-                new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
-                self::BUILD_DIRECTORY
-            )
-        ))->__invoke($event->getIO());
+        (new UpdateBrowscapVersionUsedFactory())->__invoke()->__invoke($event->getIO());
     }
 }

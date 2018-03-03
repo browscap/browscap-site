@@ -1,20 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace BrowscapSite\Tool;
+namespace BrowscapSite\BuildGenerator;
 
 use Assert\Assert;
-use Browscap\Data\Factory\DataCollectionFactory;
-use Browscap\Generator\BuildGenerator;
-use Browscap\Parser\IniParser;
-use Browscap\Writer\Factory\FullCollectionFactory;
-use BrowscapSite\Metadata\ArrayMetadataBuilder;
+use Browscap\Generator\GeneratorInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
+use BrowscapSite\Tool\BrowscapPhpTool;
 use Composer\IO\IOInterface;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use PackageVersions\Versions;
 
 final class UpdateBrowscapVersionUsed
@@ -25,9 +18,9 @@ final class UpdateBrowscapVersionUsed
     private $buildDirectory;
 
     /**
-     * @var string
+     * @var GeneratorInterface
      */
-    private $resourceDirectory;
+    private $buildGenerator;
 
     /**
      * @var MetadataBuilder
@@ -36,11 +29,11 @@ final class UpdateBrowscapVersionUsed
 
     public function __construct(
         string $buildDirectory,
-        string $resourceDirectory,
+        GeneratorInterface $buildGenerator,
         MetadataBuilder $metadataBuilder
     ) {
         $this->buildDirectory = $buildDirectory;
-        $this->resourceDirectory = $resourceDirectory;
+        $this->buildGenerator = $buildGenerator;
         $this->metadataBuilder = $metadataBuilder;
     }
 
@@ -130,24 +123,8 @@ final class UpdateBrowscapVersionUsed
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $this->buildDirectory));
         }
 
-        $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
-
-        $stream = new StreamHandler('php://output', $logLevel);
-        $stream->setFormatter(new LineFormatter('%message%' . "\n"));
-
-        $logger = new Logger('browscap');
-        $logger->pushHandler($stream);
-        $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
-
         $io->write('  - Creating browscap build');
-        $buildGenerator = new BuildGenerator(
-            $this->resourceDirectory,
-            $this->buildDirectory,
-            $logger,
-            (new FullCollectionFactory())->createCollection($logger, $this->buildDirectory),
-            new DataCollectionFactory($logger)
-        );
-        $buildGenerator->run((string)$buildNumber);
+        $this->buildGenerator->run((string)$buildNumber);
 
         $io->write('  - Generating metadata');
         $this->metadataBuilder->build();
