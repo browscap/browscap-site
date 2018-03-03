@@ -45,7 +45,7 @@ final class ComposerHook
      * @throws \Assert\AssertionFailedException
      */
     public static function postUpdate(Event $event): void
-    {;
+    {
         $buildNumber = self::determineBuildNumberFromPackage('browscap/browscap');
 
         $currentBuildNumber = self::getCurrentBuildNumber();
@@ -68,7 +68,7 @@ final class ComposerHook
      */
     private static function convertPackageVersionToBuildNumber(string $version): int
     {
-        Assert::that($version)->regex('#(\d+\.)(\d+\.)(\d+)#');
+        Assert::that($version)->regex('#^(\d+\.)(\d+\.)(\d+)$#');
         return (int)sprintf('%03d%03d%03d', ...explode('.', $version));
     }
 
@@ -81,7 +81,8 @@ final class ComposerHook
      */
     public static function determineBuildNumberFromPackage(string $packageName): int
     {
-        return self::convertPackageVersionToBuildNumber(Versions::getVersion($packageName));
+        $packageVersion = Versions::getVersion($packageName);
+        return self::convertPackageVersionToBuildNumber(substr($packageVersion, 0, strpos($packageVersion, '@')));
     }
 
     /**
@@ -106,7 +107,7 @@ final class ComposerHook
      * @param string $message
      * @param IOInterface|null $io
      */
-    private static function log($message, IOInterface $io = null): void
+    private static function log(string $message, IOInterface $io = null): void
     {
         if ($io) {
             $io->write($message);
@@ -116,7 +117,7 @@ final class ComposerHook
     /**
      * Generate a build for build number specified.
      *
-     * @param string $buildNumber
+     * @param int $buildNumber
      * @param IOInterface|null $io
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
@@ -124,7 +125,7 @@ final class ComposerHook
      * @throws \Exception
      * @throws \Assert\AssertionFailedException
      */
-    public static function createBuild($buildNumber, IOInterface $io = null): void
+    public static function createBuild(int $buildNumber, IOInterface $io = null): void
     {
         if (!file_exists(self::BUILD_DIRECTORY)
             && !mkdir(self::BUILD_DIRECTORY, 0775, true)
@@ -150,7 +151,7 @@ final class ComposerHook
             (new FullCollectionFactory())->createCollection($logger, self::BUILD_DIRECTORY),
             new DataCollectionFactory($logger)
         );
-        $buildGenerator->run($buildNumber);
+        $buildGenerator->run((string)$buildNumber);
 
         // Generate the metadata for the site
         self::log('  - Generating metadata', $io);

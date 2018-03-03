@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "39f6866d6fe752522f9b366fc4df183d",
+    "content-hash": "e0a1511d8a5f91cc7e173e232522e257",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,16 +63,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "dev-master",
+            "version": "6.0.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "1ae7325"
+                "reference": "1ae7325084fa3babaf229d2cb23c9241e5fc5148"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/1ae7325",
-                "reference": "1ae7325",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/1ae7325084fa3babaf229d2cb23c9241e5fc5148",
+                "reference": "1ae7325084fa3babaf229d2cb23c9241e5fc5148",
                 "shasum": ""
             },
             "require": {
@@ -4288,7 +4288,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "browscap/browscap": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
