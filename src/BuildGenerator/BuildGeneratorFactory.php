@@ -37,7 +37,10 @@ final class BuildGeneratorFactory
         $logger->pushHandler($stream);
         $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
-        if (!mkdir(self::BUILD_DIRECTORY, 0775, true) && !is_dir(self::BUILD_DIRECTORY)) {
+        if (!file_exists(self::BUILD_DIRECTORY)
+            && !mkdir(self::BUILD_DIRECTORY, 0775, true)
+            && !is_dir(self::BUILD_DIRECTORY))
+        {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', self::BUILD_DIRECTORY));
         }
 
