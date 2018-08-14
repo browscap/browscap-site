@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d25ded190b0b4a5d6f0afef088d474a",
+    "content-hash": "17de61975359ae2603494fdd369151f5",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,35 +63,36 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.29",
+            "version": "6.0.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "ca3ab12142d1017507cd975feffcd348f02ba180"
+                "reference": "fc9e203861d7ee5f1b141927c97167bbcd7fee7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/ca3ab12142d1017507cd975feffcd348f02ba180",
-                "reference": "ca3ab12142d1017507cd975feffcd348f02ba180",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/fc9e203861d7ee5f1b141927c97167bbcd7fee7a",
+                "reference": "fc9e203861d7ee5f1b141927c97167bbcd7fee7a",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^2.8",
+                "beberlei/assert": "^2.9",
                 "localheinz/json-normalizer": "^0.5.2",
-                "mimmi20/ua-browser-type": "^6.0.1",
+                "mimmi20/ua-browser-type": "^6.0.2",
                 "mimmi20/ua-device-type": "^6.0.0",
                 "monolog/monolog": "^1.23",
                 "php": "^7.1",
                 "seld/jsonlint": "^1.6",
-                "symfony/console": "^3.3||^4.0"
+                "symfony/console": "^3.3 || ^4.0",
+                "symfony/finder": "^3.3 || ^4.0",
+                "twig/twig": "^2.4"
             },
             "require-dev": {
-                "browscap/browscap-php": "^3.1.0",
-                "friendsofphp/php-cs-fixer": "^2.10",
-                "localheinz/composer-normalize": "^0.6.0",
+                "browscap/browscap-php": "^4.1",
+                "friendsofphp/php-cs-fixer": "^2.12",
                 "mikey179/vfsstream": "^1.6",
                 "phpstan/phpstan": "^0.9",
-                "phpunit/phpunit": "^6.5 || ^7.0"
+                "phpunit/phpunit": "^7.2"
             },
             "suggest": {
                 "ext-zip": "to create a zip file containing all other generated files"
@@ -135,7 +136,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2018-05-13T04:31:56+00:00"
+            "time": "2018-08-14T08:59:17+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -857,16 +858,16 @@
         },
         {
             "name": "mimmi20/ua-browser-type",
-            "version": "6.0.1",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/ua-browser-type.git",
-                "reference": "cdea91cc0dc66d686d3dd80cfbd310ac2812d1f5"
+                "reference": "8b4f8f6f39254e38e6efec47d5b078831bc4cf21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/ua-browser-type/zipball/cdea91cc0dc66d686d3dd80cfbd310ac2812d1f5",
-                "reference": "cdea91cc0dc66d686d3dd80cfbd310ac2812d1f5",
+                "url": "https://api.github.com/repos/mimmi20/ua-browser-type/zipball/8b4f8f6f39254e38e6efec47d5b078831bc4cf21",
+                "reference": "8b4f8f6f39254e38e6efec47d5b078831bc4cf21",
                 "shasum": ""
             },
             "require": {
@@ -910,7 +911,7 @@
                 "user agent",
                 "user-agent"
             ],
-            "time": "2018-03-09T08:09:16+00:00"
+            "time": "2018-06-07T07:18:46+00:00"
         },
         {
             "name": "mimmi20/ua-device-type",
