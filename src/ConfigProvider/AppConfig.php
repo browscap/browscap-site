@@ -18,6 +18,7 @@ use BrowscapSite\Tool\RateLimiter;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use Doctrine\Common\Cache\FilesystemCache;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use PDO;
 use Psr\Container\ContainerInterface;
@@ -65,8 +66,9 @@ final class AppConfig
                     );
                 },
                 LoggerInterface::class => function (ContainerInterface $container): LoggerInterface {
+                    $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
                     $logger = new Logger('browscan-site');
-                    $logger->pushHandler(new \Monolog\Handler\ErrorLogHandler());
+                    $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
                     return $logger;
                 },
                 PDO::class => function (ContainerInterface $container): PDO {
