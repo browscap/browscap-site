@@ -14,7 +14,10 @@ use Slim\Http\Environment;
 use Slim\Http\Headers;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Http\Uri;
 use Slim\Router;
+use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
 
 final class SlimDependencies
 {
@@ -86,6 +89,18 @@ final class SlimDependencies
                     },
                     'callableResolver' => function (ContainerInterface $container) {
                         return new CallableResolver($container);
+                    },
+                    Twig::class => function (ContainerInterface $container) {
+                        $view = new Twig(__DIR__ . '/../../views', [
+//                            'cache' => 'path/to/cache'
+                        ]);
+
+                        $view->addExtension(new TwigExtension(
+                            $container->get('router'),
+                            Uri::createFromEnvironment($container->get('environment'))
+                        ));
+
+                        return $view;
                     },
                 ],
             ],

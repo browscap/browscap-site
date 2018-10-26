@@ -7,9 +7,13 @@ namespace BrowscapSite\ConfigProvider;
 use BrowscapSite\Handler\DownloadHandler;
 use BrowscapSite\Handler\PsrRequestHandlerWrapper;
 use BrowscapSite\Metadata\Metadata;
+use BrowscapSite\Renderer\Renderer;
+use BrowscapSite\Renderer\TwigRenderer;
 use BrowscapSite\Tool\RateLimiter;
 use PDO;
 use Psr\Container\ContainerInterface;
+use Slim\Http\Response;
+use Slim\Views\Twig;
 use Zend\ConfigAggregator\ConfigAggregator;
 
 final class AppConfig
@@ -60,10 +64,17 @@ final class AppConfig
                 },
                 DownloadHandler::class => function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new DownloadHandler(
+                        $container->get(Renderer::class),
                         $container->get(Metadata::class),
                         $container->get(self::BROWSCAP_FILES_LIST),
                         $container->get(self::BAN_CONFIGURATION)
                     ));
+                },
+                Renderer::class => function (ContainerInterface $container): Renderer {
+                    return new TwigRenderer(
+                        $container->get(Twig::class),
+                        new Response(200)
+                    );
                 },
                 self::BROWSCAP_FILES_LIST => function (): array {
                     return [

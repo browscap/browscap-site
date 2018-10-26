@@ -4,14 +4,16 @@ declare(strict_types=1);
 namespace BrowscapSite\Handler;
 
 use BrowscapSite\Metadata\Metadata;
+use BrowscapSite\Renderer\Renderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Http\Response;
 
 final class DownloadHandler implements RequestHandlerInterface
 {
+    /** @var Renderer */
+    private $renderer;
+
     /** @var Metadata */
     private $metadata;
 
@@ -21,8 +23,9 @@ final class DownloadHandler implements RequestHandlerInterface
     /** @var array */
     private $banConfiguration;
 
-    public function __construct(Metadata $metadata, array $fileList, array $banConfiguration)
+    public function __construct(Renderer $renderer, Metadata $metadata, array $fileList, array $banConfiguration)
     {
+        $this->renderer = $renderer;
         $this->metadata = $metadata;
         $this->fileList = $fileList;
         $this->banConfiguration = $banConfiguration;
@@ -33,13 +36,15 @@ final class DownloadHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $renderData = [
-            'files' => $this->mergeMetadataToFiles($this->fileList),
-            'version' => $this->metadata->version(),
-            'releaseDate' => $this->metadata->released()->format('jS M Y'),
-            'banConfig' => $this->banConfiguration,
-        ];
-        return new Response(200);
+        return $this->renderer->render(
+            'downloads.html',
+            [
+                'files' => $this->mergeMetadataToFiles($this->fileList),
+                'version' => $this->metadata->version(),
+                'releaseDate' => $this->metadata->released()->format('jS M Y'),
+                'banConfig' => $this->banConfiguration,
+            ]
+        );
     }
 
     private function mergeMetadataToFiles($files): array
