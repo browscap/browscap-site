@@ -25,6 +25,8 @@ services:
             MYSQL_DATABASE: browscap
         volumes:
             - ./db/create004.sql:/docker-entrypoint-initdb.d/create.sql:ro
+        ports:
+            - 3306:3306
 
     adminer:
         image: adminer
