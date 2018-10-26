@@ -7,6 +7,7 @@ use BrowscapSite\Handler\StreamHandler;
 use BrowscapSite\Handler\UserAgentLookupHandler;
 use BrowscapSite\Handler\VersionHandler;
 use BrowscapSite\Handler\VersionNumberHandler;
+use BrowscapSite\Handler\VersionXmlHandler;
 use Slim\App;
 
 return function (App $app): void {
@@ -16,4 +17,5 @@ return function (App $app): void {
     $app->any('/statistics', StatsHandler::class);
     $app->any('/version', VersionHandler::class);
     $app->any('/version-number', VersionNumberHandler::class);
+    $app->any('/versionxml', VersionXmlHandler::class);
 };

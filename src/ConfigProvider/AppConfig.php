@@ -11,6 +11,7 @@ use BrowscapSite\Handler\StreamHandler;
 use BrowscapSite\Handler\UserAgentLookupHandler;
 use BrowscapSite\Handler\VersionHandler;
 use BrowscapSite\Handler\VersionNumberHandler;
+use BrowscapSite\Handler\VersionXmlHandler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
@@ -128,6 +129,12 @@ final class AppConfig
                     return new PsrRequestHandlerWrapper(new VersionNumberHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class)
+                    ));
+                },
+                VersionXmlHandler::class => function (ContainerInterface $container) {
+                    return new PsrRequestHandlerWrapper(new VersionXmlHandler(
+                        $container->get(Metadata::class),
+                        $container->get(self::BROWSCAP_FILES_LIST)
                     ));
                 },
                 Renderer::class => function (ContainerInterface $container): Renderer {

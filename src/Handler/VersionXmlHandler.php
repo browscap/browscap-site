@@ -1,34 +1,39 @@
 <?php
+declare(strict_types=1);
 
-namespace BrowscapSite\Controller;
+namespace BrowscapSite\Handler;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use BrowscapSite\Metadata\Metadata;
+use DOMDocument;
+use DOMElement;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Http\Response;
 
-class VersionXmlController
+final class VersionXmlHandler implements RequestHandlerInterface
 {
-    /**
-     * @var array
-     */
-    private $fileList;
-
-    /**
-     * @var array
-     */
+    /** @var Metadata */
     private $metadata;
 
-    public function __construct(array $fileList, array $metadata)
+    /** @var array */
+    private $fileList;
+
+    public function __construct(Metadata $metadata, array $fileList)
     {
-        $this->fileList = $fileList;
         $this->metadata = $metadata;
+        $this->fileList = $fileList;
     }
 
-    public function indexAction(Request $request)
+    /**
+     * @throws \Exception
+     */
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $baseUrl = $request->getSchemeAndHttpHost();
-        $metadata = $this->metadata;
+        $requestUri = $request->getUri();
+        $baseUrl = $requestUri->getScheme() . '://' . $requestUri->getHost();
 
-        $xml = new \DOMDocument();
+        $xml = new DOMDocument();
 
         $rss = $xml->createElement('rss');
         $rss->setAttribute('version', '2.0');
@@ -37,27 +42,31 @@ class VersionXmlController
         $channel = $xml->createElement('channel');
         $rss->appendChild($channel);
 
+        $releaseDate = $this->metadata->released()->format('r');
+
         $channel->appendChild($this->createTextNode($xml, 'title', 'Browser Capabilities Project Update Service'));
         $channel->appendChild($this->createTextNode($xml, 'link', $baseUrl));
         $channel->appendChild($this->createTextNode($xml, 'description', 'The Browser Capabilities Project maintains and freely distributes a regularly updated browscap.ini file. The project\'s data is also available in many other formats that make it useful in a variety of situations. Last updated: ' . $metadata['released']));
         $channel->appendChild($this->createTextNode($xml, 'language', 'en-US'));
-        $channel->appendChild($this->createTextNode($xml, 'pubDate', $metadata['released']));
-        $channel->appendChild($this->createTextNode($xml, 'lastBuildDate', $metadata['released']));
+        $channel->appendChild($this->createTextNode($xml, 'pubDate', $releaseDate));
+        $channel->appendChild($this->createTextNode($xml, 'lastBuildDate', $releaseDate));
         $channel->appendChild($this->createTextNode($xml, 'ttl', '1440'));
 
         foreach ($this->fileList as $format => $files) {
             foreach ($files as $fileCode => $fileInfo) {
-                $channel->appendChild($this->createFileItem($xml, $metadata['released'], $metadata['version'], $fileCode, $fileInfo, $baseUrl));
+                $channel->appendChild($this->createFileItem($xml, $releaseDate, $this->metadata->version(), $fileCode, $fileInfo, $baseUrl));
             }
         }
 
-        $response = new Response();
-        $response->headers->set('Content-type', 'text/xml'); #application/rss+xml
-        $response->setContent($xml->saveXML());
+        $response = (new Response())
+            ->withHeader('Content-type', 'text/xml');
+
+        $response->getBody()->write($xml->saveXML());
+
         return $response;
     }
 
-    private function createTextNode(\DOMDocument $xml, $element, $content)
+    private function createTextNode(DOMDocument $xml, $element, $content): DOMElement
     {
         $element = $xml->createElement($element);
         $elementContent = $xml->createTextNode($content);
@@ -65,7 +74,7 @@ class VersionXmlController
         return $element;
     }
 
-    private function createFileItem(\DOMDocument $xml, $pubDate, $version, $fileCode, array $fileInfo, $baseUrl)
+    private function createFileItem(DOMDocument $xml, $pubDate, $version, $fileCode, array $fileInfo, $baseUrl): DOMElement
     {
         $item = $xml->createElement('item');
 
