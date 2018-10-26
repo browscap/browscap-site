@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BrowscapSite\Composer;
+namespace BrowscapSite\SimpleIO;
 
 use Symfony\Component\Console\Output\OutputInterface;
 

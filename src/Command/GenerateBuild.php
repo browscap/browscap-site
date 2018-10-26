@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace BrowscapSite\Command;
 
 use BrowscapSite\BuildGenerator\BuildGenerator;
-use BrowscapSite\Composer\SymfonyConsoleWrappedSimpleIO;
+use BrowscapSite\SimpleIO\SymfonyConsoleWrappedSimpleIO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

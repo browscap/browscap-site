@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace BrowscapSiteTest\Composer;
 
-use BrowscapSite\Composer\ComposerWrappedSimpleIO;
+use BrowscapSite\SimpleIO\ComposerWrappedSimpleIO;
 use Composer\IO\IOInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \BrowscapSite\Composer\ComposerWrappedSimpleIO
+ * @covers \BrowscapSite\SimpleIO\ComposerWrappedSimpleIO
  */
 final class ComposerWrappedSimpleIOTest extends TestCase
 {
