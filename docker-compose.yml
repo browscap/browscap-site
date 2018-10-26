@@ -15,6 +15,7 @@ services:
             - 8080:8080
         volumes:
             - .:/var/www:ro
+            - ./cache:/var/www/cache
 
     db:
         image: mysql:5.6
