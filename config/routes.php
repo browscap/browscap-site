@@ -5,6 +5,7 @@ use BrowscapSite\Handler\DownloadHandler;
 use BrowscapSite\Handler\StatsHandler;
 use BrowscapSite\Handler\StreamHandler;
 use BrowscapSite\Handler\UserAgentLookupHandler;
+use BrowscapSite\Handler\VersionHandler;
 use Slim\App;
 
 return function (App $app): void {
@@ -12,4 +13,5 @@ return function (App $app): void {
     $app->any('/ua-lookup', UserAgentLookupHandler::class);
     $app->any('/stream', StreamHandler::class);
     $app->any('/statistics', StatsHandler::class);
+    $app->any('/version', VersionHandler::class);
 };

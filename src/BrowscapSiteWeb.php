@@ -6,10 +6,6 @@ class BrowscapSiteWeb
 {
     public function defineServices()
     {
-        $this['version.controller'] =     function () {
-            return new Controller\VersionController($this);
-        };
-
         $this['version.number.controller'] =     function () {
             return new Controller\VersionNumberController($this);
         };
@@ -21,7 +17,6 @@ class BrowscapSiteWeb
 
     public function defineControllers()
     {
-        $this->get('/version', 'version.controller:indexAction');
         $this->get('/version-number', 'version.number.controller:indexAction');
         $this->get('/version.xml', 'version.xml.controller:indexAction');
     }

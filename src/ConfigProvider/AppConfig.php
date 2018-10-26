@@ -9,6 +9,7 @@ use BrowscapSite\Handler\PsrRequestHandlerWrapper;
 use BrowscapSite\Handler\StatsHandler;
 use BrowscapSite\Handler\StreamHandler;
 use BrowscapSite\Handler\UserAgentLookupHandler;
+use BrowscapSite\Handler\VersionHandler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
@@ -112,6 +113,12 @@ final class AppConfig
                     return new PsrRequestHandlerWrapper(new StatsHandler(
                         $container->get(Renderer::class),
                         $container->get(PDO::class)
+                    ));
+                },
+                VersionHandler::class => function (ContainerInterface $container) {
+                    return new PsrRequestHandlerWrapper(new VersionHandler(
+                        $container->get(Renderer::class),
+                        $container->get(Metadata::class)
                     ));
                 },
                 Renderer::class => function (ContainerInterface $container): Renderer {

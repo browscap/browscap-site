@@ -5,7 +5,6 @@ namespace BrowscapSite\Handler;
 
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
-use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
