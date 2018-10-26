@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 if (PHP_SAPI === 'cli-server') {
+    $_SERVER['SCRIPT_NAME'] = pathinfo(__FILE__, PATHINFO_BASENAME);
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
     $url  = parse_url($_SERVER['REQUEST_URI']);

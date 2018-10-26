@@ -17,5 +17,5 @@ return function (App $app): void {
     $app->any('/statistics', StatsHandler::class);
     $app->any('/version', VersionHandler::class);
     $app->any('/version-number', VersionNumberHandler::class);
-    $app->any('/versionxml', VersionXmlHandler::class);
+    $app->any('/version.xml', VersionXmlHandler::class);
 };
