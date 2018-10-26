@@ -21,7 +21,7 @@ session_start();
 $container = require __DIR__ . '/../config/container.php';
 $app = new \Slim\App($container);
 (require __DIR__ . '/../config/middleware.php')($app);
-(require __DIR__ . '/../config/routes.php')($app, $container);
+(require __DIR__ . '/../config/routes.php')($app);
 
 /** @noinspection PhpUnhandledExceptionInspection */
 $app->run();

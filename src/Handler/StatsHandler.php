@@ -1,35 +1,45 @@
 <?php
 declare(strict_types=1);
 
-namespace BrowscapSite\Controller;
+namespace BrowscapSite\Handler;
 
-use BrowscapSite\BrowscapSiteWeb;
+use BrowscapSite\Renderer\Renderer;
+use PDO;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class StatsController
+final class StatsHandler implements RequestHandlerInterface
 {
-    protected $app;
+    /** @var Renderer */
+    private $renderer;
 
-    /**
-     * @var \PDO
-     */
-    protected $pdo;
+    /** @var PDO */
+    private $pdo;
 
-    public function __construct(BrowscapSiteWeb $app, \PDO $pdo)
+    public function __construct(Renderer $renderer, PDO $pdo)
     {
-        $this->app = $app;
+        $this->renderer = $renderer;
         $this->pdo = $pdo;
     }
 
-    public function indexAction()
+    /**
+     * @throws \Exception
+     */
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->app['twig']->render('stats.html', [
-            'downloadsPerDay' => $this->getDownloadsPerDay(),
-            'downloadsPerMonth' => $this->getDownloadsPerMonth(),
-        ]);
+        return $this->renderer->render(
+            'stats.html',
+            [
+                'downloadsPerDay' => $this->getDownloadsPerDay(),
+                'downloadsPerMonth' => $this->getDownloadsPerMonth(),
+            ]
+        );
     }
 
     /**
      * @return array
+     * @throws \Exception
      */
     private function getDownloadsPerMonth() : array
     {
@@ -38,6 +48,7 @@ class StatsController
 
     /**
      * @return array
+     * @throws \Exception
      */
     private function getDownloadsPerDay() : array
     {
@@ -47,11 +58,8 @@ class StatsController
     /**
      * Fetch some download stats
      *
-     * @param string $tableName Name of the table to grab stats from
-     * @param string $tableColumnName Name of the date column in the DB
-     * @param string $dataColumnName Name of the column for data
-     * @param string $dataColumnFormat Format of the output date
      * @return array
+     * @throws \Exception
      */
     private function getDownloadStats(
         string $tableName,
@@ -68,7 +76,7 @@ class StatsController
 
         $data = [];
         $data[] = [$dataColumnName, 'Number of Downloads'];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $data[] = [
                 (new \DateTimeImmutable($row[$tableColumnName]))->format($dataColumnFormat),
                 (int)$row['downloadCount'],
