@@ -6,6 +6,7 @@ namespace BrowscapSite\ConfigProvider;
 
 use BrowscapSite\Handler\DownloadHandler;
 use BrowscapSite\Handler\PsrRequestHandlerWrapper;
+use BrowscapSite\Handler\UserAgentLookupHandler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
@@ -68,6 +69,13 @@ final class AppConfig
                         $container->get(Metadata::class),
                         $container->get(self::BROWSCAP_FILES_LIST),
                         $container->get(self::BAN_CONFIGURATION)
+                    ));
+                },
+                UserAgentLookupHandler::class => function (ContainerInterface $container) {
+                    return new PsrRequestHandlerWrapper(new UserAgentLookupHandler(
+                        $container->get(Renderer::class),
+                        $container->get(Metadata::class),
+                        true
                     ));
                 },
                 Renderer::class => function (ContainerInterface $container): Renderer {

@@ -88,7 +88,7 @@ class BrowscapSiteWeb extends SilexApplication
         };
 
         $this['ualookup.controller'] =     function () {
-            return new Controller\UserAgentLookupController($this);
+            return new Controller\UserAgentLookupHandler($this);
         };
 
         $this->register(new TwigServiceProvider(), [
