@@ -6,6 +6,7 @@ namespace BrowscapSite\ConfigProvider;
 
 use BrowscapSite\Handler\DownloadHandler;
 use BrowscapSite\Handler\PsrRequestHandlerWrapper;
+use BrowscapSite\Handler\StreamHandler;
 use BrowscapSite\Handler\UserAgentLookupHandler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
@@ -96,6 +97,14 @@ final class AppConfig
                         $container->get(Metadata::class),
                         $container->get(UserAgentTool::class),
                         true
+                    ));
+                },
+                StreamHandler::class => function (ContainerInterface $container) {
+                    return new PsrRequestHandlerWrapper(new StreamHandler(
+                        $container->get(RateLimiter::class),
+                        $container->get(Metadata::class),
+                        $container->get(self::BROWSCAP_FILES_LIST),
+                        __DIR__ . '/../../vendor/build'
                     ));
                 },
                 Renderer::class => function (ContainerInterface $container): Renderer {

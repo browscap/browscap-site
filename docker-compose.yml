@@ -6,7 +6,7 @@ volumes:
 
 services:
     php-server:
-        image: php:7.2-alpine
+        build: docker/php
         working_dir: /var/www
         command: php -S 0.0.0.0:8080 -t public
         environment:
