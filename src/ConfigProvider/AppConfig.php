@@ -11,8 +11,14 @@ use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
 use BrowscapSite\Tool\RateLimiter;
+use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
+use BrowscapSite\UserAgentTool\UserAgentTool;
+use Doctrine\Common\Cache\FilesystemCache;
+use Monolog\Logger;
 use PDO;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
 use Slim\Http\Response;
 use Slim\Views\Twig;
 use Zend\ConfigAggregator\ConfigAggregator;
@@ -46,6 +52,19 @@ final class AppConfig
     {
         return [
             'factories' => [
+                UserAgentTool::class => function (ContainerInterface $container): UserAgentTool {
+                    return new BrowscapPhpUserAgentTool(
+                        new SimpleCacheAdapter(
+                            new FilesystemCache(__DIR__ . '/../../cache')
+                        ),
+                        $container->get(LoggerInterface::class)
+                    );
+                },
+                LoggerInterface::class => function (ContainerInterface $container): LoggerInterface {
+                    $logger = new Logger('browscan-site');
+                    $logger->pushHandler(new \Monolog\Handler\ErrorLogHandler());
+                    return $logger;
+                },
                 PDO::class => function (ContainerInterface $container): PDO {
                     $dbConfig = $container->get('Config')['db'];
                     return new PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
@@ -75,6 +94,7 @@ final class AppConfig
                     return new PsrRequestHandlerWrapper(new UserAgentLookupHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
+                        $container->get(UserAgentTool::class),
                         true
                     ));
                 },

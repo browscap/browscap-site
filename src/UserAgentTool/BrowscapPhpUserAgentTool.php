@@ -5,27 +5,24 @@ namespace BrowscapSite\UserAgentTool;
 
 use BrowscapPHP\Browscap;
 use BrowscapPHP\BrowscapUpdater;
-use BrowscapPHP\Cache\BrowscapCache;
-use BrowscapPHP\Cache\BrowscapCacheInterface;
-use WurflCache\Adapter\File;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 final class BrowscapPhpUserAgentTool implements UserAgentTool
 {
-    private const CACHE_DIRECTORY = __DIR__ . '/../../cache/';
     private const INI_FILE = __DIR__ . '/../../vendor/build/full_php_browscap.ini';
 
-    /**
-     * @var BrowscapCacheInterface
-     */
+    /** @var CacheInterface */
     private $cache;
 
-    public function __construct()
+    /** @var LoggerInterface */
+    private $logger;
+
+
+    public function __construct(CacheInterface $cache, LoggerInterface $logger)
     {
-        $this->cache = new BrowscapCache(
-            new File([
-                File::DIR => self::CACHE_DIRECTORY,
-            ])
-        );
+        $this->cache = $cache;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,8 +31,7 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
      */
     public function update(): void
     {
-        $updater = new BrowscapUpdater();
-        $updater->setCache($this->cache);
+        $updater = new BrowscapUpdater($this->cache, $this->logger);
         $updater->convertFile(self::INI_FILE);
     }
 
@@ -48,8 +44,7 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
      */
     public function identify(string $userAgent): \stdClass
     {
-        $browscap = new Browscap();
-        $browscap->setCache($this->cache);
+        $browscap = new Browscap($this->cache, $this->logger);
         return $browscap->getBrowser($userAgent);
     }
 }

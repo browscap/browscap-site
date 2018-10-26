@@ -6,6 +6,7 @@ namespace BrowscapSite\Handler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
+use BrowscapSite\UserAgentTool\UserAgentTool;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -19,13 +20,17 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
     /** @var Metadata */
     private $metadata;
 
+    /** @var UserAgentTool */
+    private $userAgentTool;
+
     /** @var bool */
     private $checkCsrf;
 
-    public function __construct(Renderer $renderer, Metadata $metadata, bool $checkCsrf = true)
+    public function __construct(Renderer $renderer, Metadata $metadata, UserAgentTool $userAgentTool, bool $checkCsrf = true)
     {
         $this->renderer = $renderer;
         $this->metadata = $metadata;
+        $this->userAgentTool = $userAgentTool;
         $this->checkCsrf = $checkCsrf;
     }
 
@@ -45,7 +50,7 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
 
             $userAgent = $parsedBody['ua'];
 
-            $userAgentInfo = (array)(new BrowscapPhpUserAgentTool())->identify($userAgent);
+            $userAgentInfo = (array)$this->userAgentTool->identify($userAgent);
             $this->convertBooleansToStrings($userAgentInfo);
         }
 

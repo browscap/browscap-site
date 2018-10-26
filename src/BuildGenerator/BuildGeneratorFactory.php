@@ -8,11 +8,12 @@ use Browscap\Generator\BuildGenerator as BrowscapBuildGenerator;
 use Browscap\Parser\IniParser;
 use Browscap\Writer\Factory\FullCollectionFactory;
 use BrowscapSite\Metadata\ArrayMetadataBuilder;
-use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
+use BrowscapSite\UserAgentTool\UserAgentTool;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Psr\Container\ContainerInterface;
 
 /**
  * @codeCoverageIgnore
@@ -23,10 +24,9 @@ final class BuildGeneratorFactory
     private const RESOURCE_DIRECTORY = __DIR__ . '/../../vendor/browscap/browscap/resources/';
 
     /**
-     * @return BuildGenerator
      * @throws \Exception
      */
-    public function __invoke(): BuildGenerator
+    public function __invoke(ContainerInterface $container): BuildGenerator
     {
         $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
 
@@ -58,7 +58,7 @@ final class BuildGeneratorFactory
                 self::BUILD_DIRECTORY
             ),
             new OcramiusDeterminePackageVersion(),
-            new BrowscapPhpUserAgentTool()
+            $container->get(UserAgentTool::class)
         );
     }
 }
