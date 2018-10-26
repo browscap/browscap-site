@@ -48,7 +48,8 @@
         "psr/log": "^1.0",
         "psr/simple-cache": "^1.0",
         "doctrine/cache": "^1.8",
-        "roave/doctrine-simplecache": "^2.1"
+        "roave/doctrine-simplecache": "^2.1",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
@@ -67,7 +68,11 @@
     },
     "bin": ["bin/browscap-site"],
     "scripts": {
-        "post-install-cmd": ["BrowscapSite\\Composer\\ComposerHook::postInstall"],
-        "post-update-cmd": ["BrowscapSite\\Composer\\ComposerHook::postUpdate"]
+        "post-install-cmd": [
+            "bin/browscap-site generate-build"
+        ],
+        "post-update-cmd": [
+            "bin/browscap-site generate-build"
+        ]
     }
 }

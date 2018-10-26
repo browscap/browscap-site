@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite;
 
+use BrowscapSite\BuildGenerator\BuildGeneratorFactory;
 use BrowscapSite\Tool\AnalyseStatistics;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
@@ -22,6 +23,9 @@ class BrowscapSiteConsole extends Application
             new Command\GenerateStatisticsCommand(new AnalyseStatistics(
                 new \PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass'])
             )),
+            new Command\GenerateBuild(
+                (new BuildGeneratorFactory())->__invoke($container)
+            )
         ];
 
         foreach ($commands as $command) {

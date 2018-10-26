@@ -5,6 +5,10 @@ namespace BrowscapSite\UserAgentTool;
 
 use BrowscapPHP\Browscap;
 use BrowscapPHP\BrowscapUpdater;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\Handler\CurlMultiHandler;
+use GuzzleHttp\Handler\Proxy;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
@@ -31,7 +35,16 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
      */
     public function update(): void
     {
-        $updater = new BrowscapUpdater($this->cache, $this->logger);
+        $updater = new BrowscapUpdater(
+            $this->cache,
+            $this->logger,
+            new Client([
+                'handler' => Proxy::wrapSync(new CurlMultiHandler(), new CurlHandler()),
+                'headers' => [
+                    'User-Agent' => 'browscap.org BrowscapPhpUserAgentTool wrapper',
+                ],
+            ])
+        );
         $updater->convertFile(self::INI_FILE);
     }
 
