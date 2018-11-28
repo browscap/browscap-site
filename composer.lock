@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17de61975359ae2603494fdd369151f5",
+    "content-hash": "f7cec283b61193804417480e77f61abd",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,20 +63,21 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.30",
+            "version": "6.0.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "fc9e203861d7ee5f1b141927c97167bbcd7fee7a"
+                "reference": "69eca6ec7373d7cf0c5810e9924e0aa466c39e5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/fc9e203861d7ee5f1b141927c97167bbcd7fee7a",
-                "reference": "fc9e203861d7ee5f1b141927c97167bbcd7fee7a",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/69eca6ec7373d7cf0c5810e9924e0aa466c39e5a",
+                "reference": "69eca6ec7373d7cf0c5810e9924e0aa466c39e5a",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^2.9",
+                "beberlei/assert": "^2.9 || ^3.0",
+                "ext-json": "*",
                 "localheinz/json-normalizer": "^0.5.2",
                 "mimmi20/ua-browser-type": "^6.0.2",
                 "mimmi20/ua-device-type": "^6.0.0",
@@ -91,8 +92,13 @@
                 "browscap/browscap-php": "^4.1",
                 "friendsofphp/php-cs-fixer": "^2.12",
                 "mikey179/vfsstream": "^1.6",
-                "phpstan/phpstan": "^0.9",
-                "phpunit/phpunit": "^7.2"
+                "pepakriz/phpstan-exception-rules": "^0.3",
+                "phpstan/phpstan": "^0.10",
+                "phpstan/phpstan-beberlei-assert": "^0.10",
+                "phpstan/phpstan-deprecation-rules": "^0.10",
+                "phpstan/phpstan-phpunit": "^0.10",
+                "phpstan/phpstan-strict-rules": "^0.10",
+                "phpunit/phpunit": "^7.3"
             },
             "suggest": {
                 "ext-zip": "to create a zip file containing all other generated files"
@@ -136,7 +142,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2018-08-14T08:59:17+00:00"
+            "time": "2018-11-28T10:29:42+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -1012,6 +1018,7 @@
                 "user agent",
                 "user-agent"
             ],
+            "abandoned": true,
             "time": "2016-04-23T18:18:10+00:00"
         },
         {
@@ -1076,6 +1083,7 @@
                 "Wurfl",
                 "cache"
             ],
+            "abandoned": true,
             "time": "2016-08-06T11:25:21+00:00"
         },
         {
@@ -1833,6 +1841,7 @@
             "keywords": [
                 "microframework"
             ],
+            "abandoned": "symfony/flex",
             "time": "2018-02-25T11:21:42+00:00"
         },
         {
