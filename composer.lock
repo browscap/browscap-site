@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7cec283b61193804417480e77f61abd",
+    "content-hash": "fa7b4fe971358eef170800ba841730ea",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,16 +63,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.31",
+            "version": "6.0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "69eca6ec7373d7cf0c5810e9924e0aa466c39e5a"
+                "reference": "2692c64303e0df9ff77e512fd19820b34d2a98ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/69eca6ec7373d7cf0c5810e9924e0aa466c39e5a",
-                "reference": "69eca6ec7373d7cf0c5810e9924e0aa466c39e5a",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/2692c64303e0df9ff77e512fd19820b34d2a98ac",
+                "reference": "2692c64303e0df9ff77e512fd19820b34d2a98ac",
                 "shasum": ""
             },
             "require": {
@@ -92,13 +92,13 @@
                 "browscap/browscap-php": "^4.1",
                 "friendsofphp/php-cs-fixer": "^2.12",
                 "mikey179/vfsstream": "^1.6",
-                "pepakriz/phpstan-exception-rules": "^0.3",
-                "phpstan/phpstan": "^0.10",
-                "phpstan/phpstan-beberlei-assert": "^0.10",
-                "phpstan/phpstan-deprecation-rules": "^0.10",
-                "phpstan/phpstan-phpunit": "^0.10",
-                "phpstan/phpstan-strict-rules": "^0.10",
-                "phpunit/phpunit": "^7.3"
+                "pepakriz/phpstan-exception-rules": "^0.7",
+                "phpstan/phpstan": "^0.11",
+                "phpstan/phpstan-beberlei-assert": "^0.11",
+                "phpstan/phpstan-deprecation-rules": "^0.11",
+                "phpstan/phpstan-phpunit": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11",
+                "phpunit/phpunit": "^7.5"
             },
             "suggest": {
                 "ext-zip": "to create a zip file containing all other generated files"
@@ -142,7 +142,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2018-11-28T10:29:42+00:00"
+            "time": "2019-03-21T08:37:43+00:00"
         },
         {
             "name": "browscap/browscap-php",
