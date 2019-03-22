@@ -5,7 +5,7 @@ namespace BrowscapSite\BuildGenerator;
 
 use Assert\Assert;
 use Browscap\Generator\GeneratorInterface;
-use BrowscapSite\Composer\SimpleIOInterface;
+use BrowscapSite\SimpleIO\SimpleIOInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 

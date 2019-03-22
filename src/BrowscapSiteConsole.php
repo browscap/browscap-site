@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace BrowscapSite;
 
+use BrowscapSite\BuildGenerator\BuildGenerator;
 use BrowscapSite\Tool\AnalyseStatistics;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
 class BrowscapSiteConsole extends Application
@@ -12,13 +14,12 @@ class BrowscapSiteConsole extends Application
     {
         parent::__construct('Browscap Website', 'dev-master');
 
-        // @todo Config should come from a shared container, this is terrible
-        $config = require __DIR__ . '/../config/config.php';
+        /** @var ContainerInterface $container */
+        $container = require __DIR__ . '/../config/container.php';
 
         $commands = [
-            new Command\GenerateStatisticsCommand(new AnalyseStatistics(
-                new \PDO($config['db']['dsn'], $config['db']['user'], $config['db']['pass'])
-            )),
+            new Command\GenerateStatisticsCommand($container->get(AnalyseStatistics::class)),
+            new Command\GenerateBuild($container->get(BuildGenerator::class)),
         ];
 
         foreach ($commands as $command) {

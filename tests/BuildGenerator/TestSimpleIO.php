@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BrowscapSiteTest\BuildGenerator;
 
-use BrowscapSite\Composer\SimpleIOInterface;
+use BrowscapSite\SimpleIO\SimpleIOInterface;
 
 final class TestSimpleIO implements SimpleIOInterface
 {

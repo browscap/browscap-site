@@ -6,7 +6,7 @@ namespace BrowscapSiteTest\BuildGenerator;
 use Browscap\Generator\GeneratorInterface;
 use BrowscapSite\BuildGenerator\BuildGenerator;
 use BrowscapSite\BuildGenerator\DeterminePackageVersion;
-use BrowscapSite\Composer\SimpleIOInterface;
+use BrowscapSite\SimpleIO\SimpleIOInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use org\bovigo\vfs\vfsStream;
