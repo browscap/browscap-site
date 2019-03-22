@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BrowscapSite\ConfigProvider;
 
+use BrowscapSite\BuildGenerator\BuildGenerator;
+use BrowscapSite\BuildGenerator\BuildGeneratorFactory;
 use BrowscapSite\Handler\DownloadHandler;
 use BrowscapSite\Handler\PsrRequestHandlerWrapper;
 use BrowscapSite\Handler\StatsHandler;
@@ -15,6 +17,7 @@ use BrowscapSite\Handler\VersionXmlHandler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
+use BrowscapSite\Tool\AnalyseStatistics;
 use BrowscapSite\Tool\RateLimiter;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
@@ -142,6 +145,10 @@ final class AppConfig
                         $container->get(Twig::class),
                         new Response(200)
                     );
+                },
+                BuildGenerator::class => BuildGeneratorFactory::class,
+                AnalyseStatistics::class => function (ContainerInterface $container): AnalyseStatistics {
+                    return new AnalyseStatistics($container->get(PDO::class));
                 },
                 self::BROWSCAP_FILES_LIST => function (): array {
                     return [
