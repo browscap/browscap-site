@@ -1,6 +1,10 @@
 language: php
 sudo: false
 
+cache:
+  directories:
+    - vendor
+
 php:
   - 7.2
 
