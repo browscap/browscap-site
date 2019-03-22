@@ -1,10 +1,6 @@
 language: php
 sudo: false
 
-env:
-  global:
-    secure: NyApmv9wlUj4Z2f3r3qbsp7bp6zQXvhnE57XooaZQVkzszGx34+SM0ng0/k0oet8HhQl7t3KLTTVhUu0e74gp3zJ31hmjosFOWtunOBYeXxIom21x70dne9+ngVP69rBQ1b/zrcfLq54ntcYNP0ZCMgoZaL5ufiRqUk0Pptq3+s=
-
 php:
   - 7.2
 
@@ -13,7 +9,6 @@ before_script:
   - mysql -e 'create database browscap;'
   - mysql browscap < db/create004.sql
   - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar config -g github-oauth.github.com $GITHUB_TOKEN
   # 200 here represents the \Monolog\Logger::INFO constant for log levels
   - BC_BUILD_LOG=200 php -n composer.phar install --prefer-dist
 
