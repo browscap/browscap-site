@@ -16,6 +16,9 @@ services:
         volumes:
             - .:/var/www:ro
             - ./cache:/var/www/cache
+            - ./vendor:/var/www/vendor
+        depends_on:
+            - db
 
     db:
         image: mysql:5.6
