@@ -59,6 +59,11 @@ $ docker-compose rm -f
 $ docker-compose build
 ```
 
+## Running the CLI scripts in Docker
+
+ * `docker-compose run php-server bin/browscap-site generate-statistics`
+ * `docker-compose run php-server bin/browscap-site generate-build`
+
 ## Creating a Browscap Release
 
 Please see [this wiki article](https://github.com/browscap/browscap/wiki/Public-release-procedure).
