@@ -31,7 +31,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "ext-dom": "*",
-        "browscap/browscap": "6.0.32",
+        "browscap/browscap": "6.0.33",
         "browscap/browscap-php": "^4.1",
         "symfony/console": "^4.1",
         "composer/composer": "^1.7",
@@ -55,7 +55,7 @@
     "require-dev": {
         "roave/security-advisories": "dev-master",
         "phpunit/phpunit": "^7.4",
-        "mikey179/vfsStream": "^1.6"
+        "mikey179/vfsstream": "^1.6"
     },
     "config": {
         "process-timeout": 0

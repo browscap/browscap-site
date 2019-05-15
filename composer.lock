@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1bb19997dcc4b7418de865719a73dd98",
+    "content-hash": "4d05ae8c7dfa16e93b4ef70c904c97d2",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,16 +63,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.32",
+            "version": "6.0.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "2692c64303e0df9ff77e512fd19820b34d2a98ac"
+                "reference": "7f93035283bcfcfda18929c8c94202fd0281f6b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/2692c64303e0df9ff77e512fd19820b34d2a98ac",
-                "reference": "2692c64303e0df9ff77e512fd19820b34d2a98ac",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/7f93035283bcfcfda18929c8c94202fd0281f6b6",
+                "reference": "7f93035283bcfcfda18929c8c94202fd0281f6b6",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2019-03-21T08:37:43+00:00"
+            "time": "2019-05-06T18:24:25+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -2707,12 +2707,12 @@
             "version": "v1.6.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mikey179/vfsStream.git",
+                "url": "https://github.com/bovigo/vfsStream.git",
                 "reference": "d5fec95f541d4d71c4823bb5e30cf9b9e5b96145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
+                "url": "https://api.github.com/repos/bovigo/vfsStream/zipball/d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
                 "reference": "d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
                 "shasum": ""
             },
