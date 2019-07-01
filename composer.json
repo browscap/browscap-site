@@ -31,7 +31,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "ext-dom": "*",
-        "browscap/browscap": "6.0.33",
+        "browscap/browscap": "6.0.34",
         "browscap/browscap-php": "^4.1",
         "symfony/console": "^4.1",
         "composer/composer": "^1.7",
