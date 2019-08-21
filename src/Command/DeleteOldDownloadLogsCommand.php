@@ -3,22 +3,22 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Command;
 
-use BrowscapSite\Tool\AnalyseStatistics;
+use BrowscapSite\Tool\DeleteOldDownloadLogs;
 use Composer\IO\ConsoleIO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class GenerateStatisticsCommand extends Command
+final class DeleteOldDownloadLogsCommand extends Command
 {
     /**
-     * @var AnalyseStatistics
+     * @var DeleteOldDownloadLogs
      */
-    private $analyseStatistics;
+    private $deleteOldDownloadLogs;
 
-    public function __construct(AnalyseStatistics $deleteOldDownloadLogs)
+    public function __construct(DeleteOldDownloadLogs $deleteOldDownloadLogs)
     {
-        $this->analyseStatistics = $deleteOldDownloadLogs;
+        $this->deleteOldDownloadLogs = $deleteOldDownloadLogs;
         parent::__construct();
     }
 
@@ -30,8 +30,8 @@ final class GenerateStatisticsCommand extends Command
     public function configure()
     {
         $this
-            ->setName('generate-statistics')
-            ->setDescription('Generate statistics into data tables');
+            ->setName('delete-old-download-logs')
+            ->setDescription('Deletes old download logs to free up space in DB');
     }
 
     /**
@@ -43,9 +43,9 @@ final class GenerateStatisticsCommand extends Command
     {
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
 
-        $io->write('<info>Generating statistics...</info>');
+        $io->write('<info>Deleting old download logs...</info>');
 
-        $this->analyseStatistics->__invoke();
+        $this->deleteOldDownloadLogs->__invoke();
 
         $io->write('<info>All done.</info>');
     }

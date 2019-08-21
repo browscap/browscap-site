@@ -18,6 +18,7 @@ use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
 use BrowscapSite\Tool\AnalyseStatistics;
+use BrowscapSite\Tool\DeleteOldDownloadLogs;
 use BrowscapSite\Tool\RateLimiter;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
@@ -149,6 +150,9 @@ final class AppConfig
                 BuildGenerator::class => BuildGeneratorFactory::class,
                 AnalyseStatistics::class => function (ContainerInterface $container): AnalyseStatistics {
                     return new AnalyseStatistics($container->get(PDO::class));
+                },
+                DeleteOldDownloadLogs::class => function (ContainerInterface $container): DeleteOldDownloadLogs {
+                    return new DeleteOldDownloadLogs($container->get(PDO::class));
                 },
                 self::BROWSCAP_FILES_LIST => function (): array {
                     return [

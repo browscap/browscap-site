@@ -5,6 +5,7 @@ namespace BrowscapSite;
 
 use BrowscapSite\BuildGenerator\BuildGenerator;
 use BrowscapSite\Tool\AnalyseStatistics;
+use BrowscapSite\Tool\DeleteOldDownloadLogs;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
@@ -20,6 +21,7 @@ class BrowscapSiteConsole extends Application
         $commands = [
             new Command\GenerateStatisticsCommand($container->get(AnalyseStatistics::class)),
             new Command\GenerateBuild($container->get(BuildGenerator::class)),
+            new Command\DeleteOldDownloadLogsCommand($container->get(DeleteOldDownloadLogs::class)),
         ];
 
         foreach ($commands as $command) {
