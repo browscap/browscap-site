@@ -5,6 +5,9 @@ cache:
   directories:
     - vendor
 
+services:
+  - mysql
+
 php:
   - 7.2
 
