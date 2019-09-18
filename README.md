@@ -63,6 +63,7 @@ $ docker-compose build
 
  * `docker-compose run php-server bin/browscap-site generate-statistics`
  * `docker-compose run php-server bin/browscap-site generate-build`
+ * `docker-compose run php-server bin/browscap-site delete-old-download-logs`
 
 ## Creating a Browscap Release
 
