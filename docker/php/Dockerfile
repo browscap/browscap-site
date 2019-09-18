@@ -1,6 +1,6 @@
-FROM php:7.2-alpine
+FROM php:7.3-alpine
 
-RUN apk add --update icu-dev zlib-dev \
+RUN apk add --update icu-dev zlib-dev libzip-dev \
   && docker-php-ext-install pdo_mysql bcmath intl zip
 
 ADD ./php.ini /usr/local/etc/php/php.ini
