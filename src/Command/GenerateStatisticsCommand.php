@@ -16,9 +16,9 @@ final class GenerateStatisticsCommand extends Command
      */
     private $analyseStatistics;
 
-    public function __construct(AnalyseStatistics $deleteOldDownloadLogs)
+    public function __construct(AnalyseStatistics $analyseStatistics)
     {
-        $this->analyseStatistics = $deleteOldDownloadLogs;
+        $this->analyseStatistics = $analyseStatistics;
         parent::__construct();
     }
 
