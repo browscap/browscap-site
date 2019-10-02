@@ -58,6 +58,7 @@ final class BuildGeneratorFactory
                 self::BUILD_DIRECTORY
             ),
             new OcramiusDeterminePackageVersion(),
+            new ComposerLockDeterminePackageReleaseDate(),
             $container->get(UserAgentTool::class)
         );
     }

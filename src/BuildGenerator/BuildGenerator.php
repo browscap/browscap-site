@@ -4,10 +4,16 @@ declare(strict_types=1);
 namespace BrowscapSite\BuildGenerator;
 
 use Assert\Assert;
+use Assert\AssertionFailedException;
 use Browscap\Generator\GeneratorInterface;
 use BrowscapSite\SimpleIO\SimpleIOInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
 use BrowscapSite\UserAgentTool\UserAgentTool;
+use DateTimeImmutable;
+use Exception;
+use InvalidArgumentException;
+use OutOfBoundsException;
+use RuntimeException;
 
 final class BuildGenerator
 {
@@ -32,6 +38,11 @@ final class BuildGenerator
     private $determinePackageVersion;
 
     /**
+     * @var DeterminePackageReleaseDate
+     */
+    private $determinePackageReleaseDate;
+
+    /**
      * @var UserAgentTool
      */
     private $userAgentTool;
@@ -41,22 +52,24 @@ final class BuildGenerator
         GeneratorInterface $buildGenerator,
         MetadataBuilder $metadataBuilder,
         DeterminePackageVersion $determinePackageVersion,
+        DeterminePackageReleaseDate $determinePackageReleaseDate,
         UserAgentTool $userAgentTool
     ) {
         $this->buildDirectory = $buildDirectory;
         $this->buildGenerator = $buildGenerator;
         $this->metadataBuilder = $metadataBuilder;
         $this->determinePackageVersion = $determinePackageVersion;
+        $this->determinePackageReleaseDate = $determinePackageReleaseDate;
         $this->userAgentTool = $userAgentTool;
     }
 
     /**
      * @param SimpleIOInterface $io
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
-     * @throws \OutOfBoundsException
-     * @throws \Assert\AssertionFailedException
-     * @throws \Exception
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws AssertionFailedException
+     * @throws Exception
      */
     public function __invoke(SimpleIOInterface $io): void
     {
@@ -64,8 +77,9 @@ final class BuildGenerator
         $currentBuildNumber = $this->getCurrentBuildNumber();
 
         if ($packageBuildNumber !== $currentBuildNumber) {
-            $io->write(sprintf('<info>Generating new Browscap build: %s</info>', $packageBuildNumber));
-            $this->createBuild($packageBuildNumber, $io);
+            $generationDate = $this->determinePackageReleaseDate->__invoke();
+            $io->write(sprintf('<info>Generating new Browscap build: %s (%s)</info>', $packageBuildNumber, $generationDate->format(DATE_ATOM)));
+            $this->createBuild($packageBuildNumber, $generationDate, $io);
             $io->write('<info>All done</info>');
         } else {
             $io->write(sprintf('<info>Current build %s is up to date</info>', $currentBuildNumber));
@@ -91,7 +105,7 @@ final class BuildGenerator
      *
      * @param string $packageName
      * @return int
-     * @throws \OutOfBoundsException
+     * @throws OutOfBoundsException
      */
     private function determineBuildNumberFromPackage(string $packageName): int
     {
@@ -120,22 +134,22 @@ final class BuildGenerator
      *
      * @param int $buildNumber
      * @param SimpleIOInterface $io
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     * @throws \Exception
-     * @throws \Assert\AssertionFailedException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws Exception
+     * @throws AssertionFailedException
      */
-    private function createBuild(int $buildNumber, SimpleIOInterface $io): void
+    private function createBuild(int $buildNumber, DateTimeImmutable $generationDate, SimpleIOInterface $io): void
     {
         if (!file_exists($this->buildDirectory)
             && !mkdir($this->buildDirectory, 0775, true)
             && !is_dir($this->buildDirectory)
         ) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $this->buildDirectory));
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $this->buildDirectory));
         }
 
         $io->write('  - Creating browscap build');
-        $this->buildGenerator->run((string)$buildNumber);
+        $this->buildGenerator->run((string)$buildNumber, $generationDate);
 
         $io->write('  - Generating metadata');
         $this->metadataBuilder->build();
