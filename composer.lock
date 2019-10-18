@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8662c7cb74d8f3035bbe85dacd683df",
+    "content-hash": "b433b59f7e5596604c08dc0291deaa30",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,16 +63,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.35",
+            "version": "6.0.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "33ffbfc919bc71e794daacd6fc29b00a8e28c5c9"
+                "reference": "107fba1ec092584ee01583d1b01d5445d3763656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/33ffbfc919bc71e794daacd6fc29b00a8e28c5c9",
-                "reference": "33ffbfc919bc71e794daacd6fc29b00a8e28c5c9",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/107fba1ec092584ee01583d1b01d5445d3763656",
+                "reference": "107fba1ec092584ee01583d1b01d5445d3763656",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2019-10-03T09:47:16+00:00"
+            "time": "2019-10-12T10:27:38+00:00"
         },
         {
             "name": "browscap/browscap-php",
