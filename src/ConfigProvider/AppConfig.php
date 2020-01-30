@@ -31,7 +31,7 @@ use Psr\Log\LoggerInterface;
 use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
 use Slim\Http\Response;
 use Slim\Views\Twig;
-use Zend\ConfigAggregator\ConfigAggregator;
+use Laminas\ConfigAggregator\ConfigAggregator;
 
 final class AppConfig
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 // Load configuration
 $config = require __DIR__ . '/config.php';
