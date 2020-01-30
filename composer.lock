@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc88ae75601f21336e77a64c4008fee4",
+    "content-hash": "15bcc44a88b9d9e597772777a74841e3",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -70,42 +70,46 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.36",
+            "version": "6.0.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "107fba1ec092584ee01583d1b01d5445d3763656"
+                "reference": "c71b1b2d6738395a03ec55cd59cd462dac6929be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/107fba1ec092584ee01583d1b01d5445d3763656",
-                "reference": "107fba1ec092584ee01583d1b01d5445d3763656",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/c71b1b2d6738395a03ec55cd59cd462dac6929be",
+                "reference": "c71b1b2d6738395a03ec55cd59cd462dac6929be",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^2.9 || ^3.0",
+                "beberlei/assert": "^3.2.7",
+                "ergebnis/json-normalizer": "^0.11.0",
                 "ext-json": "*",
-                "localheinz/json-normalizer": "^0.5.2",
-                "mimmi20/ua-browser-type": "^6.0.2",
-                "mimmi20/ua-device-type": "^6.0.0",
-                "monolog/monolog": "^1.23",
+                "mimmi20/json-class": "~2.0.8",
+                "mimmi20/ua-browser-type": "^7.0.7",
+                "mimmi20/ua-device-type": "^7.1.6",
+                "monolog/monolog": "^1.25.3 || ^2.0.2",
                 "php": "^7.1",
-                "seld/jsonlint": "^1.6",
-                "symfony/console": "^3.3 || ^4.0",
-                "symfony/finder": "^3.3 || ^4.0",
-                "twig/twig": "^2.4"
+                "seld/jsonlint": "^1.7.2",
+                "symfony/console": "^4.4.2 || ^5.0.2",
+                "symfony/finder": "^4.4.2 || ^5.0.2",
+                "twig/twig": "^2.12.2 || ^3.0.1"
             },
             "require-dev": {
-                "browscap/browscap-php": "^4.1",
-                "friendsofphp/php-cs-fixer": "^2.12",
-                "mikey179/vfsstream": "^1.6",
-                "pepakriz/phpstan-exception-rules": "^0.7",
-                "phpstan/phpstan": "^0.11",
-                "phpstan/phpstan-beberlei-assert": "^0.11",
-                "phpstan/phpstan-deprecation-rules": "^0.11",
-                "phpstan/phpstan-phpunit": "^0.11",
-                "phpstan/phpstan-strict-rules": "^0.11",
-                "phpunit/phpunit": "^7.5"
+                "browscap/browscap-php": "^4.2.2 || ^5.0.0",
+                "ergebnis/composer-normalize": "^2.2.2",
+                "ergebnis/phpstan-rules": "^0.14.3",
+                "ext-zip": "*",
+                "friendsofphp/php-cs-fixer": "^2.16.1",
+                "mikey179/vfsstream": "^1.6.8",
+                "pepakriz/phpstan-exception-rules": "^0.10.1",
+                "phpstan/phpstan": "^0.12.8",
+                "phpstan/phpstan-beberlei-assert": "^0.12.2",
+                "phpstan/phpstan-deprecation-rules": "^0.12.2",
+                "phpstan/phpstan-phpunit": "^0.12.6",
+                "phpstan/phpstan-strict-rules": "^0.12.2",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.2"
             },
             "suggest": {
                 "ext-zip": "to create a zip file containing all other generated files"
@@ -149,7 +153,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2019-10-12T10:27:38+00:00"
+            "time": "2020-01-30T20:40:00+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -682,6 +686,122 @@
             "time": "2019-11-29T15:36:20+00:00"
         },
         {
+            "name": "ergebnis/json-normalizer",
+            "version": "0.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ergebnis/json-normalizer.git",
+                "reference": "6a41d9a53f640bff8ef5516efd3aadc6f1ad1f37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ergebnis/json-normalizer/zipball/6a41d9a53f640bff8ef5516efd3aadc6f1ad1f37",
+                "reference": "6a41d9a53f640bff8ef5516efd3aadc6f1ad1f37",
+                "shasum": ""
+            },
+            "require": {
+                "ergebnis/json-printer": "^3.0.2",
+                "ext-json": "*",
+                "justinrainbow/json-schema": "^4.0.0 || ^5.0.0",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "ergebnis/php-cs-fixer-config": "^1.1.3",
+                "ergebnis/phpstan-rules": "~0.14.2",
+                "ergebnis/test-util": "~0.9.1",
+                "infection/infection": "~0.13.6",
+                "jangregor/phpstan-prophecy": "~0.6.0",
+                "phpbench/phpbench": "~0.16.10",
+                "phpstan/extension-installer": "^1.0.3",
+                "phpstan/phpstan": "~0.12.4",
+                "phpstan/phpstan-deprecation-rules": "~0.12.1",
+                "phpstan/phpstan-phpunit": "~0.12.5",
+                "phpstan/phpstan-strict-rules": "~0.12.1",
+                "phpunit/phpunit": "^7.5.20",
+                "psalm/plugin-phpunit": "~0.8.0",
+                "vimeo/psalm": "^3.8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ergebnis\\Json\\Normalizer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Möller",
+                    "email": "am@localheinz.com"
+                }
+            ],
+            "description": "Provides generic and vendor-specific normalizers for normalizing JSON documents.",
+            "homepage": "https://github.com/ergebnis/json-normalizer",
+            "keywords": [
+                "json",
+                "normalizer"
+            ],
+            "time": "2020-01-09T13:43:00+00:00"
+        },
+        {
+            "name": "ergebnis/json-printer",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ergebnis/json-printer.git",
+                "reference": "c7985dc4879777f2e4ab689da25bdd49f59dd2cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ergebnis/json-printer/zipball/c7985dc4879777f2e4ab689da25bdd49f59dd2cb",
+                "reference": "c7985dc4879777f2e4ab689da25bdd49f59dd2cb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "ergebnis/php-cs-fixer-config": "~1.1.1",
+                "ergebnis/phpstan-rules": "~0.14.1",
+                "ergebnis/test-util": "~0.9.0",
+                "infection/infection": "~0.13.6",
+                "phpbench/phpbench": "~0.16.10",
+                "phpstan/extension-installer": "^1.0.3",
+                "phpstan/phpstan": "~0.11.19",
+                "phpstan/phpstan-deprecation-rules": "~0.11.2",
+                "phpstan/phpstan-strict-rules": "~0.11.1",
+                "phpunit/phpunit": "^7.5.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ergebnis\\Json\\Printer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Möller",
+                    "email": "am@localheinz.com"
+                }
+            ],
+            "description": "Provides a JSON printer, allowing for flexible indentation.",
+            "homepage": "https://github.com/ergebnis/json-printer",
+            "keywords": [
+                "formatter",
+                "json",
+                "printer"
+            ],
+            "time": "2019-12-19T14:42:54+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "6.5.2",
             "source": {
@@ -1169,128 +1289,31 @@
             "time": "2020-01-07T22:58:31+00:00"
         },
         {
-            "name": "localheinz/json-normalizer",
-            "version": "0.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/localheinz/json-normalizer.git",
-                "reference": "0bcf04557255c318325fc959a8f36bd51356b6f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/localheinz/json-normalizer/zipball/0bcf04557255c318325fc959a8f36bd51356b6f0",
-                "reference": "0bcf04557255c318325fc959a8f36bd51356b6f0",
-                "shasum": ""
-            },
-            "require": {
-                "justinrainbow/json-schema": "^4.0.0 || ^5.0.0",
-                "localheinz/json-printer": "^1.0.0",
-                "php": "^7.1"
-            },
-            "require-dev": {
-                "infection/infection": "~0.7.1",
-                "localheinz/php-cs-fixer-config": "~1.11.0",
-                "localheinz/test-util": "0.6.1",
-                "phpbench/phpbench": "~0.14.0",
-                "phpspec/prophecy": "^1.7.1",
-                "phpunit/phpunit": "^7.0.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Localheinz\\Json\\Normalizer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com"
-                }
-            ],
-            "description": "Provides normalizers for normalizing JSON documents.",
-            "homepage": "https://github.com/localheinz/json-normalizer",
-            "keywords": [
-                "json",
-                "normalizer"
-            ],
-            "abandoned": "ergebnis/json-normalizer",
-            "time": "2018-02-15T14:13:23+00:00"
-        },
-        {
-            "name": "localheinz/json-printer",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/localheinz/json-printer.git",
-                "reference": "49459a160c551b5504d1edcbb10692039071d08a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/localheinz/json-printer/zipball/49459a160c551b5504d1edcbb10692039071d08a",
-                "reference": "49459a160c551b5504d1edcbb10692039071d08a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "infection/infection": "~0.7.0",
-                "localheinz/php-cs-fixer-config": "~1.9.0",
-                "localheinz/test-util": "0.6.1",
-                "phpbench/phpbench": "~0.14.0",
-                "phpunit/phpunit": "^6.5.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Localheinz\\Json\\Printer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com"
-                }
-            ],
-            "description": "Provides a JSON printer, allowing for flexible indentation.",
-            "homepage": "https://github.com/localheinz/json-printer",
-            "keywords": [
-                "formatter",
-                "json",
-                "printer"
-            ],
-            "abandoned": "ergebnis/json-printer",
-            "time": "2018-01-27T21:05:05+00:00"
-        },
-        {
             "name": "mimmi20/browser-detector-loader-interface",
-            "version": "2.0.5",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/browser-detector-loader-interface.git",
-                "reference": "bdf183b0ec1e6e0d58e34fb22eb13f9e427e85d2"
+                "reference": "31623fd9b587cbda6a50437efdd36ec83042b45b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/browser-detector-loader-interface/zipball/bdf183b0ec1e6e0d58e34fb22eb13f9e427e85d2",
-                "reference": "bdf183b0ec1e6e0d58e34fb22eb13f9e427e85d2",
+                "url": "https://api.github.com/repos/mimmi20/browser-detector-loader-interface/zipball/31623fd9b587cbda6a50437efdd36ec83042b45b",
+                "reference": "31623fd9b587cbda6a50437efdd36ec83042b45b",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.9",
-                "phpstan/phpstan": "^0.9",
-                "squizlabs/php_codesniffer": "^3.2"
+                "ergebnis/composer-normalize": "^2.2.2",
+                "ergebnis/phpstan-rules": "^0.14.2",
+                "friendsofphp/php-cs-fixer": "^2.16.1",
+                "pepakriz/phpstan-exception-rules": "^0.10.1",
+                "phpstan/phpstan": "^0.12.8",
+                "phpstan/phpstan-deprecation-rules": "^0.12.2",
+                "phpstan/phpstan-strict-rules": "^0.12.2",
+                "squizlabs/php_codesniffer": "^3.5.3"
             },
             "type": "library",
             "autoload": {
@@ -1314,32 +1337,98 @@
                 }
             ],
             "description": "the source interface for the browscap helper",
-            "time": "2018-01-03T21:05:56+00:00"
+            "time": "2020-01-29T19:26:50+00:00"
         },
         {
-            "name": "mimmi20/ua-browser-type",
-            "version": "6.0.2",
+            "name": "mimmi20/json-class",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mimmi20/ua-browser-type.git",
-                "reference": "8b4f8f6f39254e38e6efec47d5b078831bc4cf21"
+                "url": "https://github.com/mimmi20/json-class.git",
+                "reference": "fa7e6588563c577e54a953064601b5ee5456228b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/ua-browser-type/zipball/8b4f8f6f39254e38e6efec47d5b078831bc4cf21",
-                "reference": "8b4f8f6f39254e38e6efec47d5b078831bc4cf21",
+                "url": "https://api.github.com/repos/mimmi20/json-class/zipball/fa7e6588563c577e54a953064601b5ee5456228b",
+                "reference": "fa7e6588563c577e54a953064601b5ee5456228b",
                 "shasum": ""
             },
             "require": {
-                "mimmi20/browser-detector-loader-interface": "~2.0.5",
+                "daverandom/exceptional-json": "^1.0.4",
+                "ext-json": "*",
                 "php": "^7.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.10 || ^3.0",
-                "localheinz/composer-normalize": "^0.6.0",
-                "phpstan/phpstan": "^0.9",
-                "phpunit/phpunit": "^6.5 || ^7.0",
-                "squizlabs/php_codesniffer": "^3.2"
+                "ergebnis/composer-normalize": "^2.2.2",
+                "ergebnis/phpstan-rules": "^0.14.2",
+                "friendsofphp/php-cs-fixer": "^2.16.1",
+                "infection/infection": "^0.13.6",
+                "pepakriz/phpstan-exception-rules": "^0.10.1",
+                "phpstan/phpstan": "^0.12.8",
+                "phpstan/phpstan-deprecation-rules": "^0.12.2",
+                "phpstan/phpstan-phpunit": "^0.12.6",
+                "phpstan/phpstan-strict-rules": "^0.12.2",
+                "phpunit/phpunit": "^7.5.19 || ^8.5.0",
+                "squizlabs/php_codesniffer": "^3.5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JsonClass\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Müller",
+                    "homepage": "https://github.com/mimmi20",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/mimmi20/json-class/graphs/contributors"
+                }
+            ],
+            "description": "Class wrapper for ",
+            "homepage": "https://github.com/mimmi20/json-class",
+            "keywords": [
+                "json"
+            ],
+            "time": "2020-01-29T20:33:53+00:00"
+        },
+        {
+            "name": "mimmi20/ua-browser-type",
+            "version": "7.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mimmi20/ua-browser-type.git",
+                "reference": "3bb4f08215c1453f77e9e679ccb5985b41a41314"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mimmi20/ua-browser-type/zipball/3bb4f08215c1453f77e9e679ccb5985b41a41314",
+                "reference": "3bb4f08215c1453f77e9e679ccb5985b41a41314",
+                "shasum": ""
+            },
+            "require": {
+                "mimmi20/browser-detector-loader-interface": "~3.0.3",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.2.2",
+                "ergebnis/phpstan-rules": "^0.14.2",
+                "friendsofphp/php-cs-fixer": "^2.16.1",
+                "infection/infection": "^0.13.6",
+                "pepakriz/phpstan-exception-rules": "^0.10.1",
+                "phpstan/phpstan": "^0.12.8",
+                "phpstan/phpstan-deprecation-rules": "^0.12.2",
+                "phpstan/phpstan-phpunit": "^0.12.6",
+                "phpstan/phpstan-strict-rules": "^0.12.2",
+                "phpunit/phpunit": "^7.5.19 || ^8.5.0",
+                "squizlabs/php_codesniffer": "^3.5.3"
             },
             "type": "library",
             "autoload": {
@@ -1371,31 +1460,38 @@
                 "user agent",
                 "user-agent"
             ],
-            "time": "2018-06-07T07:18:46+00:00"
+            "time": "2020-01-29T19:51:03+00:00"
         },
         {
             "name": "mimmi20/ua-device-type",
-            "version": "6.0.1",
+            "version": "7.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/ua-device-type.git",
-                "reference": "b36f9cb0dbe263b6fd9014c8340985ddb400738c"
+                "reference": "7731abc0f000a990189c5b18f163e7b199ab755a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/ua-device-type/zipball/b36f9cb0dbe263b6fd9014c8340985ddb400738c",
-                "reference": "b36f9cb0dbe263b6fd9014c8340985ddb400738c",
+                "url": "https://api.github.com/repos/mimmi20/ua-device-type/zipball/7731abc0f000a990189c5b18f163e7b199ab755a",
+                "reference": "7731abc0f000a990189c5b18f163e7b199ab755a",
                 "shasum": ""
             },
             "require": {
-                "mimmi20/browser-detector-loader-interface": "~2.0.5",
+                "mimmi20/browser-detector-loader-interface": "~3.0.3",
                 "php": "^7.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phpstan/phpstan": "^0.10",
-                "phpunit/phpunit": "^7.3",
-                "squizlabs/php_codesniffer": "^3.3"
+                "ergebnis/composer-normalize": "^2.2.2",
+                "ergebnis/phpstan-rules": "^0.14.2",
+                "friendsofphp/php-cs-fixer": "^2.16.1",
+                "infection/infection": "^0.13.6",
+                "pepakriz/phpstan-exception-rules": "^0.10.1",
+                "phpstan/phpstan": "^0.12.8",
+                "phpstan/phpstan-deprecation-rules": "^0.12.2",
+                "phpstan/phpstan-phpunit": "^0.12.6",
+                "phpstan/phpstan-strict-rules": "^0.12.2",
+                "phpunit/phpunit": "^7.5.19 || ^8.5.0",
+                "squizlabs/php_codesniffer": "^3.5.3"
             },
             "type": "library",
             "autoload": {
@@ -1427,7 +1523,7 @@
                 "user agent",
                 "user-agent"
             ],
-            "time": "2018-08-31T19:48:13+00:00"
+            "time": "2020-01-29T20:26:47+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2722,20 +2818,20 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.12.3",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "97b6311585cae66a26833b14b33785f5797f7d39"
+                "reference": "28f856a4c57eeb24485916e8a68403f41a133616"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/97b6311585cae66a26833b14b33785f5797f7d39",
-                "reference": "97b6311585cae66a26833b14b33785f5797f7d39",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/28f856a4c57eeb24485916e8a68403f41a133616",
+                "reference": "28f856a4c57eeb24485916e8a68403f41a133616",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0",
+                "php": "^7.2.5",
                 "symfony/polyfill-ctype": "^1.8",
                 "symfony/polyfill-mbstring": "^1.3"
             },
@@ -2746,13 +2842,10 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.12-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Twig_": "lib/"
-                },
                 "psr-4": {
                     "Twig\\": "src/"
                 }
@@ -2783,7 +2876,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-12-28T07:12:03+00:00"
+            "time": "2019-12-28T07:17:28+00:00"
         }
     ],
     "packages-dev": [
