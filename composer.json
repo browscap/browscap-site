@@ -32,11 +32,13 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "beberlei/assert": "^3.2",
-        "browscap/browscap": "6.0.37",
+        "browscap/browscap": "6.0.38",
         "browscap/browscap-php": "^4.2",
         "composer/composer": "^1.9",
         "doctrine/cache": "^1.10",
         "guzzlehttp/guzzle": "^6.5",
+        "laminas/laminas-config-aggregator": "^1.1",
+        "laminas/laminas-servicemanager": "^3.3",
         "monolog/monolog": "^1.25",
         "ocramius/package-versions": "^1.5",
         "psr/container": "^1.0",
@@ -48,9 +50,7 @@
         "roave/doctrine-simplecache": "^2.3",
         "slim/slim": "^3.12",
         "slim/twig-view": "^2.5",
-        "symfony/console": "^4.4",
-        "laminas/laminas-config-aggregator": "^1.1",
-        "laminas/laminas-servicemanager": "^3.3"
+        "symfony/console": "^4.4"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

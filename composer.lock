@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15bcc44a88b9d9e597772777a74841e3",
+    "content-hash": "6bdb55fb018ce8bbe93c7e141e421d82",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -70,25 +70,25 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.37",
+            "version": "6.0.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "c71b1b2d6738395a03ec55cd59cd462dac6929be"
+                "reference": "c7f7660d14048f8881109e09e291308d851499b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/c71b1b2d6738395a03ec55cd59cd462dac6929be",
-                "reference": "c71b1b2d6738395a03ec55cd59cd462dac6929be",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/c7f7660d14048f8881109e09e291308d851499b4",
+                "reference": "c7f7660d14048f8881109e09e291308d851499b4",
                 "shasum": ""
             },
             "require": {
                 "beberlei/assert": "^3.2.7",
                 "ergebnis/json-normalizer": "^0.11.0",
                 "ext-json": "*",
-                "mimmi20/json-class": "~2.0.8",
-                "mimmi20/ua-browser-type": "^7.0.7",
-                "mimmi20/ua-device-type": "^7.1.6",
+                "mimmi20/json-class": "~2.0.9",
+                "mimmi20/ua-browser-type": "^7.0.8",
+                "mimmi20/ua-device-type": "^7.1.7",
                 "monolog/monolog": "^1.25.3 || ^2.0.2",
                 "php": "^7.1",
                 "seld/jsonlint": "^1.7.2",
@@ -104,7 +104,7 @@
                 "friendsofphp/php-cs-fixer": "^2.16.1",
                 "mikey179/vfsstream": "^1.6.8",
                 "pepakriz/phpstan-exception-rules": "^0.10.1",
-                "phpstan/phpstan": "^0.12.8",
+                "phpstan/phpstan": "^0.12.9",
                 "phpstan/phpstan-beberlei-assert": "^0.12.2",
                 "phpstan/phpstan-deprecation-rules": "^0.12.2",
                 "phpstan/phpstan-phpunit": "^0.12.6",
@@ -153,7 +153,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2020-01-30T20:40:00+00:00"
+            "time": "2020-03-17T13:57:16+00:00"
         },
         {
             "name": "browscap/browscap-php",
