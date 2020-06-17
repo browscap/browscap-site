@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 return [
     'db' => [
-       'dsn' => 'mysql:dbname=browscap',
+       'dsn' => 'mysql:host=127.0.0.1;port=13306;dbname=browscap',
        'user' => 'browscapci',
        'pass' => 'browscapci',
     ],
