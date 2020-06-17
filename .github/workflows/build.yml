@@ -20,7 +20,8 @@ jobs:
           MYSQL_DATABASE: browscap
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
-          - 3306
+          - 13306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
 
     steps:
       - uses: actions/checkout@v2
@@ -29,7 +30,7 @@ jobs:
         run: cp config/autoload/local.php.ci config/autoload/local.php
 
       - name: Load MySQL schema
-        run: mysql --user=browscapci --password=browscapci browscap < db/create004.sql
+        run: mysql --host=127.0.0.1 --port=13306 --user=browscapci --password=browscapci browscap < db/create004.sql
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -43,7 +44,7 @@ jobs:
 
       - name: Install dependencies
         # 200 here represents the \Monolog\Logger::INFO constant for log levels
-        run: BC_BUILD_LOG=200 php -n composer.phar install --prefer-dist --no-interaction
+        run: BC_BUILD_LOG=200 composer install --prefer-dist --no-interaction
 
       - name: Run unit tests
         run: vendor/bin/phpunit
