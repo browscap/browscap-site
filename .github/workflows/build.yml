@@ -1,0 +1,50 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_USER: browscapci
+          MYSQL_PASSWORD: browscapci
+          MYSQL_DATABASE: browscap
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 3306
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Copy configuration for CI
+        run: cp config/autoload/local.php.ci config/autoload/local.php
+
+      - name: Load MySQL schema
+        run: mysql --user=browscapci --password=browscapci browscap < db/create004.sql
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3
+          extensions: bcmath, curl, dom, intl, json, mbstring, pdo, pdo_mysql, xml, zip
+          coverage: none
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        # 200 here represents the \Monolog\Logger::INFO constant for log levels
+        run: BC_BUILD_LOG=200 php -n composer.phar install --prefer-dist --no-interaction
+
+      - name: Run unit tests
+        run: vendor/bin/phpunit
+

@@ -4,8 +4,8 @@ declare(strict_types=1);
 return [
     'db' => [
        'dsn' => 'mysql:dbname=browscap',
-       'user' => 'travis',
-       'pass' => '',
+       'user' => 'browscapci',
+       'pass' => 'browscapci',
     ],
     'debug' => false,
 ];
