@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
-use Exception;
 use PDO;
 use Throwable;
 
@@ -18,7 +17,7 @@ class DeleteOldDownloadLogs
     }
 
     /**
-     * @throws Exception
+     * @throws Throwable
      */
     public function __invoke(): void
     {

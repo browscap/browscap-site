@@ -6,7 +6,6 @@ namespace BrowscapSite\Tool;
 
 use DateTime;
 use DateTimeInterface;
-use Exception;
 use PDO;
 use Throwable;
 
@@ -23,7 +22,7 @@ class AnalyseStatistics
     }
 
     /**
-     * @throws Exception
+     * @throws Throwable
      */
     public function __invoke(): void
     {
