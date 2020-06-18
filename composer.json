@@ -31,7 +31,6 @@
         "ext-pdo_mysql": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "beberlei/assert": "^3.2",
         "browscap/browscap": "6.0.39",
         "browscap/browscap-php": "^4.2",
         "composer/composer": "^1.9",
