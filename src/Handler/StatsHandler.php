@@ -7,7 +7,7 @@ namespace BrowscapSite\Handler;
 use BrowscapSite\Renderer\Renderer;
 use DateTimeImmutable;
 use Exception;
-use PDO;
+use LazyPDO\LazyPDO as PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -77,7 +77,7 @@ final class StatsHandler implements RequestHandlerInterface
 
         $data   = [];
         $data[] = [$dataColumnName, 'Number of Downloads'];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $data[] = [
                 (new DateTimeImmutable((string) $row[$tableColumnName]))->format($dataColumnFormat),
                 (int) $row['downloadCount'],

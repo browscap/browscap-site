@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
-use PDO;
+use LazyPDO\LazyPDO as PDO;
 use Throwable;
 
 class DeleteOldDownloadLogs

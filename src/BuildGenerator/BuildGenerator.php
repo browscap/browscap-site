@@ -15,7 +15,6 @@ use OutOfBoundsException;
 use RuntimeException;
 use Webmozart\Assert\Assert;
 
-use function assert;
 use function explode;
 use function file_exists;
 use function is_dir;
@@ -135,7 +134,6 @@ final class BuildGenerator
 
         $buildGeneratorLazyFactory = $this->buildGeneratorLazyFactory;
         $buildGenerator            = $buildGeneratorLazyFactory();
-        assert($buildGenerator instanceof GeneratorInterface);
 
         $io->write('  - Creating browscap build');
         $buildGenerator->run((string) $buildNumber, $generationDate);

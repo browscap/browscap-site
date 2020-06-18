@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BrowscapSite\Tool;
 
 use DateTime;
-use PDO;
+use LazyPDO\LazyPDO as PDO;
 
 final class PdoRateLimiter implements RateLimiter
 {

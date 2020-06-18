@@ -6,7 +6,7 @@ namespace BrowscapSite\Tool;
 
 use DateTime;
 use DateTimeInterface;
-use PDO;
+use LazyPDO\LazyPDO as PDO;
 use Throwable;
 
 use function preg_replace;
