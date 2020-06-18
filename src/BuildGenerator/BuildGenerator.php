@@ -28,22 +28,24 @@ use const DATE_ATOM;
 final class BuildGenerator
 {
     private string $buildDirectory;
-    private GeneratorInterface $buildGenerator;
+    /** @psalm-var callable():GeneratorInterface */
+    private $buildGeneratorLazyFactory;
     private MetadataBuilder $metadataBuilder;
     private DeterminePackageVersion $determinePackageVersion;
     private DeterminePackageReleaseDate $determinePackageReleaseDate;
     private UserAgentTool $userAgentTool;
 
+    /** @psalm-param callable():GeneratorInterface $buildGeneratorLazyFactory */
     public function __construct(
         string $buildDirectory,
-        GeneratorInterface $buildGenerator,
+        callable $buildGeneratorLazyFactory,
         MetadataBuilder $metadataBuilder,
         DeterminePackageVersion $determinePackageVersion,
         DeterminePackageReleaseDate $determinePackageReleaseDate,
         UserAgentTool $userAgentTool
     ) {
         $this->buildDirectory              = $buildDirectory;
-        $this->buildGenerator              = $buildGenerator;
+        $this->buildGeneratorLazyFactory   = $buildGeneratorLazyFactory;
         $this->metadataBuilder             = $metadataBuilder;
         $this->determinePackageVersion     = $determinePackageVersion;
         $this->determinePackageReleaseDate = $determinePackageReleaseDate;
@@ -130,8 +132,12 @@ final class BuildGenerator
             throw new RuntimeException(sprintf('Directory "%s" was not created', $this->buildDirectory));
         }
 
+        $buildGeneratorLazyFactory = $this->buildGeneratorLazyFactory;
+        /** @var GeneratorInterface $buildGenerator */
+        $buildGenerator = $buildGeneratorLazyFactory();
+
         $io->write('  - Creating browscap build');
-        $this->buildGenerator->run((string) $buildNumber, $generationDate);
+        $buildGenerator->run((string) $buildNumber, $generationDate);
 
         $io->write('  - Generating metadata');
         $this->metadataBuilder->build();

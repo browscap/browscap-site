@@ -56,13 +56,15 @@ final class BuildGeneratorFactory
 
         return new BuildGenerator(
             self::BUILD_DIRECTORY,
-            new BrowscapBuildGenerator(
-                self::RESOURCE_DIRECTORY,
-                self::BUILD_DIRECTORY,
-                $logger,
-                (new FullCollectionFactory())->createCollection($logger, self::BUILD_DIRECTORY),
-                new DataCollectionFactory($logger)
-            ),
+            static function () use ($logger): BrowscapBuildGenerator {
+                return new BrowscapBuildGenerator(
+                    self::RESOURCE_DIRECTORY,
+                    self::BUILD_DIRECTORY,
+                    $logger,
+                    (new FullCollectionFactory())->createCollection($logger, self::BUILD_DIRECTORY),
+                    new DataCollectionFactory($logger)
+                );
+            },
             new ArrayMetadataBuilder(
                 new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
                 self::BUILD_DIRECTORY

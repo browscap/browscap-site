@@ -58,7 +58,9 @@ final class BuildGeneratorTest extends TestCase
         $this->io                          = new TestSimpleIO();
         $this->buildGenerator              = new BuildGenerator(
             $this->filesystem->url() . '/build',
-            $this->browscapBuildGenerator,
+            function (): GeneratorInterface {
+                return $this->browscapBuildGenerator;
+            },
             $this->metadataBuilder,
             $this->determinePackageVersion,
             $this->determinePackageReleaseDate,
