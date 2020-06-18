@@ -7,15 +7,8 @@ use Browscap\Parser\ParserInterface;
 
 final class ArrayMetadataBuilder implements MetadataBuilder
 {
-    /**
-     * @var ParserInterface
-     */
-    private $parser;
-
-    /**
-     * @var string
-     */
-    private $buildDir;
+    private ParserInterface $parser;
+    private string $buildDir;
 
     public function __construct(ParserInterface $parser, string $buildDir)
     {

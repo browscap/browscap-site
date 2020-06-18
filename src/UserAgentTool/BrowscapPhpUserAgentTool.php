@@ -16,12 +16,8 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
 {
     private const INI_FILE = __DIR__ . '/../../vendor/build/full_php_browscap.ini';
 
-    /** @var CacheInterface */
-    private $cache;
-
-    /** @var LoggerInterface */
-    private $logger;
-
+    private CacheInterface $cache;
+    private LoggerInterface $logger;
 
     public function __construct(CacheInterface $cache, LoggerInterface $logger)
     {

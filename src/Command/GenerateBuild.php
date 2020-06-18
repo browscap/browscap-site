@@ -11,8 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GenerateBuild extends Command
 {
-    /** @var BuildGenerator */
-    private $buildGenerator;
+    private BuildGenerator $buildGenerator;
 
     public function __construct(BuildGenerator $buildGenerator)
     {

@@ -7,10 +7,7 @@ use PDO;
 
 class DeleteOldDownloadLogs
 {
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(PDO $pdo)
     {

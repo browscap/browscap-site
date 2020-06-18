@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace BrowscapSite\BuildGenerator;
 
 use Assert\Assert;
-use Assert\AssertionFailedException;
 use Browscap\Generator\GeneratorInterface;
 use BrowscapSite\SimpleIO\SimpleIOInterface;
 use BrowscapSite\Metadata\MetadataBuilder;
@@ -17,35 +16,12 @@ use RuntimeException;
 
 final class BuildGenerator
 {
-    /**
-     * @var string
-     */
-    private $buildDirectory;
-
-    /**
-     * @var GeneratorInterface
-     */
-    private $buildGenerator;
-
-    /**
-     * @var MetadataBuilder
-     */
-    private $metadataBuilder;
-
-    /**
-     * @var DeterminePackageVersion
-     */
-    private $determinePackageVersion;
-
-    /**
-     * @var DeterminePackageReleaseDate
-     */
-    private $determinePackageReleaseDate;
-
-    /**
-     * @var UserAgentTool
-     */
-    private $userAgentTool;
+    private string $buildDirectory;
+    private GeneratorInterface $buildGenerator;
+    private MetadataBuilder $metadataBuilder;
+    private DeterminePackageVersion $determinePackageVersion;
+    private DeterminePackageReleaseDate $determinePackageReleaseDate;
+    private UserAgentTool $userAgentTool;
 
     public function __construct(
         string $buildDirectory,
@@ -68,7 +44,6 @@ final class BuildGenerator
      * @throws RuntimeException
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
-     * @throws AssertionFailedException
      * @throws Exception
      */
     public function __invoke(SimpleIOInterface $io): void
@@ -113,9 +88,6 @@ final class BuildGenerator
         return $this->convertPackageVersionToBuildNumber(substr($packageVersion, 0, strpos($packageVersion, '@')));
     }
 
-    /**
-     * @return int|null
-     */
     private function getCurrentBuildNumber(): ?int
     {
         $metadataFile = $this->buildDirectory . '/metadata.php';
@@ -137,7 +109,6 @@ final class BuildGenerator
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws Exception
-     * @throws AssertionFailedException
      */
     private function createBuild(int $buildNumber, DateTimeImmutable $generationDate, SimpleIOInterface $io): void
     {

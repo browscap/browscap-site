@@ -9,14 +9,39 @@ use DateTimeImmutable;
 
 final class Metadata
 {
-    /** @var string[]|int[][] */
-    private $metadataArray;
+    /**
+     * @var string[]|int[][]
+     * @psalm-var {
+     *   version: string,
+     *   released: string,
+     *   filesizes: {
+     *     BrowsCapINI: int,
+     *     Full_BrowsCapINI: int,
+     *     Lite_BrowsCapINI: int,
+     *     PHP_BrowsCapINI: int,
+     *     Full_PHP_BrowsCapINI: int,
+     *     Lite_PHP_BrowsCapINI: int,
+     *     BrowsCapXML: int,
+     *     BrowsCapCSV: int,
+     *     BrowsCapJSON: int,
+     *     BrowsCapZIP: int,
+     *   },
+     * }
+     */
+    private array $metadataArray;
 
     private function __construct()
     {
     }
 
-    public static function fromArray(array $array)
+    /**
+     * @psalm-param {
+     *   version?: string,
+     *   released?: string,
+     *   filesizes
+     * } $array
+     */
+    public static function fromArray(array $array): self
     {
         Assert::that($array)
             ->keyExists('version')

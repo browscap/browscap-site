@@ -9,11 +9,8 @@ use Slim\Views\Twig;
 
 final class TwigRenderer implements Renderer
 {
-    /** @var Twig */
-    private $twig;
-
-    /** @var ResponseInterface */
-    private $baseResponse;
+    private Twig $twig;
+    private ResponseInterface $baseResponse;
 
     public function __construct(Twig $twig, ResponseInterface $baseResponse)
     {

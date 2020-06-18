@@ -11,10 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class DeleteOldDownloadLogsCommand extends Command
 {
-    /**
-     * @var DeleteOldDownloadLogs
-     */
-    private $deleteOldDownloadLogs;
+    private DeleteOldDownloadLogs $deleteOldDownloadLogs;
 
     public function __construct(DeleteOldDownloadLogs $deleteOldDownloadLogs)
     {

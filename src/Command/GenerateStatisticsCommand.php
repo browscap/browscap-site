@@ -11,10 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GenerateStatisticsCommand extends Command
 {
-    /**
-     * @var AnalyseStatistics
-     */
-    private $analyseStatistics;
+    private AnalyseStatistics $analyseStatistics;
 
     public function __construct(AnalyseStatistics $analyseStatistics)
     {

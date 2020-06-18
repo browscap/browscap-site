@@ -11,14 +11,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class DownloadHandler implements RequestHandlerInterface
 {
-    /** @var Renderer */
-    private $renderer;
+    private Renderer $renderer;
+    private Metadata $metadata;
 
-    /** @var Metadata */
-    private $metadata;
-
-    /** @var array */
-    private $fileList;
+    /** @var  */
+    private array $fileList;
 
     /** @var array */
     private $banConfiguration;

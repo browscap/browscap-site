@@ -3,17 +3,12 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
+use PDO;
+
 final class RateLimiter
 {
-    /**
-     * @var \PDO
-     */
-    private $pdo;
-
-    /**
-     * @var array
-     */
-    private $banConfiguration;
+    private PDO $pdo;
+    private array $banConfiguration;
 
     public function __construct(\PDO $pdo, $banConfiguration)
     {
