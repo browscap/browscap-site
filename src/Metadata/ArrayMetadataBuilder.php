@@ -13,8 +13,6 @@ use function round;
 use function unlink;
 use function var_export;
 
-use const LOCK_EX;
-
 /**
  * @psalm-import-type MetadataArray from \BrowscapSite\Metadata\Metadata
  */
@@ -70,7 +68,8 @@ final class ArrayMetadataBuilder implements MetadataBuilder
     /** @psalm-param MetadataArray $array */
     private function writeArray(string $filename, array $array): void
     {
-        file_put_contents($filename, "<?php\n\nreturn " . var_export($array, true) . ';', LOCK_EX);
+        /** @noinspection FilePutContentsRaceConditionInspection */
+        file_put_contents($filename, "<?php\n\nreturn " . var_export($array, true) . ';');
     }
 
     private function getKbSize(string $filename): int
