@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Command;
@@ -19,14 +20,14 @@ final class GenerateBuild extends Command
         $this->buildGenerator = $buildGenerator;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('generate-build')
             ->setDescription('Generate the browscap build and cache');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->buildGenerator->__invoke(
             new SymfonyConsoleWrappedSimpleIO($output)

@@ -1,10 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Metadata;
 
 use Browscap\Parser\ParserInterface;
 
+use function file_exists;
+use function file_put_contents;
+use function filesize;
+use function round;
+use function unlink;
+use function var_export;
+
+/**
+ * @psalm-import-type MetadataArray from \BrowscapSite\Metadata\Metadata
+ */
 final class ArrayMetadataBuilder implements MetadataBuilder
 {
     private ParserInterface $parser;
@@ -12,7 +23,7 @@ final class ArrayMetadataBuilder implements MetadataBuilder
 
     public function __construct(ParserInterface $parser, string $buildDir)
     {
-        $this->parser = $parser;
+        $this->parser   = $parser;
         $this->buildDir = $buildDir;
     }
 
@@ -24,20 +35,20 @@ final class ArrayMetadataBuilder implements MetadataBuilder
 
         $versionData = $fileData['GJK_Browscap_Version'];
 
-        $metadata['version'] = $versionData['Version'];
+        $metadata['version']  = $versionData['Version'];
         $metadata['released'] = $versionData['Released'];
 
-        $metadata['filesizes'] = [];
-        $metadata['filesizes']['BrowsCapINI'] = $this->getKbSize($this->buildDir . '/browscap.ini');
-        $metadata['filesizes']['Full_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/full_asp_browscap.ini');
-        $metadata['filesizes']['Lite_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/lite_asp_browscap.ini');
-        $metadata['filesizes']['PHP_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/php_browscap.ini');
+        $metadata['filesizes']                         = [];
+        $metadata['filesizes']['BrowsCapINI']          = $this->getKbSize($this->buildDir . '/browscap.ini');
+        $metadata['filesizes']['Full_BrowsCapINI']     = $this->getKbSize($this->buildDir . '/full_asp_browscap.ini');
+        $metadata['filesizes']['Lite_BrowsCapINI']     = $this->getKbSize($this->buildDir . '/lite_asp_browscap.ini');
+        $metadata['filesizes']['PHP_BrowsCapINI']      = $this->getKbSize($this->buildDir . '/php_browscap.ini');
         $metadata['filesizes']['Full_PHP_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/full_php_browscap.ini');
         $metadata['filesizes']['Lite_PHP_BrowsCapINI'] = $this->getKbSize($this->buildDir . '/lite_php_browscap.ini');
-        $metadata['filesizes']['BrowsCapXML'] = $this->getKbSize($this->buildDir . '/browscap.xml');
-        $metadata['filesizes']['BrowsCapCSV'] = $this->getKbSize($this->buildDir . '/browscap.csv');
-        $metadata['filesizes']['BrowsCapJSON'] = $this->getKbSize($this->buildDir . '/browscap.json');
-        $metadata['filesizes']['BrowsCapZIP'] = $this->getKbSize($this->buildDir . '/browscap.zip');
+        $metadata['filesizes']['BrowsCapXML']          = $this->getKbSize($this->buildDir . '/browscap.xml');
+        $metadata['filesizes']['BrowsCapCSV']          = $this->getKbSize($this->buildDir . '/browscap.csv');
+        $metadata['filesizes']['BrowsCapJSON']         = $this->getKbSize($this->buildDir . '/browscap.json');
+        $metadata['filesizes']['BrowsCapZIP']          = $this->getKbSize($this->buildDir . '/browscap.zip');
 
         $this->writeArray($this->buildDir . '/metadata.php', $metadata);
 
@@ -47,11 +58,14 @@ final class ArrayMetadataBuilder implements MetadataBuilder
 
     private function niceDelete(string $filename): void
     {
-        if (file_exists($filename)) {
-            unlink($filename);
+        if (! file_exists($filename)) {
+            return;
         }
+
+        unlink($filename);
     }
 
+    /** @psalm-param MetadataArray $array */
     private function writeArray(string $filename, array $array): void
     {
         file_put_contents($filename, "<?php\n\nreturn " . var_export($array, true) . ';');
@@ -59,6 +73,6 @@ final class ArrayMetadataBuilder implements MetadataBuilder
 
     private function getKbSize(string $filename): int
     {
-        return (int)round(filesize($filename) / 1024);
+        return (int) round(filesize($filename) / 1024);
     }
 }

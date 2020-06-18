@@ -1,18 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
+use DateTime;
 use PDO;
 
 final class RateLimiter
 {
     private PDO $pdo;
+    /** @var int[] */
     private array $banConfiguration;
 
-    public function __construct(\PDO $pdo, $banConfiguration)
+    /** @param int[] $banConfiguration */
+    public function __construct(PDO $pdo, array $banConfiguration)
     {
-        $this->pdo = $pdo;
+        $this->pdo              = $pdo;
         $this->banConfiguration = $banConfiguration;
     }
 
@@ -22,9 +26,6 @@ final class RateLimiter
      * If the IP is not banned, it checks the download rate, and if it exceeds
      * it, we ban them. If they have exceeded the temporary ban rate, we will
      * permanently ban them.
-     *
-     * @param string $ip
-     * @return bool
      */
     public function isTemporarilyBanned(string $ip): bool
     {
@@ -38,6 +39,7 @@ final class RateLimiter
         $isOverLimit = $this->isOverLimit($ip);
         if ($isOverLimit) {
             $this->createBan($ip, $this->shouldPermanentlyBan($ip));
+
             return true;
         }
 
@@ -46,9 +48,6 @@ final class RateLimiter
 
     /**
      * Check to see if an IP is permanently banned.
-     *
-     * @param string $ip
-     * @return bool
      */
     public function isPermanentlyBanned(string $ip): bool
     {
@@ -57,10 +56,6 @@ final class RateLimiter
 
     /**
      * Log that a download has happened.
-     *
-     * @param string $ip
-     * @param string $userAgent
-     * @param string $fileCode
      */
     public function logDownload(string $ip, string $userAgent, string $fileCode): void
     {
@@ -78,16 +73,13 @@ final class RateLimiter
      * Check whether an IP has gone over the download limit.
      *
      * Returns true if IP is over limit
-     *
-     * @param string $ip
-     * @return bool
      */
     private function isOverLimit(string $ip): bool
     {
-        $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
-        $rateLimitDownloads = (int)$this->banConfiguration['rateLimitDownloads'];
+        $rateLimitPeriod    = $this->banConfiguration['rateLimitPeriod'];
+        $rateLimitDownloads = (int) $this->banConfiguration['rateLimitDownloads'];
 
-        $cutoff = new \DateTime($rateLimitPeriod . ' hours ago');
+        $cutoff = new DateTime($rateLimitPeriod . ' hours ago');
 
         $sql = 'SELECT COUNT(*) FROM downloadLog WHERE ipAddress = :ip AND downloadDate >= :cutoff';
 
@@ -96,37 +88,31 @@ final class RateLimiter
         $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
 
         $stmt->execute();
-        $downloads = (int)$stmt->fetchColumn();
+        $downloads = (int) $stmt->fetchColumn();
 
         return $downloads >= $rateLimitDownloads;
     }
 
     /**
      * Should we permanently ban an IP address.
-     *
-     * @param string $ip
-     * @return bool
      */
     private function shouldPermanentlyBan(string $ip): bool
     {
-        $tempBanLimit = (int)$this->banConfiguration['tempBanLimit'];
+        $tempBanLimit = (int) $this->banConfiguration['tempBanLimit'];
 
         $recentBanCount = $this->getRecentTemporaryBanCount($ip);
 
-        return ($recentBanCount > $tempBanLimit);
+        return $recentBanCount > $tempBanLimit;
     }
 
     /**
      * Get how many temporary bans the IP has received recently.
-     *
-     * @param string $ip
-     * @return int
      */
     private function getRecentTemporaryBanCount(string $ip): int
     {
         $tempBanPeriod = $this->banConfiguration['tempBanPeriod'];
 
-        $cutoff = new \DateTime($tempBanPeriod . ' days ago');
+        $cutoff = new DateTime($tempBanPeriod . ' days ago');
 
         $sql = '
             SELECT
@@ -142,7 +128,8 @@ final class RateLimiter
         $stmt->bindValue('cutoff', $cutoff->format('Y-m-d H:i:s'));
 
         $stmt->execute();
-        return (int)$stmt->fetchColumn();
+
+        return (int) $stmt->fetchColumn();
     }
 
     /**
@@ -150,14 +137,21 @@ final class RateLimiter
      *
      * Returns boolean(false) if no temporary ban exists.
      *
-     * @param string $ip
-     * @return array|bool
+     * @return int[]|string[]|bool
+     *
+     * @psalm-return bool|array{
+     *   id: int,
+     *   ipAddress: string,
+     *   banDate: string,
+     *   isPermanent: int,
+     *   unbanDate: string,
+     * }
      */
     private function getTemporaryBan(string $ip)
     {
         $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
 
-        $cutoff = new \DateTime($rateLimitPeriod . ' hour ago');
+        $cutoff = new DateTime($rateLimitPeriod . ' hour ago');
 
         $sql = '
             SELECT
@@ -184,8 +178,15 @@ final class RateLimiter
      *
      * Returns boolean(false) if no permanent ban exists.
      *
-     * @param string $ip
-     * @return array|bool
+     * @return int[]|string[]|bool
+     *
+     * @psalm-return bool|array{
+     *   id: int,
+     *   ipAddress: string,
+     *   banDate: string,
+     *   isPermanent: int,
+     *   unbanDate: string,
+     * }
      */
     private function getPermanentBan(string $ip)
     {
@@ -208,9 +209,6 @@ final class RateLimiter
 
     /**
      * Create a banLog entry.
-     *
-     * @param string $ip
-     * @param bool $permanent
      */
     private function createBan(string $ip, bool $permanent): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Command;
@@ -6,6 +7,7 @@ namespace BrowscapSite\Command;
 use BrowscapSite\Tool\AnalyseStatistics;
 use Composer\IO\ConsoleIO;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,10 +23,12 @@ final class GenerateStatisticsCommand extends Command
 
     /**
      * (non-PHPdoc).
+     *
      * @see \Symfony\Component\Console\Command\Command::configure()
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     *
+     * @throws InvalidArgumentException
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('generate-statistics')
@@ -33,6 +37,7 @@ final class GenerateStatisticsCommand extends Command
 
     /**
      * (non-PHPdoc).
+     *
      * @see \Symfony\Component\Console\Command\Command::execute()
      * {@inheritdoc}
      */

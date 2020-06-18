@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
+use Exception;
 use PDO;
+use Throwable;
 
 class DeleteOldDownloadLogs
 {
@@ -15,8 +18,7 @@ class DeleteOldDownloadLogs
     }
 
     /**
-     * @throws \Exception
-     * @return void
+     * @throws Exception
      */
     public function __invoke(): void
     {
@@ -26,8 +28,9 @@ class DeleteOldDownloadLogs
             $this->pdo->exec('DELETE FROM downloadlog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL 12 MONTH)');
 
             $this->pdo->commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $this->pdo->rollBack();
+
             throw $e;
         }
 

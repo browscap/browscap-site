@@ -6,27 +6,31 @@ namespace BrowscapSite\Metadata;
 
 use Assert\Assert;
 use DateTimeImmutable;
+use Exception;
 
+/**
+ * @psalm-type MetadataArray = {
+ *   version: string,
+ *   released: string,
+ *   filesizes: {
+ *     BrowsCapINI: int,
+ *     Full_BrowsCapINI: int,
+ *     Lite_BrowsCapINI: int,
+ *     PHP_BrowsCapINI: int,
+ *     Full_PHP_BrowsCapINI: int,
+ *     Lite_PHP_BrowsCapINI: int,
+ *     BrowsCapXML: int,
+ *     BrowsCapCSV: int,
+ *     BrowsCapJSON: int,
+ *     BrowsCapZIP: int,
+ *   },
+ * }
+ */
 final class Metadata
 {
     /**
      * @var string[]|int[][]
-     * @psalm-var {
-     *   version: string,
-     *   released: string,
-     *   filesizes: {
-     *     BrowsCapINI: int,
-     *     Full_BrowsCapINI: int,
-     *     Lite_BrowsCapINI: int,
-     *     PHP_BrowsCapINI: int,
-     *     Full_PHP_BrowsCapINI: int,
-     *     Lite_PHP_BrowsCapINI: int,
-     *     BrowsCapXML: int,
-     *     BrowsCapCSV: int,
-     *     BrowsCapJSON: int,
-     *     BrowsCapZIP: int,
-     *   },
-     * }
+     * @psalm-var MetadataArray
      */
     private array $metadataArray;
 
@@ -35,11 +39,7 @@ final class Metadata
     }
 
     /**
-     * @psalm-param {
-     *   version?: string,
-     *   released?: string,
-     *   filesizes
-     * } $array
+     * @param mixed[] $array
      */
     public static function fromArray(array $array): self
     {
@@ -64,8 +64,9 @@ final class Metadata
             ->keyExists('BrowsCapZIP')
             ->all()->integer();
 
-        $instance = new self();
+        $instance                = new self();
         $instance->metadataArray = $array;
+
         return $instance;
     }
 
@@ -75,7 +76,7 @@ final class Metadata
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function released(): DateTimeImmutable
     {

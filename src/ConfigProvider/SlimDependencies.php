@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\ConfigProvider;
 
+use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Slim\CallableResolver;
 use Slim\Handlers\Error;
@@ -19,14 +21,17 @@ use Slim\Router;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
+use function method_exists;
+
 final class SlimDependencies
 {
+    /** @return mixed[] */
     public function __invoke(): array
     {
         return [
             'dependencies' => [
                 'factories' => [
-                    'settings' => function (): array {
+                    'settings' => static function (): array {
                         return [
                             'httpVersion' => '1.1',
                             'responseChunkSize' => 4096,
@@ -41,23 +46,23 @@ final class SlimDependencies
                             'logger' => [
                                 'name' => 'slim-app',
                                 'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
-                                'level' => \Monolog\Logger::DEBUG,
+                                'level' => Logger::DEBUG,
                             ],
                         ];
                     },
-                    'environment' => function (): Environment {
+                    'environment' => static function (): Environment {
                         return new Environment($_SERVER);
                     },
-                    'request' => function (ContainerInterface $container) {
+                    'request' => static function (ContainerInterface $container) {
                         return Request::createFromEnvironment($container->get('environment'));
                     },
-                    'response' => function (ContainerInterface $container) {
-                        $headers = new Headers(['Content-Type' => 'text/html; charset=UTF-8']);
+                    'response' => static function (ContainerInterface $container) {
+                        $headers  = new Headers(['Content-Type' => 'text/html; charset=UTF-8']);
                         $response = new Response(200, $headers);
 
                         return $response->withProtocolVersion($container->get('settings')['httpVersion']);
                     },
-                    'router' => function (ContainerInterface $container) {
+                    'router' => static function (ContainerInterface $container) {
                         $routerCacheFile = false;
                         if (isset($container->get('settings')['routerCacheFile'])) {
                             $routerCacheFile = $container->get('settings')['routerCacheFile'];
@@ -70,30 +75,28 @@ final class SlimDependencies
 
                         return $router;
                     },
-                    'foundHandler' => function () {
+                    'foundHandler' => static function () {
                         return new RequestResponse();
                     },
-                    'phpErrorHandler' => function (ContainerInterface $container) {
+                    'phpErrorHandler' => static function (ContainerInterface $container) {
                         return new PhpError($container->get('settings')['displayErrorDetails']);
                     },
-                    'errorHandler' => function (ContainerInterface $container) {
+                    'errorHandler' => static function (ContainerInterface $container) {
                         return new Error(
                             $container->get('settings')['displayErrorDetails']
                         );
                     },
-                    'notFoundHandler' => function () {
+                    'notFoundHandler' => static function () {
                         return new NotFound();
                     },
-                    'notAllowedHandler' => function () {
+                    'notAllowedHandler' => static function () {
                         return new NotAllowed();
                     },
-                    'callableResolver' => function (ContainerInterface $container) {
+                    'callableResolver' => static function (ContainerInterface $container) {
                         return new CallableResolver($container);
                     },
-                    Twig::class => function (ContainerInterface $container) {
-                        $view = new Twig(__DIR__ . '/../../views', [
-//                            'cache' => 'path/to/cache'
-                        ]);
+                    Twig::class => static function (ContainerInterface $container) {
+                        $view = new Twig(__DIR__ . '/../../views', []);
 
                         $view->addExtension(new TwigExtension(
                             $container->get('router'),

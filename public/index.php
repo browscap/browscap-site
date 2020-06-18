@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
@@ -21,8 +22,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-/** @var ContainerInterface $container */
 $container = require __DIR__ . '/../config/container.php';
+assert($container instanceof ContainerInterface);
 $app = new App($container);
 (require __DIR__ . '/../config/middleware.php')($app);
 (require __DIR__ . '/../config/routes.php')($app);

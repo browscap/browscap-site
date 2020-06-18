@@ -23,21 +23,52 @@ use BrowscapSite\Tool\RateLimiter;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use Doctrine\Common\Cache\FilesystemCache;
+use Laminas\ConfigAggregator\ConfigAggregator;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use PDO;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
+use RuntimeException;
 use Slim\Http\Response;
 use Slim\Views\Twig;
-use Laminas\ConfigAggregator\ConfigAggregator;
 
+use function getenv;
+
+/**
+ * @psalm-type FilesListItem = array{name: string, size: int?, description: string}
+ * @psalm-type FilesList = array{
+ *   asp: {
+ *     BrowsCapINI: FilesListItem,
+ *     Full_BrowsCapINI: FilesListItem,
+ *     Lite_BrowsCapINI: FilesListItem,
+ *   },
+ *   php: {
+ *     PHP_BrowsCapINI: FilesListItem,
+ *     Full_PHP_BrowsCapINI: FilesListItem,
+ *     Lite_PHP_BrowsCapINI: FilesListItem,
+ *   },
+ *   other: {
+ *     BrowsCapXML: FilesListItem,
+ *     BrowsCapCSV: FilesListItem,
+ *     BrowsCapJSON: FilesListItem,
+ *     BrowsCapZIP: FilesListItem,
+ *   },
+ * }
+ * @psalm-type BanConfiguration = array{
+ *   rateLimitDownloads: int,
+ *   rateLimitPeriod: int,
+ *   tempBanPeriod: int,
+ *   tempBanLimit: int,
+ * }
+ */
 final class AppConfig
 {
-    private const BAN_CONFIGURATION = 'banConfiguration';
+    private const BAN_CONFIGURATION   = 'banConfiguration';
     private const BROWSCAP_FILES_LIST = 'browscapFilesList';
 
+    /** @return mixed[] */
     public function __invoke(): array
     {
         return [
@@ -58,11 +89,12 @@ final class AppConfig
         ];
     }
 
+    /** @return mixed[] */
     private function dependencies(): array
     {
         return [
             'factories' => [
-                UserAgentTool::class => function (ContainerInterface $container): UserAgentTool {
+                UserAgentTool::class => static function (ContainerInterface $container): UserAgentTool {
                     return new BrowscapPhpUserAgentTool(
                         new SimpleCacheAdapter(
                             new FilesystemCache(__DIR__ . '/../../cache')
@@ -70,30 +102,33 @@ final class AppConfig
                         $container->get(LoggerInterface::class)
                     );
                 },
-                LoggerInterface::class => function (ContainerInterface $container): LoggerInterface {
+                LoggerInterface::class => static function (ContainerInterface $container): LoggerInterface {
                     $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
-                    $logger = new Logger('browscan-site');
+                    $logger   = new Logger('browscan-site');
                     $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
+
                     return $logger;
                 },
-                PDO::class => function (ContainerInterface $container): PDO {
+                PDO::class => static function (ContainerInterface $container): PDO {
                     $dbConfig = $container->get('Config')['db'];
+
                     return new PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
                 },
-                self::BAN_CONFIGURATION => function (ContainerInterface $container): array {
+                self::BAN_CONFIGURATION => static function (ContainerInterface $container): array {
                     $banConfiguration = $container->get('Config')['rateLimiter'];
-                    if (!$banConfiguration) {
-                        throw new \RuntimeException('Rate limit configuration not set');
+                    if (! $banConfiguration) {
+                        throw new RuntimeException('Rate limit configuration not set');
                     }
+
                     return $banConfiguration;
                 },
-                RateLimiter::class => function (ContainerInterface $container): RateLimiter {
+                RateLimiter::class => static function (ContainerInterface $container): RateLimiter {
                     return new RateLimiter($container->get(PDO::class), $container->get(self::BAN_CONFIGURATION));
                 },
-                Metadata::class => function (): Metadata {
+                Metadata::class => static function (): Metadata {
                     return Metadata::fromArray(require __DIR__ . '/../../vendor/build/metadata.php');
                 },
-                DownloadHandler::class => function (ContainerInterface $container) {
+                DownloadHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new DownloadHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
@@ -101,7 +136,7 @@ final class AppConfig
                         $container->get(self::BAN_CONFIGURATION)
                     ));
                 },
-                UserAgentLookupHandler::class => function (ContainerInterface $container) {
+                UserAgentLookupHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new UserAgentLookupHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
@@ -109,7 +144,7 @@ final class AppConfig
                         true
                     ));
                 },
-                StreamHandler::class => function (ContainerInterface $container) {
+                StreamHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new StreamHandler(
                         $container->get(RateLimiter::class),
                         $container->get(Metadata::class),
@@ -117,44 +152,44 @@ final class AppConfig
                         __DIR__ . '/../../vendor/build'
                     ));
                 },
-                StatsHandler::class => function (ContainerInterface $container) {
+                StatsHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new StatsHandler(
                         $container->get(Renderer::class),
                         $container->get(PDO::class)
                     ));
                 },
-                VersionHandler::class => function (ContainerInterface $container) {
+                VersionHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class)
                     ));
                 },
-                VersionNumberHandler::class => function (ContainerInterface $container) {
+                VersionNumberHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionNumberHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class)
                     ));
                 },
-                VersionXmlHandler::class => function (ContainerInterface $container) {
+                VersionXmlHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionXmlHandler(
                         $container->get(Metadata::class),
                         $container->get(self::BROWSCAP_FILES_LIST)
                     ));
                 },
-                Renderer::class => function (ContainerInterface $container): Renderer {
+                Renderer::class => static function (ContainerInterface $container): Renderer {
                     return new TwigRenderer(
                         $container->get(Twig::class),
                         new Response(200)
                     );
                 },
                 BuildGenerator::class => BuildGeneratorFactory::class,
-                AnalyseStatistics::class => function (ContainerInterface $container): AnalyseStatistics {
+                AnalyseStatistics::class => static function (ContainerInterface $container): AnalyseStatistics {
                     return new AnalyseStatistics($container->get(PDO::class));
                 },
-                DeleteOldDownloadLogs::class => function (ContainerInterface $container): DeleteOldDownloadLogs {
+                DeleteOldDownloadLogs::class => static function (ContainerInterface $container): DeleteOldDownloadLogs {
                     return new DeleteOldDownloadLogs($container->get(PDO::class));
                 },
-                self::BROWSCAP_FILES_LIST => function (): array {
+                self::BROWSCAP_FILES_LIST => static function (): array {
                     return [
                         'asp' => [
                             'BrowsCapINI' => [

@@ -1,45 +1,46 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
+use BrowscapPHP\Exception;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
+
+use function array_key_exists;
+use function bin2hex;
+use function hash_equals;
 use function is_bool;
+use function random_bytes;
 
 final class UserAgentLookupHandler implements RequestHandlerInterface
 {
-    /** @var Renderer */
-    private $renderer;
-
-    /** @var Metadata */
-    private $metadata;
-
-    /** @var UserAgentTool */
-    private $userAgentTool;
-
-    /** @var bool */
-    private $checkCsrf;
+    private Renderer $renderer;
+    private Metadata $metadata;
+    private UserAgentTool $userAgentTool;
+    private bool $checkCsrf;
 
     public function __construct(Renderer $renderer, Metadata $metadata, UserAgentTool $userAgentTool, bool $checkCsrf = true)
     {
-        $this->renderer = $renderer;
-        $this->metadata = $metadata;
+        $this->renderer      = $renderer;
+        $this->metadata      = $metadata;
         $this->userAgentTool = $userAgentTool;
-        $this->checkCsrf = $checkCsrf;
+        $this->checkCsrf     = $checkCsrf;
     }
 
     /**
-     * @throws \BrowscapPHP\Exception
+     * @throws Exception
      * @throws \Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $userAgent = $request->getServerParams()['HTTP_USER_AGENT'];
+        $userAgent     = $request->getServerParams()['HTTP_USER_AGENT'];
         $userAgentInfo = false;
 
         $parsedBody = $request->getParsedBody();
@@ -49,7 +50,7 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
 
             $userAgent = $parsedBody['ua'];
 
-            $userAgentInfo = (array)$this->userAgentTool->identify($userAgent);
+            $userAgentInfo = (array) $this->userAgentTool->identify($userAgent);
             $this->convertBooleansToStrings($userAgentInfo);
         }
 
@@ -64,18 +65,23 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
         );
     }
 
-    public function convertBooleansToStrings(array &$uaInfo): void
+    /**
+     * @param mixed[] $uaInfo
+     */
+    private function convertBooleansToStrings(array &$uaInfo): void
     {
         foreach ($uaInfo as $key => $value) {
-            if (is_bool($value)) {
-                $uaInfo[$key] = ($value ? 'true' : 'false');
+            if (! is_bool($value)) {
+                continue;
             }
+
+            $uaInfo[$key] = ($value ? 'true' : 'false');
         }
     }
 
-    public function csrfCheck(ServerRequestInterface $request): void
+    private function csrfCheck(ServerRequestInterface $request): void
     {
-        if (!$this->checkCsrf) {
+        if (! $this->checkCsrf) {
             return;
         }
 
@@ -84,20 +90,23 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
 
         $parsedBody = $request->getParsedBody();
 
-        if (!array_key_exists('csrfToken', $parsedBody)
-            || !$csrfTokenFromSession
-            || !hash_equals($csrfTokenFromSession, $parsedBody['csrfToken'])) {
-            throw new \RuntimeException('CSRF token not correct...');
+        if (
+            ! array_key_exists('csrfToken', $parsedBody)
+            || ! $csrfTokenFromSession
+            || ! hash_equals($csrfTokenFromSession, $parsedBody['csrfToken'])
+        ) {
+            throw new RuntimeException('CSRF token not correct...');
         }
     }
 
     /**
      * @throws \Exception
      */
-    public function csrfSet(): string
+    private function csrfSet(): string
     {
-        $csrfToken = bin2hex(random_bytes(32));
+        $csrfToken             = bin2hex(random_bytes(32));
         $_SESSION['csrfToken'] = $csrfToken;
+
         return $csrfToken;
     }
 }

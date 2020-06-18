@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
@@ -6,19 +7,31 @@ namespace BrowscapSite\Handler;
 use BrowscapSite\Metadata\Metadata;
 use DOMDocument;
 use DOMElement;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Http\Response;
 
+/**
+ * @psalm-import-type FileListItem from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FileList from \BrowscapSite\ConfigProvider\AppConfig
+ */
 final class VersionXmlHandler implements RequestHandlerInterface
 {
-    /** @var Metadata */
-    private $metadata;
+    private Metadata $metadata;
 
-    /** @var array */
-    private $fileList;
+    /**
+     * @var string[][][]|int[][][]
+     * @psalm-var FileList
+     */
+    private array $fileList;
 
+    /**
+     * @param string[][][]|int[][][] $fileList
+     *
+     * @psalm-param FileList $fileList
+     */
     public function __construct(Metadata $metadata, array $fileList)
     {
         $this->metadata = $metadata;
@@ -26,12 +39,12 @@ final class VersionXmlHandler implements RequestHandlerInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $requestUri = $request->getUri();
-        $baseUrl = $requestUri->getScheme() . '://' . $requestUri->getHost();
+        $baseUrl    = $requestUri->getScheme() . '://' . $requestUri->getHost();
 
         $xml = new DOMDocument();
 
@@ -66,15 +79,21 @@ final class VersionXmlHandler implements RequestHandlerInterface
         return $response;
     }
 
-    private function createTextNode(DOMDocument $xml, $element, $content): DOMElement
+    private function createTextNode(DOMDocument $xml, string $element, string $content): DOMElement
     {
-        $element = $xml->createElement($element);
+        $element        = $xml->createElement($element);
         $elementContent = $xml->createTextNode($content);
         $element->appendChild($elementContent);
+
         return $element;
     }
 
-    private function createFileItem(DOMDocument $xml, $pubDate, $version, $fileCode, array $fileInfo, $baseUrl): DOMElement
+    /**
+     * @param string[]|int[] $fileInfo
+     *
+     * @psalm-param FilesListItem $fileInfo
+     */
+    private function createFileItem(DOMDocument $xml, string $pubDate, string $version, string $fileCode, array $fileInfo, string $baseUrl): DOMElement
     {
         $item = $xml->createElement('item');
 

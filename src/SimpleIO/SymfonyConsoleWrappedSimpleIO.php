@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\SimpleIO;
@@ -14,7 +15,7 @@ final class SymfonyConsoleWrappedSimpleIO implements SimpleIOInterface
         $this->consoleOutput = $consoleOutput;
     }
 
-    public function write(string $message) : void
+    public function write(string $message): void
     {
         $this->consoleOutput->writeln($message);
     }
