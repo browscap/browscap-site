@@ -79,7 +79,7 @@ final class StatsHandler implements RequestHandlerInterface
         $data[] = [$dataColumnName, 'Number of Downloads'];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $data[] = [
-                (new DateTimeImmutable($row[$tableColumnName]))->format($dataColumnFormat),
+                (new DateTimeImmutable((string) $row[$tableColumnName]))->format($dataColumnFormat),
                 (int) $row['downloadCount'],
             ];
         }

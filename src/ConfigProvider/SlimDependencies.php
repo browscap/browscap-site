@@ -21,8 +21,6 @@ use Slim\Router;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
-use function method_exists;
-
 final class SlimDependencies
 {
     /** @return mixed[] */
@@ -57,10 +55,10 @@ final class SlimDependencies
                         return Request::createFromEnvironment($container->get('environment'));
                     },
                     'response' => static function (ContainerInterface $container) {
-                        $headers  = new Headers(['Content-Type' => 'text/html; charset=UTF-8']);
-                        $response = new Response(200, $headers);
+                        $headers = new Headers(['Content-Type' => 'text/html; charset=UTF-8']);
 
-                        return $response->withProtocolVersion($container->get('settings')['httpVersion']);
+                        return (new Response(200, $headers))
+                            ->withProtocolVersion($container->get('settings')['httpVersion']);
                     },
                     'router' => static function (ContainerInterface $container) {
                         $routerCacheFile = false;
@@ -69,9 +67,7 @@ final class SlimDependencies
                         }
 
                         $router = (new Router())->setCacheFile($routerCacheFile);
-                        if (method_exists($router, 'setContainer')) {
-                            $router->setContainer($container);
-                        }
+                        $router->setContainer($container);
 
                         return $router;
                     },

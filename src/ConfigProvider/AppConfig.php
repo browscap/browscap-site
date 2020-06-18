@@ -37,30 +37,34 @@ use Slim\Views\Twig;
 use function getenv;
 
 /**
- * @psalm-type FilesListItem = array{name: string, size: int?, description: string}
+ * @psalm-type FilesListItem = array{
+ *   name: string,
+ *   size: int|string|null,
+ *   description: string
+ * }
  * @psalm-type FilesList = array{
- *   asp: {
+ *   asp: array{
  *     BrowsCapINI: FilesListItem,
  *     Full_BrowsCapINI: FilesListItem,
- *     Lite_BrowsCapINI: FilesListItem,
+ *     Lite_BrowsCapINI: FilesListItem
  *   },
- *   php: {
+ *   php: array{
  *     PHP_BrowsCapINI: FilesListItem,
  *     Full_PHP_BrowsCapINI: FilesListItem,
- *     Lite_PHP_BrowsCapINI: FilesListItem,
+ *     Lite_PHP_BrowsCapINI: FilesListItem
  *   },
- *   other: {
+ *   other: array{
  *     BrowsCapXML: FilesListItem,
  *     BrowsCapCSV: FilesListItem,
  *     BrowsCapJSON: FilesListItem,
- *     BrowsCapZIP: FilesListItem,
- *   },
+ *     BrowsCapZIP: FilesListItem
+ *   }
  * }
  * @psalm-type BanConfiguration = array{
  *   rateLimitDownloads: int,
  *   rateLimitPeriod: int,
  *   tempBanPeriod: int,
- *   tempBanLimit: int,
+ *   tempBanLimit: int
  * }
  */
 final class AppConfig
@@ -103,7 +107,7 @@ final class AppConfig
                     );
                 },
                 LoggerInterface::class => static function (ContainerInterface $container): LoggerInterface {
-                    $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
+                    $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Logger::NOTICE);
                     $logger   = new Logger('browscan-site');
                     $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 

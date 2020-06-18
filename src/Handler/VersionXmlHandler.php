@@ -13,25 +13,24 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Http\Response;
 
+use function sprintf;
+
 /**
- * @psalm-import-type FileListItem from \BrowscapSite\ConfigProvider\AppConfig
- * @psalm-import-type FileList from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesListItem from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
  */
 final class VersionXmlHandler implements RequestHandlerInterface
 {
+    private const XML_DESCRIPTION = 'The Browser Capabilities Project maintains and freely distributes a regularly '
+        . 'updated browscap.ini file. The project\'s data is also available in many other formats that make it useful '
+        . 'in a variety of situations. Last updated: %s';
+
     private Metadata $metadata;
 
-    /**
-     * @var string[][][]|int[][][]
-     * @psalm-var FileList
-     */
+    /** @psalm-var FilesList */
     private array $fileList;
 
-    /**
-     * @param string[][][]|int[][][] $fileList
-     *
-     * @psalm-param FileList $fileList
-     */
+    /** @psalm-param FilesList $fileList */
     public function __construct(Metadata $metadata, array $fileList)
     {
         $this->metadata = $metadata;
@@ -59,7 +58,7 @@ final class VersionXmlHandler implements RequestHandlerInterface
 
         $channel->appendChild($this->createTextNode($xml, 'title', 'Browser Capabilities Project Update Service'));
         $channel->appendChild($this->createTextNode($xml, 'link', $baseUrl));
-        $channel->appendChild($this->createTextNode($xml, 'description', 'The Browser Capabilities Project maintains and freely distributes a regularly updated browscap.ini file. The project\'s data is also available in many other formats that make it useful in a variety of situations. Last updated: ' . $metadata['released']));
+        $channel->appendChild($this->createTextNode($xml, 'description', sprintf(self::XML_DESCRIPTION, $releaseDate)));
         $channel->appendChild($this->createTextNode($xml, 'language', 'en-US'));
         $channel->appendChild($this->createTextNode($xml, 'pubDate', $releaseDate));
         $channel->appendChild($this->createTextNode($xml, 'lastBuildDate', $releaseDate));
@@ -67,7 +66,14 @@ final class VersionXmlHandler implements RequestHandlerInterface
 
         foreach ($this->fileList as $format => $files) {
             foreach ($files as $fileCode => $fileInfo) {
-                $channel->appendChild($this->createFileItem($xml, $releaseDate, $this->metadata->version(), $fileCode, $fileInfo, $baseUrl));
+                $channel->appendChild($this->createFileItem(
+                    $xml,
+                    $releaseDate,
+                    $this->metadata->version(),
+                    $fileCode,
+                    $fileInfo,
+                    $baseUrl
+                ));
             }
         }
 
@@ -89,12 +95,16 @@ final class VersionXmlHandler implements RequestHandlerInterface
     }
 
     /**
-     * @param string[]|int[] $fileInfo
-     *
      * @psalm-param FilesListItem $fileInfo
      */
-    private function createFileItem(DOMDocument $xml, string $pubDate, string $version, string $fileCode, array $fileInfo, string $baseUrl): DOMElement
-    {
+    private function createFileItem(
+        DOMDocument $xml,
+        string $pubDate,
+        string $version,
+        string $fileCode,
+        array $fileInfo,
+        string $baseUrl
+    ): DOMElement {
         $item = $xml->createElement('item');
 
         $item->appendChild($this->createTextNode($xml, 'title', $fileInfo['name']));

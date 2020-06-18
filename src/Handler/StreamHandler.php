@@ -20,15 +20,18 @@ use function fopen;
 use function sha1;
 use function strtolower;
 
+/**
+ * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
+ */
 final class StreamHandler implements RequestHandlerInterface
 {
     private RateLimiter $rateLimiter;
     private Metadata $metadata;
-    /** @var string[][][]|int[][][] */
+    /** @psalm-var FilesList */
     private array $fileList;
     private string $buildDirectory;
 
-    /** @param string[][][]|int[][][] $fileList */
+    /** @psalm-param FilesList $fileList */
     public function __construct(RateLimiter $rateLimiter, Metadata $metadata, array $fileList, string $buildDirectory)
     {
         $this->rateLimiter    = $rateLimiter;

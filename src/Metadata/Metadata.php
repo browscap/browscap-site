@@ -9,10 +9,10 @@ use DateTimeImmutable;
 use Exception;
 
 /**
- * @psalm-type MetadataArray = {
+ * @psalm-type MetadataArray = array{
  *   version: string,
  *   released: string,
- *   filesizes: {
+ *   filesizes: array{
  *     BrowsCapINI: int,
  *     Full_BrowsCapINI: int,
  *     Lite_BrowsCapINI: int,
@@ -28,14 +28,13 @@ use Exception;
  */
 final class Metadata
 {
-    /**
-     * @var string[]|int[][]
-     * @psalm-var MetadataArray
-     */
+    /** @psalm-var MetadataArray */
     private array $metadataArray;
 
-    private function __construct()
+    /** @psalm-param MetadataArray $metadataArray */
+    private function __construct(array $metadataArray)
     {
+        $this->metadataArray = $metadataArray;
     }
 
     /**
@@ -64,10 +63,7 @@ final class Metadata
             ->keyExists('BrowsCapZIP')
             ->all()->integer();
 
-        $instance                = new self();
-        $instance->metadataArray = $array;
-
-        return $instance;
+        return new self($array);
     }
 
     public function version(): string

@@ -67,6 +67,7 @@ final class BuildGenerator
             $this->createBuild($packageBuildNumber, $generationDate, $io);
             $io->write('<info>All done</info>');
         } else {
+            \Webmozart\Assert\Assert::integer($currentBuildNumber);
             $io->write(sprintf('<info>Current build %s is up to date</info>', $currentBuildNumber));
         }
     }
@@ -92,7 +93,10 @@ final class BuildGenerator
     {
         $packageVersion = $this->determinePackageVersion->__invoke($packageName);
 
-        return $this->convertPackageVersionToBuildNumber(substr($packageVersion, 0, strpos($packageVersion, '@')));
+        $positionOfAt = strpos($packageVersion, '@');
+        \Webmozart\Assert\Assert::integer($positionOfAt);
+
+        return $this->convertPackageVersionToBuildNumber(substr($packageVersion, 0, $positionOfAt));
     }
 
     private function getCurrentBuildNumber(): ?int

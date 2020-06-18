@@ -27,10 +27,12 @@ final class GenerateBuild extends Command
             ->setDescription('Generate the browscap build and cache');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->buildGenerator->__invoke(
             new SymfonyConsoleWrappedSimpleIO($output)
         );
+
+        return 0;
     }
 }

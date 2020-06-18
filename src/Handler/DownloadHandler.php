@@ -14,31 +14,20 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function number_format;
 
 /**
- * @psalm-import-type FileList from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
  * @psalm-import-type BanConfiguration from \BrowscapSite\ConfigProvider\AppConfig
  */
 final class DownloadHandler implements RequestHandlerInterface
 {
     private Renderer $renderer;
     private Metadata $metadata;
-
-    /**
-     * @var string[][][]|int[][][]
-     * @psalm-var FileList
-     */
+    /** @psalm-var FilesList */
     private array $fileList;
-
-    /**
-     * @var int[]
-     * @psalm-var BanConfiguration
-     */
+    /** @psalm-var BanConfiguration */
     private array $banConfiguration;
 
     /**
-     * @param string[][][]|int[][][] $fileList
-     * @param int[]                  $banConfiguration
-     *
-     * @psalm-param FileList $fileList
+     * @psalm-param FilesList $fileList
      * @psalm-param BanConfiguration $banConfiguration
      */
     public function __construct(Renderer $renderer, Metadata $metadata, array $fileList, array $banConfiguration)
@@ -66,12 +55,8 @@ final class DownloadHandler implements RequestHandlerInterface
     }
 
     /**
-     * @param string[][][]|int[][][] $files
-     *
-     * @return string[][][]|int[][][]
-     *
-     * @psalm-param FileList $files
-     * @psalm-return FileList
+     * @psalm-param FilesList $files
+     * @psalm-return FilesList
      */
     private function mergeMetadataToFiles(array $files): array
     {

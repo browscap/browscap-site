@@ -16,7 +16,9 @@ use RuntimeException;
 use function array_key_exists;
 use function bin2hex;
 use function hash_equals;
+use function is_array;
 use function is_bool;
+use function is_string;
 use function random_bytes;
 
 final class UserAgentLookupHandler implements RequestHandlerInterface
@@ -45,7 +47,7 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
 
         $parsedBody = $request->getParsedBody();
 
-        if ($parsedBody['ua']) {
+        if (is_array($parsedBody) && array_key_exists('ua', $parsedBody) && is_string($parsedBody['ua'])) {
             $this->csrfCheck($request);
 
             $userAgent = $parsedBody['ua'];
@@ -91,7 +93,8 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
         $parsedBody = $request->getParsedBody();
 
         if (
-            ! array_key_exists('csrfToken', $parsedBody)
+            ! is_array($parsedBody)
+            || ! array_key_exists('csrfToken', $parsedBody)
             || ! $csrfTokenFromSession
             || ! hash_equals($csrfTokenFromSession, $parsedBody['csrfToken'])
         ) {
