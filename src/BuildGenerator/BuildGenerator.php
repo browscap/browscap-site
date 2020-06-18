@@ -13,8 +13,8 @@ use Exception;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use RuntimeException;
-
 use Webmozart\Assert\Assert;
+
 use function explode;
 use function file_exists;
 use function is_dir;

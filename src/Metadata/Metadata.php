@@ -63,6 +63,7 @@ final class Metadata
 
         Assert::allInteger($array['filesizes']);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         return new self($array);
     }
 

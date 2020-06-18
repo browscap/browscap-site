@@ -8,10 +8,10 @@ use BrowscapSite\Metadata\Metadata;
 use DOMDocument;
 use DOMElement;
 use Exception;
+use Laminas\Diactoros\Response\XmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Http\Response;
 
 use function sprintf;
 
@@ -77,12 +77,7 @@ final class VersionXmlHandler implements RequestHandlerInterface
             }
         }
 
-        $response = (new Response())
-            ->withHeader('Content-type', 'text/xml');
-
-        $response->getBody()->write($xml->saveXML());
-
-        return $response;
+        return new XmlResponse($xml->saveXML());
     }
 
     private function createTextNode(DOMDocument $xml, string $element, string $content): DOMElement

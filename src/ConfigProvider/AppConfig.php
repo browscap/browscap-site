@@ -24,6 +24,7 @@ use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use Doctrine\Common\Cache\FilesystemCache;
 use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\Diactoros\Response\HtmlResponse;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use PDO;
@@ -31,7 +32,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
 use RuntimeException;
-use Slim\Http\Response;
 use Slim\Views\Twig;
 
 use function getenv;
@@ -183,7 +183,7 @@ final class AppConfig
                 Renderer::class => static function (ContainerInterface $container): Renderer {
                     return new TwigRenderer(
                         $container->get(Twig::class),
-                        new Response(200)
+                        new HtmlResponse('', 200)
                     );
                 },
                 BuildGenerator::class => BuildGeneratorFactory::class,

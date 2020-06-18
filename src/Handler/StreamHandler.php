@@ -7,11 +7,11 @@ namespace BrowscapSite\Handler;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Tool\RateLimiter;
 use Exception;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Http\Response;
-use Slim\Http\Stream;
 
 use function array_key_exists;
 use function explode;
@@ -79,7 +79,6 @@ final class StreamHandler implements RequestHandlerInterface
 
         $fileHandle = fopen($fullPath, 'rb');
 
-        // Offer the download
         return (new Response())
             ->withHeader('Content-Disposition', 'attachment;filename="' . $file . '"')
             ->withHeader('Last-Modified', $this->metadata->released()->format('D, d M Y H:i:s'))
@@ -90,7 +89,7 @@ final class StreamHandler implements RequestHandlerInterface
 
     private function failed(int $status, string $message): ResponseInterface
     {
-        return (new Response($status))->withJson(['response' => $message]);
+        return new Response\JsonResponse(['response' => $message], $status);
     }
 
     private function getRemoteAddr(ServerRequestInterface $request): string

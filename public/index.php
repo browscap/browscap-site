@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Slim\App;
+use Slim\Factory\AppFactory;
 
 if (PHP_SAPI === 'cli-server') {
     $_SERVER['SCRIPT_NAME'] = pathinfo(__FILE__, PATHINFO_BASENAME);
@@ -26,10 +26,8 @@ session_start();
 
 $container = require __DIR__ . '/../config/container.php';
 assert($container instanceof ContainerInterface);
-$app = new App($container);
+$app = AppFactory::createFromContainer($container);
 (require __DIR__ . '/../config/middleware.php')($app);
 (require __DIR__ . '/../config/routes.php')($app);
 
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection UnusedFunctionResultInspection */
 $app->run();
