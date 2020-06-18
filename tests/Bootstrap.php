@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -21,7 +22,7 @@ foreach ($autoloadPaths as $path) {
     }
 }
 
-if (!$foundVendorAutoload) {
+if (! $foundVendorAutoload) {
     throw new Exception('Could not find autoload path in any of the searched locations');
 }
 

@@ -13,6 +13,7 @@
     <arg value="nps"/>
 
     <file>./src</file>
+    <file>./tests</file>
     <file>./bin/browscap-site</file>
     <file>./public/index.php</file>
 
