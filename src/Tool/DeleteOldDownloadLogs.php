@@ -1,16 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
-use PDO;
+use LazyPDO\LazyPDO as PDO;
+use Throwable;
 
 class DeleteOldDownloadLogs
 {
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(PDO $pdo)
     {
@@ -18,8 +17,7 @@ class DeleteOldDownloadLogs
     }
 
     /**
-     * @throws \Exception
-     * @return void
+     * @throws Throwable
      */
     public function __invoke(): void
     {
@@ -29,8 +27,9 @@ class DeleteOldDownloadLogs
             $this->pdo->exec('DELETE FROM downloadlog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL 12 MONTH)');
 
             $this->pdo->commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $this->pdo->rollBack();
+
             throw $e;
         }
 

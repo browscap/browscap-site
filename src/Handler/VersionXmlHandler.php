@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
@@ -6,19 +7,30 @@ namespace BrowscapSite\Handler;
 use BrowscapSite\Metadata\Metadata;
 use DOMDocument;
 use DOMElement;
+use Exception;
+use Laminas\Diactoros\Response\XmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Http\Response;
 
+use function sprintf;
+
+/**
+ * @psalm-import-type FilesListItem from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
+ */
 final class VersionXmlHandler implements RequestHandlerInterface
 {
-    /** @var Metadata */
-    private $metadata;
+    private const XML_DESCRIPTION = 'The Browser Capabilities Project maintains and freely distributes a regularly '
+        . 'updated browscap.ini file. The project\'s data is also available in many other formats that make it useful '
+        . 'in a variety of situations. Last updated: %s';
 
-    /** @var array */
-    private $fileList;
+    private Metadata $metadata;
 
+    /** @psalm-var FilesList */
+    private array $fileList;
+
+    /** @psalm-param FilesList $fileList */
     public function __construct(Metadata $metadata, array $fileList)
     {
         $this->metadata = $metadata;
@@ -26,12 +38,12 @@ final class VersionXmlHandler implements RequestHandlerInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $requestUri = $request->getUri();
-        $baseUrl = $requestUri->getScheme() . '://' . $requestUri->getHost();
+        $baseUrl    = $requestUri->getScheme() . '://' . $requestUri->getHost();
 
         $xml = new DOMDocument();
 
@@ -46,7 +58,7 @@ final class VersionXmlHandler implements RequestHandlerInterface
 
         $channel->appendChild($this->createTextNode($xml, 'title', 'Browser Capabilities Project Update Service'));
         $channel->appendChild($this->createTextNode($xml, 'link', $baseUrl));
-        $channel->appendChild($this->createTextNode($xml, 'description', 'The Browser Capabilities Project maintains and freely distributes a regularly updated browscap.ini file. The project\'s data is also available in many other formats that make it useful in a variety of situations. Last updated: ' . $metadata['released']));
+        $channel->appendChild($this->createTextNode($xml, 'description', sprintf(self::XML_DESCRIPTION, $releaseDate)));
         $channel->appendChild($this->createTextNode($xml, 'language', 'en-US'));
         $channel->appendChild($this->createTextNode($xml, 'pubDate', $releaseDate));
         $channel->appendChild($this->createTextNode($xml, 'lastBuildDate', $releaseDate));
@@ -54,28 +66,40 @@ final class VersionXmlHandler implements RequestHandlerInterface
 
         foreach ($this->fileList as $format => $files) {
             foreach ($files as $fileCode => $fileInfo) {
-                $channel->appendChild($this->createFileItem($xml, $releaseDate, $this->metadata->version(), $fileCode, $fileInfo, $baseUrl));
+                $channel->appendChild($this->createFileItem(
+                    $xml,
+                    $releaseDate,
+                    $this->metadata->version(),
+                    $fileCode,
+                    $fileInfo,
+                    $baseUrl
+                ));
             }
         }
 
-        $response = (new Response())
-            ->withHeader('Content-type', 'text/xml');
-
-        $response->getBody()->write($xml->saveXML());
-
-        return $response;
+        return new XmlResponse($xml->saveXML());
     }
 
-    private function createTextNode(DOMDocument $xml, $element, $content): DOMElement
+    private function createTextNode(DOMDocument $xml, string $element, string $content): DOMElement
     {
-        $element = $xml->createElement($element);
+        $element        = $xml->createElement($element);
         $elementContent = $xml->createTextNode($content);
         $element->appendChild($elementContent);
+
         return $element;
     }
 
-    private function createFileItem(DOMDocument $xml, $pubDate, $version, $fileCode, array $fileInfo, $baseUrl): DOMElement
-    {
+    /**
+     * @psalm-param FilesListItem $fileInfo
+     */
+    private function createFileItem(
+        DOMDocument $xml,
+        string $pubDate,
+        string $version,
+        string $fileCode,
+        array $fileInfo,
+        string $baseUrl
+    ): DOMElement {
         $item = $xml->createElement('item');
 
         $item->appendChild($this->createTextNode($xml, 'title', $fileInfo['name']));

@@ -1,45 +1,52 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Tool\RateLimiter;
+use Exception;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Http\Response;
-use Slim\Http\Stream;
 
+use function array_key_exists;
+use function explode;
+use function file_exists;
+use function fopen;
+use function sha1;
+use function strtolower;
+
+/**
+ * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
+ */
 final class StreamHandler implements RequestHandlerInterface
 {
-    /** @var RateLimiter */
-    private $rateLimiter;
+    private RateLimiter $rateLimiter;
+    private Metadata $metadata;
+    /** @psalm-var FilesList */
+    private array $fileList;
+    private string $buildDirectory;
 
-    /** @var Metadata */
-    private $metadata;
-
-    /** @var array */
-    private $fileList;
-
-    /** @var string */
-    private $buildDirectory;
-
+    /** @psalm-param FilesList $fileList */
     public function __construct(RateLimiter $rateLimiter, Metadata $metadata, array $fileList, string $buildDirectory)
     {
-        $this->rateLimiter = $rateLimiter;
-        $this->metadata = $metadata;
-        $this->fileList = $fileList;
+        $this->rateLimiter    = $rateLimiter;
+        $this->metadata       = $metadata;
+        $this->fileList       = $fileList;
         $this->buildDirectory = $buildDirectory;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getQueryParams();
-        if (!array_key_exists('q', $queryParams)) {
+        if (! array_key_exists('q', $queryParams)) {
             return $this->failed(400, 'The version requested could not be found');
         }
 
@@ -47,30 +54,31 @@ final class StreamHandler implements RequestHandlerInterface
 
         // Convert requested short code to the filename
         $file = $this->getFilenameFromCode($browscapVersion);
-        if (!$file) {
+        if (! $file) {
             return $this->failed(404, 'The version requested could not be found');
         }
 
         // Check the file to be downloaded exists
         $fullPath = $this->buildDirectory . '/' . $file;
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             return $this->failed(500, 'The original file for the version requested could not be found');
         }
 
         // Check for rate limiting
-        $remoteAddr = $this->getRemoteAddr($request);
+        $remoteAddr      = $this->getRemoteAddr($request);
         $remoteUserAgent = $this->getRemoteUserAgent($request);
         if ($this->rateLimiter->isPermanentlyBanned($remoteAddr)) {
             return $this->failed(403, 'Rate limit exceeded for ' . $remoteAddr . '. You have been permantly banned for abuse.');
         }
+
         if ($this->rateLimiter->isTemporarilyBanned($remoteAddr)) {
             return $this->failed(429, 'Rate limit exceeded for ' . $remoteAddr . '. Please try again later.');
         }
+
         $this->rateLimiter->logDownload($remoteAddr, $remoteUserAgent, $browscapVersion);
 
         $fileHandle = fopen($fullPath, 'rb');
 
-        // Offer the download
         return (new Response())
             ->withHeader('Content-Disposition', 'attachment;filename="' . $file . '"')
             ->withHeader('Last-Modified', $this->metadata->released()->format('D, d M Y H:i:s'))
@@ -79,23 +87,25 @@ final class StreamHandler implements RequestHandlerInterface
             ->withBody(new Stream($fileHandle));
     }
 
-    private function failed(int $status, string $message) : ResponseInterface
+    private function failed(int $status, string $message): ResponseInterface
     {
-        $response = new \Slim\Http\Response($status);
-        return $response->withJson(['response' => $message]);
+        return new Response\JsonResponse(['response' => $message], $status);
     }
 
-    private function getRemoteAddr(ServerRequestInterface $request) : string
+    private function getRemoteAddr(ServerRequestInterface $request): string
     {
         $serverParams = $request->getServerParams();
 
         if (array_key_exists('HTTP_CF_CONNECTING_IP', $serverParams)) {
             return $serverParams['HTTP_CF_CONNECTING_IP'];
         }
+
         if (array_key_exists('HTTP_X_FORWARDED_FOR', $serverParams)) {
             $ips = explode(',', $serverParams['HTTP_X_FORWARDED_FOR']);
+
             return $ips[0];
         }
+
         return $serverParams['REMOTE_ADDR'];
     }
 
@@ -103,7 +113,7 @@ final class StreamHandler implements RequestHandlerInterface
     {
         $serverParams = $request->getServerParams();
 
-        if (!array_key_exists('HTTP_USER_AGENT', $serverParams)) {
+        if (! array_key_exists('HTTP_USER_AGENT', $serverParams)) {
             return 'Unknown UA';
         }
 
@@ -119,6 +129,7 @@ final class StreamHandler implements RequestHandlerInterface
                 }
             }
         }
+
         return null;
     }
 }

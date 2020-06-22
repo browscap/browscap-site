@@ -1,30 +1,32 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
 use BrowscapSite\Renderer\Renderer;
-use PDO;
+use DateTimeImmutable;
+use Exception;
+use LazyPDO\LazyPDO as PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function sprintf;
+
 final class StatsHandler implements RequestHandlerInterface
 {
-    /** @var Renderer */
-    private $renderer;
-
-    /** @var PDO */
-    private $pdo;
+    private Renderer $renderer;
+    private PDO $pdo;
 
     public function __construct(Renderer $renderer, PDO $pdo)
     {
         $this->renderer = $renderer;
-        $this->pdo = $pdo;
+        $this->pdo      = $pdo;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -38,19 +40,21 @@ final class StatsHandler implements RequestHandlerInterface
     }
 
     /**
-     * @return array
-     * @throws \Exception
+     * @throws Exception
+     *
+     * @psalm-return list<array{0: string, 1: string|int}>
      */
-    private function getDownloadsPerMonth() : array
+    private function getDownloadsPerMonth(): array
     {
         return $this->getDownloadStats('downloadsPerMonth', 'monthPeriod', 'Month', 'M Y');
     }
 
     /**
-     * @return array
-     * @throws \Exception
+     * @throws Exception
+     *
+     * @psalm-return list<array{0: string, 1: string|int}>
      */
-    private function getDownloadsPerDay() : array
+    private function getDownloadsPerDay(): array
     {
         return $this->getDownloadStats('downloadsLastMonth', 'dayPeriod', 'Date', 'd/m');
     }
@@ -58,28 +62,25 @@ final class StatsHandler implements RequestHandlerInterface
     /**
      * Fetch some download stats
      *
-     * @return array
-     * @throws \Exception
+     * @throws Exception
+     *
+     * @psalm-return list<array{0: string, 1: string|int}>
      */
     private function getDownloadStats(
         string $tableName,
         string $tableColumnName,
         string $dataColumnName,
         string $dataColumnFormat
-    ) : array {
-        $sql = "
-            SELECT *
-            FROM $tableName
-            ORDER BY $tableColumnName ASC
-        ";
+    ): array {
+        $sql  = sprintf('SELECT * FROM %s ORDER BY %s ASC', $tableName, $tableColumnName);
         $stmt = $this->pdo->query($sql);
 
-        $data = [];
+        $data   = [];
         $data[] = [$dataColumnName, 'Number of Downloads'];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $data[] = [
-                (new \DateTimeImmutable($row[$tableColumnName]))->format($dataColumnFormat),
-                (int)$row['downloadCount'],
+                (new DateTimeImmutable((string) $row[$tableColumnName]))->format($dataColumnFormat),
+                (int) $row['downloadCount'],
             ];
         }
 

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection UnusedFunctionResultInspection */
 declare(strict_types=1);
 
 use BrowscapSite\Handler\DownloadHandler;
@@ -10,7 +11,7 @@ use BrowscapSite\Handler\VersionNumberHandler;
 use BrowscapSite\Handler\VersionXmlHandler;
 use Slim\App;
 
-return function (App $app): void {
+return static function (App $app): void {
     $app->get('/', DownloadHandler::class);
     $app->any('/ua-lookup', UserAgentLookupHandler::class);
     $app->any('/stream', StreamHandler::class);

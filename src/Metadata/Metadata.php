@@ -4,44 +4,67 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Metadata;
 
-use Assert\Assert;
 use DateTimeImmutable;
+use Exception;
+use Webmozart\Assert\Assert;
 
+/**
+ * @psalm-type MetadataArray = array{
+ *   version: string,
+ *   released: string,
+ *   filesizes: array{
+ *     BrowsCapINI: int,
+ *     Full_BrowsCapINI: int,
+ *     Lite_BrowsCapINI: int,
+ *     PHP_BrowsCapINI: int,
+ *     Full_PHP_BrowsCapINI: int,
+ *     Lite_PHP_BrowsCapINI: int,
+ *     BrowsCapXML: int,
+ *     BrowsCapCSV: int,
+ *     BrowsCapJSON: int,
+ *     BrowsCapZIP: int,
+ *   },
+ * }
+ */
 final class Metadata
 {
-    /** @var string[]|int[][] */
-    private $metadataArray;
+    /** @psalm-var MetadataArray */
+    private array $metadataArray;
 
-    private function __construct()
+    /** @psalm-param MetadataArray $metadataArray */
+    private function __construct(array $metadataArray)
     {
+        $this->metadataArray = $metadataArray;
     }
 
-    public static function fromArray(array $array)
+    /**
+     * @param mixed[] $array
+     */
+    public static function fromArray(array $array): self
     {
-        Assert::that($array)
-            ->keyExists('version')
-            ->keyExists('released')
-            ->keyExists('filesizes');
+        Assert::keyExists($array, 'version');
+        Assert::keyExists($array, 'released');
+        Assert::keyExists($array, 'filesizes');
 
-        Assert::that($array['version'])->string();
-        Assert::that($array['released'])->string();
-        Assert::that($array['filesizes'])
-            ->isArray()
-            ->keyExists('BrowsCapINI')
-            ->keyExists('Full_BrowsCapINI')
-            ->keyExists('Lite_BrowsCapINI')
-            ->keyExists('PHP_BrowsCapINI')
-            ->keyExists('Full_PHP_BrowsCapINI')
-            ->keyExists('Lite_PHP_BrowsCapINI')
-            ->keyExists('BrowsCapXML')
-            ->keyExists('BrowsCapCSV')
-            ->keyExists('BrowsCapJSON')
-            ->keyExists('BrowsCapZIP')
-            ->all()->integer();
+        Assert::string($array['version']);
+        Assert::string($array['released']);
+        Assert::isArray($array['filesizes']);
 
-        $instance = new self();
-        $instance->metadataArray = $array;
-        return $instance;
+        Assert::keyExists($array['filesizes'], 'BrowsCapINI');
+        Assert::keyExists($array['filesizes'], 'Full_BrowsCapINI');
+        Assert::keyExists($array['filesizes'], 'Lite_BrowsCapINI');
+        Assert::keyExists($array['filesizes'], 'PHP_BrowsCapINI');
+        Assert::keyExists($array['filesizes'], 'Full_PHP_BrowsCapINI');
+        Assert::keyExists($array['filesizes'], 'Lite_PHP_BrowsCapINI');
+        Assert::keyExists($array['filesizes'], 'BrowsCapXML');
+        Assert::keyExists($array['filesizes'], 'BrowsCapCSV');
+        Assert::keyExists($array['filesizes'], 'BrowsCapJSON');
+        Assert::keyExists($array['filesizes'], 'BrowsCapZIP');
+
+        Assert::allInteger($array['filesizes']);
+
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return new self($array);
     }
 
     public function version(): string
@@ -50,7 +73,7 @@ final class Metadata
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function released(): DateTimeImmutable
     {
@@ -59,7 +82,11 @@ final class Metadata
 
     public function filesizeOf(string $fileKey): int
     {
-        Assert::that($this->metadataArray['filesizes'])->keyExists($fileKey, 'File key specified was invalid');
+        Assert::keyExists(
+            $this->metadataArray['filesizes'],
+            $fileKey,
+            'File key specified was invalid'
+        );
 
         return $this->metadataArray['filesizes'][$fileKey];
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSiteTest\BuildGenerator;
@@ -10,7 +11,7 @@ final class OcramiusDeterminePackageVersionTest extends TestCase
 {
     public function testPackageVersionReturnedInValidFormat(): void
     {
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '#^(\d+\.)(\d+\.)(\d+)@.*$#',
             (new OcramiusDeterminePackageVersion())->__invoke('browscap/browscap')
         );

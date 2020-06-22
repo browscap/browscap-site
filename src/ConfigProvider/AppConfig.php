@@ -19,35 +19,132 @@ use BrowscapSite\Renderer\Renderer;
 use BrowscapSite\Renderer\TwigRenderer;
 use BrowscapSite\Tool\AnalyseStatistics;
 use BrowscapSite\Tool\DeleteOldDownloadLogs;
+use BrowscapSite\Tool\PdoRateLimiter;
 use BrowscapSite\Tool\RateLimiter;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
 use Doctrine\Common\Cache\FilesystemCache;
+use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\Diactoros\Response\HtmlResponse;
+use LazyPDO\LazyPDO as PDO;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
-use PDO;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
-use Slim\Http\Response;
+use RuntimeException;
 use Slim\Views\Twig;
-use Laminas\ConfigAggregator\ConfigAggregator;
 
+use function getenv;
+
+/**
+ * @psalm-type FilesListItem = array{
+ *   name: string,
+ *   size: int|string|null,
+ *   description: string
+ * }
+ * @psalm-type FilesList = array{
+ *   asp: array{
+ *     BrowsCapINI: FilesListItem,
+ *     Full_BrowsCapINI: FilesListItem,
+ *     Lite_BrowsCapINI: FilesListItem
+ *   },
+ *   php: array{
+ *     PHP_BrowsCapINI: FilesListItem,
+ *     Full_PHP_BrowsCapINI: FilesListItem,
+ *     Lite_PHP_BrowsCapINI: FilesListItem
+ *   },
+ *   other: array{
+ *     BrowsCapXML: FilesListItem,
+ *     BrowsCapCSV: FilesListItem,
+ *     BrowsCapJSON: FilesListItem,
+ *     BrowsCapZIP: FilesListItem
+ *   }
+ * }
+ * @psalm-type BanConfiguration = array{
+ *   rateLimitDownloads: int,
+ *   rateLimitPeriod: int,
+ *   tempBanPeriod: int,
+ *   tempBanLimit: int
+ * }
+ */
 final class AppConfig
 {
-    private const BAN_CONFIGURATION = 'banConfiguration';
+    public const DEFAULT_BAN_CONFIGURATION = [
+        'rateLimitDownloads' => 30, // How many downloads per $rateLimitPeriod
+        'rateLimitPeriod' => 1, // Download limit period in HOURS
+        'tempBanPeriod' => 3, // Tempban period in DAYS
+        'tempBanLimit' => 5, // How many tempbans allowed in $tempBanPeriod before permaban
+    ];
+
+    public const DEFAULT_FILES_LIST = [
+        'asp' => [
+            'BrowsCapINI' => [
+                'name' => 'browscap.ini',
+                'size' => null,
+                'description' => 'This is the standard version of browscap.ini file for IIS 5.x and greater.',
+            ],
+            'Full_BrowsCapINI' => [
+                'name' => 'full_asp_browscap.ini',
+                'size' => null,
+                'description' => 'This is a larger version of browscap.ini with all the new properties.',
+            ],
+            'Lite_BrowsCapINI' => [
+                'name' => 'lite_asp_browscap.ini',
+                'size' => null,
+                'description' => 'This is a smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.',
+            ],
+        ],
+        'php' => [
+            'PHP_BrowsCapINI' => [
+                'name' => 'php_browscap.ini',
+                'size' => null,
+                'description' => 'This is a special version of browscap.ini for PHP users only!',
+            ],
+            'Full_PHP_BrowsCapINI' => [
+                'name' => 'full_php_browscap.ini',
+                'size' => null,
+                'description' => 'This is a larger version of php_browscap.ini with all the new properties.',
+            ],
+            'Lite_PHP_BrowsCapINI' => [
+                'name' => 'lite_php_browscap.ini',
+                'size' => null,
+                'description' => 'This is a smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.',
+            ],
+        ],
+        'other' => [
+            'BrowsCapXML' => [
+                'name' => 'browscap.xml',
+                'size' => null,
+                'description' => 'This is the standard version of browscap.ini file in XML format.',
+            ],
+            'BrowsCapCSV' => [
+                'name' => 'browscap.csv',
+                'size' => null,
+                'description' => 'This is an industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.',
+            ],
+            'BrowsCapJSON' => [
+                'name' => 'browscap.json',
+                'size' => null,
+                'description' => 'This is a JSON (JavaScript Object Notation) version of browscap.ini. This is usually used with JavaScript.',
+            ],
+            'BrowsCapZIP' => [
+                'name' => 'browscap.zip',
+                'size' => null,
+                'description' => 'This archive combines all the above files into one download that is smaller than all eight files put together.',
+            ],
+        ],
+    ];
+
+    private const BAN_CONFIGURATION   = 'banConfiguration';
     private const BROWSCAP_FILES_LIST = 'browscapFilesList';
 
+    /** @return mixed[] */
     public function __invoke(): array
     {
         return [
             'dependencies' => $this->dependencies(),
-            'rateLimiter' => [
-                'rateLimitDownloads' => 30, // How many downloads per $rateLimitPeriod
-                'rateLimitPeriod' => 1, // Download limit period in HOURS
-                'tempBanPeriod' => 3, // Tempban period in DAYS
-                'tempBanLimit' => 5, // How many tempbans allowed in $tempBanPeriod before permaban
-            ],
+            'rateLimiter' => self::DEFAULT_BAN_CONFIGURATION,
             'db' => [
                 'dsn' => 'mysql:dbname=browscap',
                 'user' => '',
@@ -58,11 +155,12 @@ final class AppConfig
         ];
     }
 
+    /** @return mixed[] */
     private function dependencies(): array
     {
         return [
             'factories' => [
-                UserAgentTool::class => function (ContainerInterface $container): UserAgentTool {
+                UserAgentTool::class => static function (ContainerInterface $container): UserAgentTool {
                     return new BrowscapPhpUserAgentTool(
                         new SimpleCacheAdapter(
                             new FilesystemCache(__DIR__ . '/../../cache')
@@ -70,30 +168,36 @@ final class AppConfig
                         $container->get(LoggerInterface::class)
                     );
                 },
-                LoggerInterface::class => function (ContainerInterface $container): LoggerInterface {
-                    $logLevel = getenv('BC_BUILD_LOG') ?: Logger::NOTICE;
-                    $logger = new Logger('browscan-site');
+                LoggerInterface::class => static function (ContainerInterface $container): LoggerInterface {
+                    $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Logger::NOTICE);
+                    $logger   = new Logger('browscan-site');
                     $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
+
                     return $logger;
                 },
-                PDO::class => function (ContainerInterface $container): PDO {
+                PDO::class => static function (ContainerInterface $container): PDO {
                     $dbConfig = $container->get('Config')['db'];
+
                     return new PDO($dbConfig['dsn'], $dbConfig['user'], $dbConfig['pass']);
                 },
-                self::BAN_CONFIGURATION => function (ContainerInterface $container): array {
+                self::BAN_CONFIGURATION => static function (ContainerInterface $container): array {
                     $banConfiguration = $container->get('Config')['rateLimiter'];
-                    if (!$banConfiguration) {
-                        throw new \RuntimeException('Rate limit configuration not set');
+                    if (! $banConfiguration) {
+                        throw new RuntimeException('Rate limit configuration not set');
                     }
+
                     return $banConfiguration;
                 },
-                RateLimiter::class => function (ContainerInterface $container): RateLimiter {
-                    return new RateLimiter($container->get(PDO::class), $container->get(self::BAN_CONFIGURATION));
+                RateLimiter::class => static function (ContainerInterface $container): PdoRateLimiter {
+                    return new PdoRateLimiter(
+                        $container->get(PDO::class),
+                        $container->get(self::BAN_CONFIGURATION)
+                    );
                 },
-                Metadata::class => function (): Metadata {
+                Metadata::class => static function (): Metadata {
                     return Metadata::fromArray(require __DIR__ . '/../../vendor/build/metadata.php');
                 },
-                DownloadHandler::class => function (ContainerInterface $container) {
+                DownloadHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new DownloadHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
@@ -101,7 +205,7 @@ final class AppConfig
                         $container->get(self::BAN_CONFIGURATION)
                     ));
                 },
-                UserAgentLookupHandler::class => function (ContainerInterface $container) {
+                UserAgentLookupHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new UserAgentLookupHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
@@ -109,7 +213,7 @@ final class AppConfig
                         true
                     ));
                 },
-                StreamHandler::class => function (ContainerInterface $container) {
+                StreamHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new StreamHandler(
                         $container->get(RateLimiter::class),
                         $container->get(Metadata::class),
@@ -117,102 +221,45 @@ final class AppConfig
                         __DIR__ . '/../../vendor/build'
                     ));
                 },
-                StatsHandler::class => function (ContainerInterface $container) {
+                StatsHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new StatsHandler(
                         $container->get(Renderer::class),
                         $container->get(PDO::class)
                     ));
                 },
-                VersionHandler::class => function (ContainerInterface $container) {
+                VersionHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class)
                     ));
                 },
-                VersionNumberHandler::class => function (ContainerInterface $container) {
+                VersionNumberHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionNumberHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class)
                     ));
                 },
-                VersionXmlHandler::class => function (ContainerInterface $container) {
+                VersionXmlHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionXmlHandler(
                         $container->get(Metadata::class),
                         $container->get(self::BROWSCAP_FILES_LIST)
                     ));
                 },
-                Renderer::class => function (ContainerInterface $container): Renderer {
+                Renderer::class => static function (ContainerInterface $container): Renderer {
                     return new TwigRenderer(
                         $container->get(Twig::class),
-                        new Response(200)
+                        new HtmlResponse('', 200)
                     );
                 },
                 BuildGenerator::class => BuildGeneratorFactory::class,
-                AnalyseStatistics::class => function (ContainerInterface $container): AnalyseStatistics {
+                AnalyseStatistics::class => static function (ContainerInterface $container): AnalyseStatistics {
                     return new AnalyseStatistics($container->get(PDO::class));
                 },
-                DeleteOldDownloadLogs::class => function (ContainerInterface $container): DeleteOldDownloadLogs {
+                DeleteOldDownloadLogs::class => static function (ContainerInterface $container): DeleteOldDownloadLogs {
                     return new DeleteOldDownloadLogs($container->get(PDO::class));
                 },
-                self::BROWSCAP_FILES_LIST => function (): array {
-                    return [
-                        'asp' => [
-                            'BrowsCapINI' => [
-                                'name' => 'browscap.ini',
-                                'size' => null,
-                                'description' => 'This is the standard version of browscap.ini file for IIS 5.x and greater.',
-                            ],
-                            'Full_BrowsCapINI' => [
-                                'name' => 'full_asp_browscap.ini',
-                                'size' => null,
-                                'description' => 'This is a larger version of browscap.ini with all the new properties.',
-                            ],
-                            'Lite_BrowsCapINI' => [
-                                'name' => 'lite_asp_browscap.ini',
-                                'size' => null,
-                                'description' => 'This is a smaller version of browscap.ini file containing major browsers & search engines. This file is adequate for most websites.',
-                            ],
-                        ],
-                        'php' => [
-                            'PHP_BrowsCapINI' => [
-                                'name' => 'php_browscap.ini',
-                                'size' => null,
-                                'description' => 'This is a special version of browscap.ini for PHP users only!',
-                            ],
-                            'Full_PHP_BrowsCapINI' => [
-                                'name' => 'full_php_browscap.ini',
-                                'size' => null,
-                                'description' => 'This is a larger version of php_browscap.ini with all the new properties.',
-                            ],
-                            'Lite_PHP_BrowsCapINI' => [
-                                'name' => 'lite_php_browscap.ini',
-                                'size' => null,
-                                'description' => 'This is a smaller version of php_browscap.ini file containing major browsers & search engines. This file is adequate for most websites.',
-                            ],
-                        ],
-                        'other' => [
-                            'BrowsCapXML' => [
-                                'name' => 'browscap.xml',
-                                'size' => null,
-                                'description' => 'This is the standard version of browscap.ini file in XML format.',
-                            ],
-                            'BrowsCapCSV' => [
-                                'name' => 'browscap.csv',
-                                'size' => null,
-                                'description' => 'This is an industry-standard comma-separated-values version of browscap.ini. Easily imported into Access, Excel, MySQL & others.',
-                            ],
-                            'BrowsCapJSON' => [
-                                'name' => 'browscap.json',
-                                'size' => null,
-                                'description' => 'This is a JSON (JavaScript Object Notation) version of browscap.ini. This is usually used with JavaScript.',
-                            ],
-                            'BrowsCapZIP' => [
-                                'name' => 'browscap.zip',
-                                'size' => null,
-                                'description' => 'This archive combines all the above files into one download that is smaller than all eight files put together.',
-                            ],
-                        ],
-                    ];
+                self::BROWSCAP_FILES_LIST => static function (): array {
+                    return self::DEFAULT_FILES_LIST;
                 },
             ],
         ];

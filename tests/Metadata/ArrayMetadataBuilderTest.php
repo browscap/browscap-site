@@ -1,39 +1,38 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSiteTest\Metadata;
 
 use Browscap\Parser\ParserInterface;
 use BrowscapSite\Metadata\ArrayMetadataBuilder;
+use DateTimeImmutable;
 use org\bovigo\vfs\content\LargeFileContent;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+
+use function array_walk;
+
+use const DATE_RFC2822;
 
 /**
  * @covers \BrowscapSite\Metadata\ArrayMetadataBuilder
  */
 final class ArrayMetadataBuilderTest extends TestCase
 {
-    /**
-     * @var ParserInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var ParserInterface&MockObject */
     private $parser;
 
-    /**
-     * @var vfsStreamDirectory
-     */
-    private $filesystem;
+    private vfsStreamDirectory $filesystem;
 
-    /**
-     * @var ArrayMetadataBuilder
-     */
-    private $metadataBuilder;
+    private ArrayMetadataBuilder $metadataBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->parser = $this->createMock(ParserInterface::class);
-        $this->filesystem = vfsStream::setup();
+        $this->parser          = $this->createMock(ParserInterface::class);
+        $this->filesystem      = vfsStream::setup();
         $this->metadataBuilder = new ArrayMetadataBuilder(
             $this->parser,
             $this->filesystem->url()
@@ -42,8 +41,8 @@ final class ArrayMetadataBuilderTest extends TestCase
 
     public function testMetadataGenerated(): void
     {
-        $version = '1002003';
-        $releaseDate = (new \DateTimeImmutable('now'))->format(DATE_RFC2822);
+        $version     = '1002003';
+        $releaseDate = (new DateTimeImmutable('now'))->format(DATE_RFC2822);
         $this->parser->expects(self::once())->method('parse')->willReturn([
             'GJK_Browscap_Version' => [
                 'Version' => $version,
@@ -66,7 +65,7 @@ final class ArrayMetadataBuilderTest extends TestCase
 
         array_walk(
             $expectedFiles,
-            function ($kbSize, $filename) {
+            function (int $kbSize, string $filename): void {
                 vfsStream::newFile($filename)
                     ->withContent(LargeFileContent::withKilobytes($kbSize))
                     ->at($this->filesystem);
@@ -75,6 +74,7 @@ final class ArrayMetadataBuilderTest extends TestCase
 
         $this->metadataBuilder->build();
 
+        /** @psalm-suppress UnresolvableInclude */
         self::assertEquals(
             [
                 'version' => $version,

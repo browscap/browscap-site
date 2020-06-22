@@ -1,4 +1,4 @@
-name: CI Build
+name: Unit tests
 
 on:
   push:
@@ -7,9 +7,15 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  unit-tests:
+    name: "Unit tests"
 
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
 
     services:
       mysql:
@@ -35,12 +41,21 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.3
+          php-version: ${{ matrix.php-version }}
           extensions: bcmath, curl, dom, intl, json, mbstring, pdo, pdo_mysql, xml, zip
           coverage: none
 
       - name: Validate composer.json and composer.lock
         run: composer validate
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.composer/cache
+            vendor
+          key: php-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: php-${{ matrix.php-version }}-
 
       - name: Install dependencies
         # 200 here represents the \Monolog\Logger::INFO constant for log levels
@@ -48,4 +63,3 @@ jobs:
 
       - name: Run unit tests
         run: vendor/bin/phpunit
-

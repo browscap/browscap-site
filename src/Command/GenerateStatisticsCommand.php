@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BrowscapSite\Command;
@@ -6,15 +7,14 @@ namespace BrowscapSite\Command;
 use BrowscapSite\Tool\AnalyseStatistics;
 use Composer\IO\ConsoleIO;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Webmozart\Assert\Assert;
 
 final class GenerateStatisticsCommand extends Command
 {
-    /**
-     * @var AnalyseStatistics
-     */
-    private $analyseStatistics;
+    private AnalyseStatistics $analyseStatistics;
 
     public function __construct(AnalyseStatistics $analyseStatistics)
     {
@@ -24,10 +24,12 @@ final class GenerateStatisticsCommand extends Command
 
     /**
      * (non-PHPdoc).
+     *
      * @see \Symfony\Component\Console\Command\Command::configure()
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     *
+     * @throws InvalidArgumentException
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('generate-statistics')
@@ -36,17 +38,22 @@ final class GenerateStatisticsCommand extends Command
 
     /**
      * (non-PHPdoc).
+     *
      * @see \Symfony\Component\Console\Command\Command::execute()
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new ConsoleIO($input, $output, $this->getHelperSet());
+        $helperSet = $this->getHelperSet();
+        Assert::notNull($helperSet);
+        $io = new ConsoleIO($input, $output, $helperSet);
 
         $io->write('<info>Generating statistics...</info>');
 
         $this->analyseStatistics->__invoke();
 
         $io->write('<info>All done.</info>');
+
+        return 0;
     }
 }
