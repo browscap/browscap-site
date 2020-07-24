@@ -5,13 +5,3 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  automerged_updates:
-    - match:
-        dependency_name: "browscap/browscap"
-        update_type: "semver:minor"
-    - match:
-        dependency_type: "development"
-        update_type: "semver:minor"
-    - match:
-        dependency_type: "all"
-        update_type: "semver:patch"
