@@ -35,7 +35,7 @@
         "browscap/browscap-php": "^4.2",
         "composer/composer": "^1.10",
         "doctrine/cache": "^1.10",
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^7.0",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-diactoros": "^2.3",
         "laminas/laminas-servicemanager": "^3.4",
