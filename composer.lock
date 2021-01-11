@@ -1395,24 +1395,28 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.5.1",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "0d4c8628a71fae9f7bd0b1b74b76382e5e9a04b1"
+                "reference": "d55e4e78fc7c9bbef1e9e098dada979eeef04439"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/0d4c8628a71fae9f7bd0b1b74b76382e5e9a04b1",
-                "reference": "0d4c8628a71fae9f7bd0b1b74b76382e5e9a04b1",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/d55e4e78fc7c9bbef1e9e098dada979eeef04439",
+                "reference": "d55e4e78fc7c9bbef1e9e098dada979eeef04439",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.2",
                 "laminas/laminas-stdlib": "^3.2.1",
                 "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.3 || ~8.0.0",
                 "psr/container": "^1.0"
+            },
+            "conflict": {
+                "laminas/laminas-code": "<3.3.1",
+                "zendframework/zend-code": "<3.3.1"
             },
             "provide": {
                 "container-interop/container-interop-implementation": "^1.2",
@@ -1422,27 +1426,24 @@
                 "zendframework/zend-servicemanager": "^3.4.0"
             },
             "require-dev": {
+                "composer/package-versions-deprecated": "^1.0",
                 "laminas/laminas-coding-standard": "~1.0.0",
-                "mikey179/vfsstream": "^1.6.5",
-                "ocramius/proxy-manager": "^1.0 || ^2.0",
-                "phpbench/phpbench": "^0.13.0",
-                "phpunit/phpunit": "^5.7.25 || ^6.4.4"
+                "laminas/laminas-container-config-test": "^0.3",
+                "laminas/laminas-dependency-plugin": "^2.1",
+                "mikey179/vfsstream": "^1.6.8",
+                "ocramius/proxy-manager": "^2.2.3",
+                "phpbench/phpbench": "^1.0.0-alpha3",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.4"
             },
             "suggest": {
-                "laminas/laminas-stdlib": "laminas-stdlib ^2.5 if you wish to use the MergeReplaceKey or MergeRemoveKey features in Config instances",
-                "ocramius/proxy-manager": "ProxyManager 1.* to handle lazy initialization of services"
+                "ocramius/proxy-manager": "ProxyManager ^2.1.1 to handle lazy initialization of services"
             },
             "bin": [
                 "bin/generate-deps-for-config-factory",
                 "bin/generate-factory-for-class"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev",
-                    "dev-develop": "4.0-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Laminas\\ServiceManager\\": "src/"
@@ -1469,7 +1470,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-05-11T14:43:22+00:00"
+            "time": "2021-01-10T22:25:38+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -5404,12 +5405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "d5961914bf7f90e81af509b81e51450bff419815"
+                "reference": "a2c04f857299a7119e96448249a9dd5954e099c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/d5961914bf7f90e81af509b81e51450bff419815",
-                "reference": "d5961914bf7f90e81af509b81e51450bff419815",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/a2c04f857299a7119e96448249a9dd5954e099c1",
+                "reference": "a2c04f857299a7119e96448249a9dd5954e099c1",
                 "shasum": ""
             },
             "conflict": {
@@ -5543,7 +5544,7 @@
                 "phpmussel/phpmussel": ">=1,<1.6",
                 "phpmyadmin/phpmyadmin": "<4.9.6|>=5,<5.0.3",
                 "phpoffice/phpexcel": "<1.8.2",
-                "phpoffice/phpspreadsheet": "<1.8",
+                "phpoffice/phpspreadsheet": "<1.16",
                 "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5.0.10,<5.6.3",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
@@ -5566,8 +5567,8 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
-                "shopware/core": "<=6.3.2",
-                "shopware/platform": "<=6.3.2",
+                "shopware/core": "<=6.3.4",
+                "shopware/platform": "<=6.3.4",
                 "shopware/shopware": "<5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
@@ -5713,7 +5714,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-08T15:02:56+00:00"
+            "time": "2020-12-31T19:24:22+00:00"
         },
         {
             "name": "sebastian/code-unit",
