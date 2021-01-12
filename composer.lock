@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96df1d554d4e87e431b5f5e62437c3f4",
+    "content-hash": "5c2aee8570354106c954720b42d12e26",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -194,16 +194,16 @@
         },
         {
             "name": "browscap/browscap-php",
-            "version": "4.3.0",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap-php.git",
-                "reference": "476851a1d90bfb74b91cb84ff40ab8a207492132"
+                "reference": "aa6bde6900922102a67a4187db8880c01e228fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/476851a1d90bfb74b91cb84ff40ab8a207492132",
-                "reference": "476851a1d90bfb74b91cb84ff40ab8a207492132",
+                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/aa6bde6900922102a67a4187db8880c01e228fd8",
+                "reference": "aa6bde6900922102a67a4187db8880c01e228fd8",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.5.2 || ^7.0",
                 "monolog/monolog": "^1.25.3 || ^2.0.2",
-                "php": ">=7.1.0,<7.5.0",
+                "php": ">=7.3.0,<8.1.0",
                 "psr/simple-cache": "^1.0.1",
                 "roave/doctrine-simplecache": "^2.2.0",
                 "symfony/console": "^3.4.36 || ^4.4.2 || ^5.0.2",
@@ -227,7 +227,7 @@
                 "phpstan/phpstan-deprecation-rules": "^0.12.2",
                 "phpstan/phpstan-phpunit": "^0.12.6",
                 "phpstan/phpstan-strict-rules": "^0.12.2",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.2"
+                "phpunit/phpunit": "^9.5.0"
             },
             "suggest": {
                 "ext-curl": "to use curl requests to get the ini file"
@@ -267,7 +267,7 @@
                 "get_browser",
                 "user agent"
             ],
-            "time": "2020-08-17T16:30:15+00:00"
+            "time": "2021-01-06T19:02:13+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -2957,16 +2957,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v5.2.0",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "bb92ba7f38b037e531908590a858a04d85c0e238"
+                "reference": "fa8f8cab6b65e2d99a118e082935344c5ba8c60d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/bb92ba7f38b037e531908590a858a04d85c0e238",
-                "reference": "bb92ba7f38b037e531908590a858a04d85c0e238",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/fa8f8cab6b65e2d99a118e082935344c5ba8c60d",
+                "reference": "fa8f8cab6b65e2d99a118e082935344c5ba8c60d",
                 "shasum": ""
             },
             "require": {
@@ -3012,7 +3012,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-12T09:58:18+00:00"
+            "time": "2020-11-30T17:05:38+00:00"
         },
         {
             "name": "symfony/finder",
