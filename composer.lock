@@ -8,21 +8,20 @@
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "5367e3895976b49704ae671f75bc5f0ba1b986ab"
+                "reference": "5e721d7e937ca3ba2cdec1e1adf195f9e5188372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/5367e3895976b49704ae671f75bc5f0ba1b986ab",
-                "reference": "5367e3895976b49704ae671f75bc5f0ba1b986ab",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/5e721d7e937ca3ba2cdec1e1adf195f9e5188372",
+                "reference": "5e721d7e937ca3ba2cdec1e1adf195f9e5188372",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
-                "ext-intl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-simplexml": "*",
@@ -33,6 +32,9 @@
                 "phpstan/phpstan": "*",
                 "phpunit/phpunit": ">=6.0.0",
                 "yoast/phpunit-polyfills": "^0.1.0"
+            },
+            "suggest": {
+                "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
             },
             "type": "library",
             "autoload": {
@@ -65,7 +67,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2020-11-13T20:02:54+00:00"
+            "time": "2021-04-18T20:11:03+00:00"
         },
         {
             "name": "brick/varexporter",
@@ -107,46 +109,43 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.42",
+            "version": "6.0.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "a01bcdaf4e34d1a7040519bbe75ad63c84fda611"
+                "reference": "efa609919af687de5e4004456647d951a7058b19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/a01bcdaf4e34d1a7040519bbe75ad63c84fda611",
-                "reference": "a01bcdaf4e34d1a7040519bbe75ad63c84fda611",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/efa609919af687de5e4004456647d951a7058b19",
+                "reference": "efa609919af687de5e4004456647d951a7058b19",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^3.2.7",
-                "ergebnis/json-normalizer": "^0.11.0 || ^0.12.0",
+                "beberlei/assert": "^3.3.0",
+                "ergebnis/json-normalizer": "^0.13.0 || ^1.0.2",
                 "ext-json": "*",
-                "mimmi20/json-class": "~2.0.11",
-                "mimmi20/ua-browser-type": "^7.0.10",
-                "mimmi20/ua-device-type": "^7.1.9",
-                "monolog/monolog": "^1.25.4 || ^2.1.0",
+                "mimmi20/json-class": "~2.0.16",
+                "mimmi20/ua-browser-type": "^7.0.15",
+                "mimmi20/ua-device-type": "^7.1.14",
+                "monolog/monolog": "^1.26.0 || ^2.2.0",
                 "php": "^7.1.3",
-                "seld/jsonlint": "^1.8.0",
-                "symfony/console": "^4.4.8 || ^5.0.8",
-                "symfony/finder": "^4.4.8 || ^5.0.8",
-                "twig/twig": "^2.12.5 || ^3.0.3"
+                "seld/jsonlint": "^1.8.3",
+                "symfony/console": "^4.4.18 || ^5.2.1",
+                "symfony/finder": "^4.4.18 || ^5.2.1",
+                "twig/twig": "^2.13.1 || ^3.2.1"
             },
             "require-dev": {
-                "browscap/browscap-php": "^4.2.2 || ^5.0.0",
-                "ergebnis/composer-normalize": "^2.5.1",
-                "ergebnis/phpstan-rules": "^0.15.0",
+                "browscap/browscap-php": "^4.3.0 || ^5.0.0",
+                "doctrine/coding-standard": "^9.0.0",
                 "ext-zip": "*",
-                "friendsofphp/php-cs-fixer": "^2.16.3",
                 "mikey179/vfsstream": "^1.6.8",
-                "pepakriz/phpstan-exception-rules": "^0.11.1",
-                "phpstan/phpstan": "^0.12.25",
-                "phpstan/phpstan-beberlei-assert": "^0.12.2",
-                "phpstan/phpstan-deprecation-rules": "^0.12.3",
-                "phpstan/phpstan-phpunit": "^0.12.8",
-                "phpstan/phpstan-strict-rules": "^0.12.2",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.5 || ^9.1.5"
+                "phpstan/extension-installer": "~1.1.0",
+                "phpstan/phpstan": "^0.12.65",
+                "phpstan/phpstan-beberlei-assert": "^0.12.4",
+                "phpstan/phpstan-deprecation-rules": "^0.12.6",
+                "phpstan/phpstan-phpunit": "^0.12.17",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.13 || ^9.5.0"
             },
             "suggest": {
                 "ext-zip": "to create a zip file containing all other generated files"
@@ -190,7 +189,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2020-12-07T08:37:21+00:00"
+            "time": "2021-04-22T07:51:04+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -810,39 +809,39 @@
         },
         {
             "name": "ergebnis/json-normalizer",
-            "version": "0.12.0",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/json-normalizer.git",
-                "reference": "0197447cd5d8f7e82116e904196a3e9f470655db"
+                "reference": "4a7f064ce34d5a2e382564565cdd433dbc5b9494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/json-normalizer/zipball/0197447cd5d8f7e82116e904196a3e9f470655db",
-                "reference": "0197447cd5d8f7e82116e904196a3e9f470655db",
+                "url": "https://api.github.com/repos/ergebnis/json-normalizer/zipball/4a7f064ce34d5a2e382564565cdd433dbc5b9494",
+                "reference": "4a7f064ce34d5a2e382564565cdd433dbc5b9494",
                 "shasum": ""
             },
             "require": {
-                "ergebnis/json-printer": "^3.0.2",
+                "ergebnis/json-printer": "^3.1.1",
                 "ext-json": "*",
-                "justinrainbow/json-schema": "^4.0.0 || ^5.0.0",
-                "php": "^7.1"
+                "justinrainbow/json-schema": "^5.2.10",
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "ergebnis/license": "~0.1.0",
-                "ergebnis/php-cs-fixer-config": "^2.1.2",
-                "ergebnis/phpstan-rules": "~0.14.4",
-                "ergebnis/test-util": "~1.0.0",
-                "infection/infection": "~0.13.6",
-                "jangregor/phpstan-prophecy": "~0.6.2",
-                "phpstan/extension-installer": "^1.0.4",
-                "phpstan/phpstan": "~0.12.18",
-                "phpstan/phpstan-deprecation-rules": "~0.12.2",
-                "phpstan/phpstan-phpunit": "~0.12.8",
-                "phpstan/phpstan-strict-rules": "~0.12.2",
-                "phpunit/phpunit": "^7.5.20",
-                "psalm/plugin-phpunit": "~0.10.0",
-                "vimeo/psalm": "^3.11.2"
+                "ergebnis/license": "^1.1.0",
+                "ergebnis/php-cs-fixer-config": "^2.10.0",
+                "ergebnis/phpstan-rules": "~0.15.3",
+                "ergebnis/test-util": "^1.4.0",
+                "infection/infection": "~0.15.3",
+                "jangregor/phpstan-prophecy": "~0.8.1",
+                "phpstan/extension-installer": "^1.1.0",
+                "phpstan/phpstan": "~0.12.80",
+                "phpstan/phpstan-deprecation-rules": "~0.12.6",
+                "phpstan/phpstan-phpunit": "~0.12.17",
+                "phpstan/phpstan-strict-rules": "~0.12.9",
+                "phpunit/phpunit": "^8.5.14",
+                "psalm/plugin-phpunit": "~0.12.2",
+                "vimeo/psalm": "^3.18"
             },
             "type": "library",
             "autoload": {
@@ -868,23 +867,11 @@
             ],
             "funding": [
                 {
-                    "url": "https://paypal.me/localheinz",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.amazon.de/hz/wishlist/ls/2NCHMSJ4BC1OW",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.buymeacoffee.com/localheinz",
-                    "type": "custom"
-                },
-                {
                     "url": "https://github.com/localheinz",
                     "type": "github"
                 }
             ],
-            "time": "2020-04-19T12:30:41+00:00"
+            "time": "2021-03-06T13:33:57+00:00"
         },
         {
             "name": "ergebnis/json-printer",
@@ -1632,27 +1619,27 @@
         },
         {
             "name": "mimmi20/browser-detector-loader-interface",
-            "version": "3.0.11",
+            "version": "3.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/browser-detector-loader-interface.git",
-                "reference": "0cefb0b7ee7df9fc04a74d7a8ab1b67c86c8d8bf"
+                "reference": "49df45215051d767635276b379301351f021cb46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/browser-detector-loader-interface/zipball/0cefb0b7ee7df9fc04a74d7a8ab1b67c86c8d8bf",
-                "reference": "0cefb0b7ee7df9fc04a74d7a8ab1b67c86c8d8bf",
+                "url": "https://api.github.com/repos/mimmi20/browser-detector-loader-interface/zipball/49df45215051d767635276b379301351f021cb46",
+                "reference": "49df45215051d767635276b379301351f021cb46",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3 || ^8.0.0"
             },
             "require-dev": {
-                "mimmi20/coding-standard": "~1.0.5",
-                "pepakriz/phpstan-exception-rules": "~0.11.2",
-                "phpstan/extension-installer": "~1.0.5",
-                "phpstan/phpstan": "~0.12.56",
-                "phpstan/phpstan-deprecation-rules": "~0.12.5"
+                "mimmi20/coding-standard": "^1.0.9",
+                "pepakriz/phpstan-exception-rules": "^0.11.6",
+                "phpstan/extension-installer": "^1.1.0",
+                "phpstan/phpstan": "^0.12.78",
+                "phpstan/phpstan-deprecation-rules": "^0.12.6"
             },
             "type": "library",
             "autoload": {
@@ -1676,20 +1663,20 @@
                 }
             ],
             "description": "the source interface for the browscap helper",
-            "time": "2020-11-17T07:22:45+00:00"
+            "time": "2021-02-21T18:36:57+00:00"
         },
         {
             "name": "mimmi20/json-class",
-            "version": "2.0.15",
+            "version": "2.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/json-class.git",
-                "reference": "5ae55d6858cf147d8c804f5525e1670013ecc380"
+                "reference": "b45b88efcfb481684bcde0345dbf631044f16af3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/json-class/zipball/5ae55d6858cf147d8c804f5525e1670013ecc380",
-                "reference": "5ae55d6858cf147d8c804f5525e1670013ecc380",
+                "url": "https://api.github.com/repos/mimmi20/json-class/zipball/b45b88efcfb481684bcde0345dbf631044f16af3",
+                "reference": "b45b88efcfb481684bcde0345dbf631044f16af3",
                 "shasum": ""
             },
             "require": {
@@ -1698,14 +1685,14 @@
                 "php": "^7.1.3 || ^8.0.0"
             },
             "require-dev": {
-                "infection/infection": "~0.13.6 || ~0.18",
-                "mimmi20/coding-standard": "~1.0.5",
-                "pepakriz/phpstan-exception-rules": "~0.11.2",
-                "phpstan/extension-installer": "~1.0.5",
-                "phpstan/phpstan": "~0.12.56",
-                "phpstan/phpstan-deprecation-rules": "~0.12.5",
-                "phpstan/phpstan-phpunit": "~0.12.16",
-                "phpunit/phpunit": "~7.5.20 || ~8.5.8 || ~9.4.2"
+                "infection/infection": "~0.13.6 || ~0.18 || ~0.20.2",
+                "mimmi20/coding-standard": "~1.0.9",
+                "pepakriz/phpstan-exception-rules": "~0.11.4",
+                "phpstan/extension-installer": "~1.1.0",
+                "phpstan/phpstan": "~0.12.68",
+                "phpstan/phpstan-deprecation-rules": "~0.12.6",
+                "phpstan/phpstan-phpunit": "~0.12.17",
+                "phpunit/phpunit": "~7.5.20 || ~8.5.13 || ~9.5.0"
             },
             "type": "library",
             "autoload": {
@@ -1730,35 +1717,35 @@
             ],
             "description": "Class wrapper for daverandom/exceptional-json",
             "homepage": "https://github.com/mimmi20/json-class",
-            "time": "2020-11-17T07:36:27+00:00"
+            "time": "2021-01-19T10:14:50+00:00"
         },
         {
             "name": "mimmi20/ua-browser-type",
-            "version": "7.0.14",
+            "version": "7.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/ua-browser-type.git",
-                "reference": "e173ef0c037eea7c5ebd30f913a73c604b4488b6"
+                "reference": "39ec11ff6804d7cb2b80f49deaf30e96b4738d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/ua-browser-type/zipball/e173ef0c037eea7c5ebd30f913a73c604b4488b6",
-                "reference": "e173ef0c037eea7c5ebd30f913a73c604b4488b6",
+                "url": "https://api.github.com/repos/mimmi20/ua-browser-type/zipball/39ec11ff6804d7cb2b80f49deaf30e96b4738d85",
+                "reference": "39ec11ff6804d7cb2b80f49deaf30e96b4738d85",
                 "shasum": ""
             },
             "require": {
-                "mimmi20/browser-detector-loader-interface": "~3.0.10",
+                "mimmi20/browser-detector-loader-interface": "~3.0.13",
                 "php": "^7.1.3 || ^8.0.0"
             },
             "require-dev": {
-                "infection/infection": "~0.13.6 || ~0.18",
-                "mimmi20/coding-standard": "~1.0.5",
-                "pepakriz/phpstan-exception-rules": "~0.11.2",
-                "phpstan/extension-installer": "~1.0.5",
-                "phpstan/phpstan": "~0.12.56",
-                "phpstan/phpstan-deprecation-rules": "~0.12.5",
-                "phpstan/phpstan-phpunit": "~0.12.16",
-                "phpunit/phpunit": "~7.5.20 || ~8.5.8 || ~9.4.2"
+                "infection/infection": "~0.13.6 || ~0.18 || ~0.20.2",
+                "mimmi20/coding-standard": "~1.0.9",
+                "pepakriz/phpstan-exception-rules": "~0.11.4",
+                "phpstan/extension-installer": "~1.1.0",
+                "phpstan/phpstan": "~0.12.68",
+                "phpstan/phpstan-deprecation-rules": "~0.12.6",
+                "phpstan/phpstan-phpunit": "~0.12.17",
+                "phpunit/phpunit": "~7.5.20 || ~8.5.13 || ~9.5.0"
             },
             "type": "library",
             "autoload": {
@@ -1790,35 +1777,35 @@
                 "user agent",
                 "user-agent"
             ],
-            "time": "2020-11-17T07:28:55+00:00"
+            "time": "2021-01-19T10:42:24+00:00"
         },
         {
             "name": "mimmi20/ua-device-type",
-            "version": "7.1.13",
+            "version": "7.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mimmi20/ua-device-type.git",
-                "reference": "f4661e1b8caa2c4a9138f0dd515c5a1786c5994e"
+                "reference": "a805eaf0e2fbbaa595d463b2d1f612027d2c8f09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mimmi20/ua-device-type/zipball/f4661e1b8caa2c4a9138f0dd515c5a1786c5994e",
-                "reference": "f4661e1b8caa2c4a9138f0dd515c5a1786c5994e",
+                "url": "https://api.github.com/repos/mimmi20/ua-device-type/zipball/a805eaf0e2fbbaa595d463b2d1f612027d2c8f09",
+                "reference": "a805eaf0e2fbbaa595d463b2d1f612027d2c8f09",
                 "shasum": ""
             },
             "require": {
-                "mimmi20/browser-detector-loader-interface": "~3.0.10",
+                "mimmi20/browser-detector-loader-interface": "~3.0.13",
                 "php": "^7.1.3 || ^8.0.0"
             },
             "require-dev": {
-                "infection/infection": "~0.13.6 || ~0.18",
-                "mimmi20/coding-standard": "~1.0.5",
-                "pepakriz/phpstan-exception-rules": "~0.11.2",
-                "phpstan/extension-installer": "~1.0.5",
-                "phpstan/phpstan": "~0.12.56",
-                "phpstan/phpstan-deprecation-rules": "~0.12.5",
-                "phpstan/phpstan-phpunit": "~0.12.16",
-                "phpunit/phpunit": "~7.5.20 || ~8.5.8 || ~9.4.2"
+                "infection/infection": "~0.13.6 || ~0.18 || ~0.20.2",
+                "mimmi20/coding-standard": "~1.0.9",
+                "pepakriz/phpstan-exception-rules": "~0.11.4",
+                "phpstan/extension-installer": "~1.1.0",
+                "phpstan/phpstan": "~0.12.68",
+                "phpstan/phpstan-deprecation-rules": "~0.12.6",
+                "phpstan/phpstan-phpunit": "~0.12.17",
+                "phpunit/phpunit": "~7.5.20 || ~8.5.13 || ~9.5.0"
             },
             "type": "library",
             "autoload": {
@@ -1850,7 +1837,7 @@
                 "user agent",
                 "user-agent"
             ],
-            "time": "2020-11-17T07:24:11+00:00"
+            "time": "2021-01-19T10:43:16+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3311,16 +3298,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.20.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "39d483bdf39be819deabf04ec872eb0b2410b531"
+                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/39d483bdf39be819deabf04ec872eb0b2410b531",
-                "reference": "39d483bdf39be819deabf04ec872eb0b2410b531",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/5232de97ee3b75b0360528dae24e73db49566ab1",
+                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1",
                 "shasum": ""
             },
             "require": {
@@ -3332,7 +3319,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.20-dev"
+                    "dev-main": "1.22-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -3384,7 +3371,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-23T14:02:19+00:00"
+            "time": "2021-01-22T09:19:47+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
@@ -3759,16 +3746,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.1.1",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b02fa41f3783a2616eccef7b92fbc2343ffed737"
+                "reference": "1f3b7e2c06cc05d42936a8ad508ff1db7975cdc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b02fa41f3783a2616eccef7b92fbc2343ffed737",
-                "reference": "b02fa41f3783a2616eccef7b92fbc2343ffed737",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1f3b7e2c06cc05d42936a8ad508ff1db7975cdc5",
+                "reference": "1f3b7e2c06cc05d42936a8ad508ff1db7975cdc5",
                 "shasum": ""
             },
             "require": {
@@ -3783,7 +3770,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -3827,7 +3814,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-27T19:28:23+00:00"
+            "time": "2021-02-08T09:54:36+00:00"
         },
         {
             "name": "webimpress/safe-writer",
@@ -5408,12 +5395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "0a55b3eacf6b4a0fdc6ec9d01e00285ca9942b2b"
+                "reference": "593c4de369ca852cf3b86037f19435d47c136448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0a55b3eacf6b4a0fdc6ec9d01e00285ca9942b2b",
-                "reference": "0a55b3eacf6b4a0fdc6ec9d01e00285ca9942b2b",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/593c4de369ca852cf3b86037f19435d47c136448",
+                "reference": "593c4de369ca852cf3b86037f19435d47c136448",
                 "shasum": ""
             },
             "conflict": {
@@ -5457,7 +5444,7 @@
                 "doctrine/doctrine-module": "<=0.7.1",
                 "doctrine/mongodb-odm": ">=1,<1.0.2",
                 "doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
-                "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
+                "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1|>=2.8.3,<2.8.4",
                 "dolibarr/dolibarr": "<11.0.4",
                 "dompdf/dompdf": ">=0.6,<0.6.2",
                 "drupal/core": ">=7,<7.74|>=8,<8.8.11|>=8.9,<8.9.9|>=9,<9.0.8",
@@ -5492,7 +5479,7 @@
                 "friendsofsymfony/user-bundle": ">=1.2,<1.3.5",
                 "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
                 "fuel/core": "<1.8.1",
-                "getgrav/grav": "<1.7-beta.8",
+                "getgrav/grav": "<1.7.11",
                 "getkirby/cms": ">=3,<3.4.5",
                 "getkirby/panel": "<2.5.14",
                 "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
@@ -5524,12 +5511,15 @@
                 "magento/magento1ee": ">=1,<1.14.4.3",
                 "magento/product-community-edition": ">=2,<2.2.10|>=2.3,<2.3.2-p.2",
                 "marcwillmann/turn": "<0.3.3",
-                "mautic/core": "<2.16.5|>=3,<3.2.4|= 2.13.1",
+                "mautic/core": "<3.3.2|= 2.13.1",
                 "mediawiki/core": ">=1.27,<1.27.6|>=1.29,<1.29.3|>=1.30,<1.30.2|>=1.31,<1.31.9|>=1.32,<1.32.6|>=1.32.99,<1.33.3|>=1.33.99,<1.34.3|>=1.34.99,<1.35",
                 "mittwald/typo3_forum": "<1.2.1",
                 "monolog/monolog": ">=1.8,<1.12",
                 "moodle/moodle": "<3.5.17|>=3.7,<3.7.9|>=3.8,<3.8.8|>=3.9,<3.9.5|>=3.10,<3.10.2",
                 "namshi/jose": "<2.2",
+                "neos/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.12|>=3.1,<3.1.10|>=3.2,<3.2.13|>=3.3,<3.3.13|>=4,<4.0.6",
+                "neos/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<2.9.99|>=3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<3.3.23|>=4,<4.0.17|>=4.1,<4.1.16|>=4.2,<4.2.12|>=4.3,<4.3.3",
+                "neos/swiftmailer": ">=4.1,<4.1.99|>=5.4,<5.4.5",
                 "nette/application": ">=2,<2.0.19|>=2.1,<2.1.13|>=2.2,<2.2.10|>=2.3,<2.3.14|>=2.4,<2.4.16|>=3,<3.0.6",
                 "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
                 "nystudio107/craft-seomatic": "<3.3",
@@ -5558,6 +5548,7 @@
                 "phpmyadmin/phpmyadmin": "<4.9.6|>=5,<5.0.3",
                 "phpoffice/phpexcel": "<1.8.2",
                 "phpoffice/phpspreadsheet": "<1.16",
+                "phpseclib/phpseclib": "<2.0.31|>=3,<3.0.7",
                 "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5.0.10,<5.6.3",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
@@ -5568,12 +5559,14 @@
                 "prestashop/contactform": ">1.0.1,<4.3",
                 "prestashop/gamification": "<2.3.2",
                 "prestashop/productcomments": ">=4,<4.2.1",
+                "prestashop/ps_emailsubscription": "<2.6.1",
                 "prestashop/ps_facetedsearch": "<3.4.1",
                 "privatebin/privatebin": "<1.2.2|>=1.3,<1.3.2",
                 "propel/propel": ">=2-alpha.1,<=2-alpha.7",
                 "propel/propel1": ">=1,<=1.7.1",
                 "pterodactyl/panel": "<0.7.19|>=1-rc.0,<=1-rc.6",
                 "pusher/pusher-php-server": "<2.2.1",
+                "pwweb/laravel-core": "<=0.3.6-beta",
                 "rainlab/debugbar-plugin": "<3.1",
                 "robrichards/xmlseclibs": "<3.0.4",
                 "sabberworm/php-css-parser": ">=1,<1.0.1|>=2,<2.0.1|>=3,<3.0.1|>=4,<4.0.1|>=5,<5.0.9|>=5.1,<5.1.3|>=5.2,<5.2.1|>=6,<6.0.2|>=7,<7.0.4|>=8,<8.0.1|>=8.1,<8.1.1|>=8.2,<8.2.1|>=8.3,<8.3.1",
@@ -5581,8 +5574,9 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
-                "shopware/core": "<=6.3.4",
-                "shopware/platform": "<=6.3.5.1",
+                "shopware/core": "<=6.3.5.2",
+                "shopware/platform": "<=6.3.5.2",
+                "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
@@ -5659,15 +5653,17 @@
                 "typo3/cms-backend": ">=7,<=7.6.50|>=8,<=8.7.39|>=9,<=9.5.24|>=10,<=10.4.13|>=11,<=11.1",
                 "typo3/cms-core": ">=6.2,<=6.2.56|>=7,<=7.6.50|>=8,<=8.7.39|>=9,<9.5.25|>=10,<10.4.14|>=11,<11.1.1",
                 "typo3/cms-form": ">=8,<=8.7.39|>=9,<=9.5.24|>=10,<=10.4.13|>=11,<=11.1",
-                "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.10|>=3.1,<3.1.7|>=3.2,<3.2.7|>=3.3,<3.3.5",
-                "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4",
+                "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.12|>=3.1,<3.1.10|>=3.2,<3.2.13|>=3.3,<3.3.13|>=4,<4.0.6",
+                "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<2.3.99|>=3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<3.3.23|>=4,<4.0.17|>=4.1,<4.1.16|>=4.2,<4.2.12|>=4.3,<4.3.3",
                 "typo3/phar-stream-wrapper": ">=1,<2.1.1|>=3,<3.1.1",
+                "typo3/swiftmailer": ">=4.1,<4.1.99|>=5.4,<5.4.5",
                 "typo3fluid/fluid": ">=2,<2.0.8|>=2.1,<2.1.7|>=2.2,<2.2.4|>=2.3,<2.3.7|>=2.4,<2.4.4|>=2.5,<2.5.11|>=2.6,<2.6.10",
                 "ua-parser/uap-php": "<3.8",
                 "usmanhalalit/pixie": "<1.0.3|>=2,<2.0.2",
                 "verot/class.upload.php": "<=1.0.3|>=2,<=2.0.4",
                 "vrana/adminer": "<4.7.9",
                 "wallabag/tcpdf": "<6.2.22",
+                "wikimedia/parsoid": "<0.12.2",
                 "willdurand/js-translation-bundle": "<2.1.1",
                 "yii2mod/yii2-cms": "<1.9.2",
                 "yiisoft/yii": ">=1.1.14,<1.1.15",
@@ -5733,7 +5729,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-29T21:01:39+00:00"
+            "time": "2021-04-16T20:01:44+00:00"
         },
         {
             "name": "sebastian/code-unit",
