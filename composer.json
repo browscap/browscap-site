@@ -55,7 +55,7 @@
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^8.0",
+        "doctrine/coding-standard": "^9.0",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^9.2",
         "psalm/plugin-phpunit": "^0.10.1",
