@@ -21,10 +21,9 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_USER: browscapci
-          MYSQL_PASSWORD: browscapci
+          MYSQL_ROOT_PASSWORD: browscapci
           MYSQL_DATABASE: browscap
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_HOST: '%'
         ports:
           - 13306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
@@ -36,7 +35,7 @@ jobs:
         run: cp config/autoload/local.php.ci config/autoload/local.php
 
       - name: Load MySQL schema
-        run: mysql --host=127.0.0.1 --port=13306 --user=browscapci --password=browscapci browscap < db/create004.sql
+        run: mysql --host=127.0.01 --port=13306 --user=root --password=browscapci browscap < db/create004.sql
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
