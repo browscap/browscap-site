@@ -109,16 +109,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.44",
+            "version": "6.0.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "9782e43f0de3948ffc0f40e0e96ef80d031cbe4b"
+                "reference": "ab07a2a4c42108673c7df9df5ccdd6ae60e023e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/9782e43f0de3948ffc0f40e0e96ef80d031cbe4b",
-                "reference": "9782e43f0de3948ffc0f40e0e96ef80d031cbe4b",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/ab07a2a4c42108673c7df9df5ccdd6ae60e023e5",
+                "reference": "ab07a2a4c42108673c7df9df5ccdd6ae60e023e5",
                 "shasum": ""
             },
             "require": {
@@ -189,7 +189,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2021-04-29T12:41:31+00:00"
+            "time": "2021-05-04T07:10:07+00:00"
         },
         {
             "name": "browscap/browscap-php",
