@@ -26,7 +26,7 @@ jobs:
           MYSQL_ROOT_HOST: '%'
         ports:
           - 13306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        options: --health-cmd="mysqladmin ping --host=127.0.0.1 --port=13306 --user=root --password=browscapci" --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
       - uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
         run: cp config/autoload/local.php.ci config/autoload/local.php
 
       - name: Load MySQL schema
-        run: mysql --host=127.0.01 --port=13306 --user=root --password=browscapci browscap < db/create004.sql
+        run: mysql --host=127.0.0.1 --port=13306 --user=root --password=browscapci browscap < db/create004.sql
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
