@@ -17,25 +17,39 @@ jobs:
         php-version:
           - "7.4"
 
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: browscapci
-          MYSQL_DATABASE: browscap
-          MYSQL_ROOT_HOST: '%'
-        ports:
-          - 13306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+    env:
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_DATABASE: browscap
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Copy configuration for CI
-        run: cp config/autoload/local.php.ci config/autoload/local.php
+      - name: Configure application DB credentials
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: config/autoload/local.php
+          contents: |
+            <?php
+            declare(strict_types=1);
+
+            return [
+                'db' => [
+                   'dsn' => 'mysql:dbname=${{ env.DB_DATABASE }}',
+                   'user' => '${{ env.DB_USER }}',
+                   'pass' => '${{ env.DB_PASSWORD }}',
+                ],
+                'debug' => false,
+            ];
+          write-mode: overwrite
+
+      - name: Run MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' --user=${{ env.DB_USER }} --password=${{ env.DB_PASSWORD }}
 
       - name: Load MySQL schema
-        run: mysql --host=127.0.01 --port=13306 --user=root --password=browscapci browscap < db/create004.sql
+        run: mysql --user=${{ env.DB_USER }} --password=${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }} < db/create004.sql
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
