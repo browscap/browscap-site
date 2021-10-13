@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
+use BrowscapSite\ConfigProvider\AppConfig;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use Exception;
@@ -14,8 +15,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function number_format;
 
 /**
- * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
- * @psalm-import-type BanConfiguration from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesList from AppConfig
+ * @psalm-import-type BanConfiguration from AppConfig
  */
 final class DownloadHandler implements RequestHandlerInterface
 {
@@ -56,6 +57,7 @@ final class DownloadHandler implements RequestHandlerInterface
 
     /**
      * @psalm-param FilesList $files
+     *
      * @psalm-return FilesList
      */
     private function mergeMetadataToFiles(array $files): array

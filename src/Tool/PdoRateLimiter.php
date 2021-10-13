@@ -138,7 +138,6 @@ final class PdoRateLimiter implements RateLimiter
      * Returns boolean(false) if no temporary ban exists.
      *
      * @return int[]|string[]|bool
-     *
      * @psalm-return bool|array{
      *   id: int,
      *   ipAddress: string,
@@ -179,7 +178,6 @@ final class PdoRateLimiter implements RateLimiter
      * Returns boolean(false) if no permanent ban exists.
      *
      * @return int[]|string[]|bool
-     *
      * @psalm-return bool|array{
      *   id: int,
      *   ipAddress: string,

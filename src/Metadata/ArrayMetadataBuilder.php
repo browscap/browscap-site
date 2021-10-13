@@ -14,7 +14,7 @@ use function unlink;
 use function var_export;
 
 /**
- * @psalm-import-type MetadataArray from \BrowscapSite\Metadata\Metadata
+ * @psalm-import-type MetadataArray from Metadata
  */
 final class ArrayMetadataBuilder implements MetadataBuilder
 {

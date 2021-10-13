@@ -40,9 +40,9 @@ final class StatsHandler implements RequestHandlerInterface
     }
 
     /**
-     * @throws Exception
-     *
      * @psalm-return list<array{0: string, 1: string|int}>
+     *
+     * @throws Exception
      */
     private function getDownloadsPerMonth(): array
     {
@@ -50,9 +50,9 @@ final class StatsHandler implements RequestHandlerInterface
     }
 
     /**
-     * @throws Exception
-     *
      * @psalm-return list<array{0: string, 1: string|int}>
+     *
+     * @throws Exception
      */
     private function getDownloadsPerDay(): array
     {
@@ -62,9 +62,9 @@ final class StatsHandler implements RequestHandlerInterface
     /**
      * Fetch some download stats
      *
-     * @throws Exception
-     *
      * @psalm-return list<array{0: string, 1: string|int}>
+     *
+     * @throws Exception
      */
     private function getDownloadStats(
         string $tableName,

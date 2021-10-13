@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
+use BrowscapSite\ConfigProvider\AppConfig;
 use BrowscapSite\Metadata\Metadata;
 use DOMDocument;
 use DOMElement;
@@ -16,8 +17,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function sprintf;
 
 /**
- * @psalm-import-type FilesListItem from \BrowscapSite\ConfigProvider\AppConfig
- * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesListItem from AppConfig
+ * @psalm-import-type FilesList from AppConfig
  */
 final class VersionXmlHandler implements RequestHandlerInterface
 {
