@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
+use BrowscapSite\ConfigProvider\AppConfig;
 use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Tool\RateLimiter;
 use Exception;
@@ -21,7 +22,7 @@ use function sha1;
 use function strtolower;
 
 /**
- * @psalm-import-type FilesList from \BrowscapSite\ConfigProvider\AppConfig
+ * @psalm-import-type FilesList from AppConfig
  */
 final class StreamHandler implements RequestHandlerInterface
 {
