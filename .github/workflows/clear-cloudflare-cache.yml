@@ -1,0 +1,13 @@
+name: Clear Cloudflare cache when deployed
+on: deployment_status
+
+jobs:
+  clear-cloudflare-cache:
+    name: "Clear Cloudflare cache"
+    if: ${{ github.event.deployment_status.state == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Purge cache"
+        uses: jakejarvis/cloudflare-purge-action@v0.3.0
+        env:
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
