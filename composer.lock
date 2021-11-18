@@ -109,16 +109,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.48",
+            "version": "6.0.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "2c74b2746fc1113397c1e2da5b742deba384197a"
+                "reference": "abceb27ca813186df3228a94c6ea612c6fbfa84d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/2c74b2746fc1113397c1e2da5b742deba384197a",
-                "reference": "2c74b2746fc1113397c1e2da5b742deba384197a",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/abceb27ca813186df3228a94c6ea612c6fbfa84d",
+                "reference": "abceb27ca813186df3228a94c6ea612c6fbfa84d",
                 "shasum": ""
             },
             "require": {
@@ -189,7 +189,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2021-11-17T08:20:41+00:00"
+            "time": "2021-11-18T06:32:03+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -5465,12 +5465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "f08ee6ef799891738c410ebf80bf54aeddc24120"
+                "reference": "dd62a7ab9fe822143aaaba5764d916d10f23e527"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/f08ee6ef799891738c410ebf80bf54aeddc24120",
-                "reference": "f08ee6ef799891738c410ebf80bf54aeddc24120",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/dd62a7ab9fe822143aaaba5764d916d10f23e527",
+                "reference": "dd62a7ab9fe822143aaaba5764d916d10f23e527",
                 "shasum": ""
             },
             "conflict": {
@@ -5589,7 +5589,7 @@
                 "icecoder/icecoder": "<=8",
                 "illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
                 "illuminate/cookie": ">=4,<=4.0.11|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.31|>=7,<7.22.4",
-                "illuminate/database": "<6.20.26|>=7,<8.40",
+                "illuminate/database": "<6.20.26|>=7,<7.30.5|>=8,<8.40",
                 "illuminate/encryption": ">=4,<=4.0.11|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
                 "illuminate/view": ">=7,<7.1.2",
                 "impresscms/impresscms": "<=1.4.2",
@@ -5875,7 +5875,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-17T00:48:00+00:00"
+            "time": "2021-11-17T16:24:54+00:00"
         },
         {
             "name": "sebastian/code-unit",
