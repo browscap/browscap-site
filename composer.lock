@@ -109,16 +109,16 @@
         },
         {
             "name": "browscap/browscap",
-            "version": "6.0.49",
+            "version": "6.0.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap.git",
-                "reference": "abceb27ca813186df3228a94c6ea612c6fbfa84d"
+                "reference": "a54f895a423f34754616c00842d378e15ac13195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap/zipball/abceb27ca813186df3228a94c6ea612c6fbfa84d",
-                "reference": "abceb27ca813186df3228a94c6ea612c6fbfa84d",
+                "url": "https://api.github.com/repos/browscap/browscap/zipball/a54f895a423f34754616c00842d378e15ac13195",
+                "reference": "a54f895a423f34754616c00842d378e15ac13195",
                 "shasum": ""
             },
             "require": {
@@ -189,7 +189,7 @@
             "keywords": [
                 "Browscap"
             ],
-            "time": "2021-11-18T06:32:03+00:00"
+            "time": "2021-11-22T16:03:15+00:00"
         },
         {
             "name": "browscap/browscap-php",
@@ -5555,12 +5555,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "dd62a7ab9fe822143aaaba5764d916d10f23e527"
+                "reference": "40581b6c391cffa5d211ac1659ea9cffc6dc2b13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/dd62a7ab9fe822143aaaba5764d916d10f23e527",
-                "reference": "dd62a7ab9fe822143aaaba5764d916d10f23e527",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/40581b6c391cffa5d211ac1659ea9cffc6dc2b13",
+                "reference": "40581b6c391cffa5d211ac1659ea9cffc6dc2b13",
                 "shasum": ""
             },
             "conflict": {
@@ -5644,7 +5644,7 @@
                 "ezsystems/platform-ui-assets-bundle": ">=4.2,<4.2.3",
                 "ezsystems/repository-forms": ">=2.3,<2.3.2.1",
                 "ezyang/htmlpurifier": "<4.1.1",
-                "facade/ignition": "<2.4.2|>=2.5,<2.5.2",
+                "facade/ignition": "<1.16.15|>=2,<2.4.2|>=2.5,<2.5.2",
                 "feehi/cms": "<=2.1.1",
                 "feehi/feehicms": "<=0.1.3",
                 "firebase/php-jwt": "<2",
@@ -5696,7 +5696,7 @@
                 "kreait/firebase-php": ">=3.2,<3.8.1",
                 "la-haute-societe/tcpdf": "<6.2.22",
                 "laminas/laminas-http": "<2.14.2",
-                "laravel/framework": "<=8.70.2",
+                "laravel/framework": "<6.20.26|>=7,<7.30.5|>=8,<8.40",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "lavalite/cms": "<=5.8",
                 "lcobucci/jwt": ">=3.4,<3.4.6|>=4,<4.0.4|>=4.1,<4.1.5",
@@ -5744,7 +5744,7 @@
                 "openid/php-openid": "<2.3",
                 "openmage/magento-lts": "<19.4.15|>=20,<20.0.13",
                 "orchid/platform": ">=9,<9.4.4",
-                "oro/crm": ">=1.7,<1.7.4",
+                "oro/crm": ">=1.7,<1.7.4|>=3.1,<4.1.17|>=4.2,<4.2.7",
                 "oro/platform": ">=1.7,<1.7.4",
                 "padraic/humbug_get_contents": "<1.1.2",
                 "pagarme/pagarme-php": ">=0,<3",
@@ -5779,7 +5779,7 @@
                 "privatebin/privatebin": "<1.2.2|>=1.3,<1.3.2",
                 "propel/propel": ">=2-alpha.1,<=2-alpha.7",
                 "propel/propel1": ">=1,<=1.7.1",
-                "pterodactyl/panel": "<0.7.19|>=1-rc.0,<=1-rc.6|>=1,<1.6.3",
+                "pterodactyl/panel": "<1.6.6",
                 "pusher/pusher-php-server": "<2.2.1",
                 "pwweb/laravel-core": "<=0.3.6-beta",
                 "rainlab/debugbar-plugin": "<3.1",
@@ -5965,7 +5965,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-17T16:24:54+00:00"
+            "time": "2021-11-19T21:12:46+00:00"
         },
         {
             "name": "sebastian/code-unit",
@@ -6600,6 +6600,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-06-26T12:16:22+00:00"
         },
         {
