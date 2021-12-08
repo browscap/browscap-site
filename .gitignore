@@ -5,3 +5,4 @@ vendor
 .project
 build
 build-*
+.phpunit.result.cache

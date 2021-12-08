@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Tool;
 
+use BrowscapSite\ConfigProvider\AppConfig;
 use DateTime;
 use LazyPDO\LazyPDO as PDO;
 
+/**
+ * @psalm-import-type BanConfiguration from AppConfig
+ */
 final class PdoRateLimiter implements RateLimiter
 {
     private PDO $pdo;
-    /** @var int[] */
+    /** @psalm-var BanConfiguration */
     private array $banConfiguration;
 
-    /** @param int[] $banConfiguration */
+    /** @psalm-param BanConfiguration $banConfiguration */
     public function __construct(PDO $pdo, array $banConfiguration)
     {
         $this->pdo              = $pdo;
@@ -77,7 +81,7 @@ final class PdoRateLimiter implements RateLimiter
     private function isOverLimit(string $ip): bool
     {
         $rateLimitPeriod    = $this->banConfiguration['rateLimitPeriod'];
-        $rateLimitDownloads = (int) $this->banConfiguration['rateLimitDownloads'];
+        $rateLimitDownloads = $this->banConfiguration['rateLimitDownloads'];
 
         $cutoff = new DateTime($rateLimitPeriod . ' hours ago');
 
@@ -94,11 +98,11 @@ final class PdoRateLimiter implements RateLimiter
     }
 
     /**
-     * Should we permanently ban an IP address.
+     * Should we permanently ban an IP address?
      */
     private function shouldPermanentlyBan(string $ip): bool
     {
-        $tempBanLimit = (int) $this->banConfiguration['tempBanLimit'];
+        $tempBanLimit = $this->banConfiguration['tempBanLimit'];
 
         $recentBanCount = $this->getRecentTemporaryBanCount($ip);
 

@@ -20,8 +20,6 @@ use function file_exists;
 use function is_dir;
 use function mkdir;
 use function sprintf;
-use function strpos;
-use function substr;
 
 use const DATE_ATOM;
 
