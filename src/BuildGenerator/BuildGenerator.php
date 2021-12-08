@@ -93,12 +93,7 @@ final class BuildGenerator
      */
     private function determineBuildNumberFromPackage(string $packageName): int
     {
-        $packageVersion = $this->determinePackageVersion->__invoke($packageName);
-
-        $positionOfAt = strpos($packageVersion, '@');
-        Assert::integer($positionOfAt);
-
-        return $this->convertPackageVersionToBuildNumber(substr($packageVersion, 0, $positionOfAt));
+        return $this->convertPackageVersionToBuildNumber($this->determinePackageVersion->__invoke($packageName));
     }
 
     private function getCurrentBuildNumber(): ?int
