@@ -69,7 +69,7 @@ final class BuildGeneratorFactory
                 new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
                 self::BUILD_DIRECTORY
             ),
-            new OcramiusDeterminePackageVersion(),
+            new ComposerDeterminePackageVersion(),
             new ComposerLockDeterminePackageReleaseDate(),
             $container->get(UserAgentTool::class)
         );

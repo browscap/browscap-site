@@ -21,8 +21,6 @@ use RuntimeException;
 
 use function file_put_contents;
 use function mkdir;
-use function sha1;
-use function uniqid;
 
 final class BuildGeneratorTest extends TestCase
 {
@@ -75,7 +73,7 @@ final class BuildGeneratorTest extends TestCase
     public function testBuildIsGeneratedWhenNoPreviousBuildExists(): void
     {
         $generationDate     = new DateTimeImmutable('1970-01-01 00:00:00');
-        $packageVersion     = '1.2.3@' . sha1(uniqid('gitHash', true));
+        $packageVersion     = '1.2.3';
         $packageBuildNumber = '1002003';
         $this->determinePackageVersion->expects(self::once())
             ->method('__invoke')
@@ -114,7 +112,7 @@ final class BuildGeneratorTest extends TestCase
             $this->filesystem->url() . '/build/metadata.php',
             '<?php return ["version" => "1002002"];'
         );
-        $packageVersion     = '1.2.3@' . sha1(uniqid('gitHash', true));
+        $packageVersion     = '1.2.3';
         $packageBuildNumber = '1002003';
         $this->determinePackageVersion->expects(self::once())
             ->method('__invoke')
@@ -152,7 +150,7 @@ final class BuildGeneratorTest extends TestCase
             $this->filesystem->url() . '/build/metadata.php',
             '<?php return ["version" => "1002003"];'
         );
-        $packageVersion = '1.2.3@' . sha1(uniqid('gitHash', true));
+        $packageVersion = '1.2.3';
         $this->determinePackageVersion->expects(self::once())
             ->method('__invoke')
             ->with('browscap/browscap')
@@ -177,7 +175,7 @@ final class BuildGeneratorTest extends TestCase
     {
         $this->filesystem->chmod(000);
 
-        $packageVersion = '1.2.3@' . sha1(uniqid('gitHash', true));
+        $packageVersion = '1.2.3';
         $this->determinePackageVersion->expects(self::once())
             ->method('__invoke')
             ->with('browscap/browscap')

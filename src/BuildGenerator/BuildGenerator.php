@@ -20,8 +20,6 @@ use function file_exists;
 use function is_dir;
 use function mkdir;
 use function sprintf;
-use function strpos;
-use function substr;
 
 use const DATE_ATOM;
 
@@ -93,12 +91,7 @@ final class BuildGenerator
      */
     private function determineBuildNumberFromPackage(string $packageName): int
     {
-        $packageVersion = $this->determinePackageVersion->__invoke($packageName);
-
-        $positionOfAt = strpos($packageVersion, '@');
-        Assert::integer($positionOfAt);
-
-        return $this->convertPackageVersionToBuildNumber(substr($packageVersion, 0, $positionOfAt));
+        return $this->convertPackageVersionToBuildNumber($this->determinePackageVersion->__invoke($packageName));
     }
 
     private function getCurrentBuildNumber(): ?int

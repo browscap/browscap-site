@@ -23,15 +23,16 @@ use BrowscapSite\Tool\PdoRateLimiter;
 use BrowscapSite\Tool\RateLimiter;
 use BrowscapSite\UserAgentTool\BrowscapPhpUserAgentTool;
 use BrowscapSite\UserAgentTool\UserAgentTool;
-use Doctrine\Common\Cache\FilesystemCache;
+use Cache\Adapter\Filesystem\FilesystemCachePool;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\Response\HtmlResponse;
 use LazyPDO\LazyPDO as PDO;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
 use RuntimeException;
 use Slim\Views\Twig;
 
@@ -162,8 +163,10 @@ final class AppConfig
             'factories' => [
                 UserAgentTool::class => static function (ContainerInterface $container): UserAgentTool {
                     return new BrowscapPhpUserAgentTool(
-                        new SimpleCacheAdapter(
-                            new FilesystemCache(__DIR__ . '/../../cache')
+                        new FilesystemCachePool(
+                            new Filesystem(
+                                new Local(__DIR__ . '/../../cache')
+                            )
                         ),
                         $container->get(LoggerInterface::class)
                     );
