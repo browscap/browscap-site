@@ -27,8 +27,8 @@ use Cache\Adapter\Filesystem\FilesystemCachePool;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\Response\HtmlResponse;
 use LazyPDO\LazyPDO as PDO;
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
@@ -165,7 +165,7 @@ final class AppConfig
                     return new BrowscapPhpUserAgentTool(
                         new FilesystemCachePool(
                             new Filesystem(
-                                new Local(__DIR__ . '/../../cache')
+                                new LocalFilesystemAdapter(__DIR__ . '/../../cache')
                             )
                         ),
                         $container->get(LoggerInterface::class)
