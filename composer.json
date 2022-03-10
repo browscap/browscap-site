@@ -38,7 +38,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "composer-plugin-api": "^2.1",
-        "browscap/browscap": "6.0.x-dev",
+        "browscap/browscap": "^6.1",
         "browscap/browscap-php": "^7.0",
         "cache/cache": "dev-flysystem_2n3",
         "guzzlehttp/guzzle": "^7.4",
