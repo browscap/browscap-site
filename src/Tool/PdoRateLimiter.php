@@ -141,8 +141,8 @@ final class PdoRateLimiter implements RateLimiter
      *
      * Returns boolean(false) if no temporary ban exists.
      *
-     * @return int[]|string[]|bool
-     * @psalm-return bool|array{
+     * @return int[]|string[]|false
+     * @psalm-return false|array{
      *   id: int,
      *   ipAddress: string,
      *   banDate: string,
@@ -150,7 +150,7 @@ final class PdoRateLimiter implements RateLimiter
      *   unbanDate: string,
      * }
      */
-    private function getTemporaryBan(string $ip)
+    private function getTemporaryBan(string $ip): array|false
     {
         $rateLimitPeriod = $this->banConfiguration['rateLimitPeriod'];
 
@@ -181,8 +181,8 @@ final class PdoRateLimiter implements RateLimiter
      *
      * Returns boolean(false) if no permanent ban exists.
      *
-     * @return int[]|string[]|bool
-     * @psalm-return bool|array{
+     * @return int[]|string[]|false
+     * @psalm-return false|array{
      *   id: int,
      *   ipAddress: string,
      *   banDate: string,
@@ -190,7 +190,7 @@ final class PdoRateLimiter implements RateLimiter
      *   unbanDate: string,
      * }
      */
-    private function getPermanentBan(string $ip)
+    private function getPermanentBan(string $ip): array|false
     {
         $sql = '
             SELECT

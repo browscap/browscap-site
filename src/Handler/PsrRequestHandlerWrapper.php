@@ -17,8 +17,7 @@ final class PsrRequestHandlerWrapper
         $this->requestHandler = $requestHandler;
     }
 
-    /** @param mixed $mixed */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $mixed): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, mixed $mixed): ResponseInterface
     {
         return $this->requestHandler->handle($request);
     }
