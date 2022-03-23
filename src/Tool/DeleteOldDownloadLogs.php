@@ -24,7 +24,7 @@ class DeleteOldDownloadLogs
         $this->pdo->beginTransaction();
 
         try {
-            $this->pdo->exec('DELETE FROM downloadlog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL 12 MONTH)');
+            $this->pdo->exec('DELETE FROM downloadLog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL 12 MONTH)');
 
             $this->pdo->commit();
         } catch (Throwable $e) {
