@@ -64,8 +64,11 @@ $ make build
 
 ## Running the CLI scripts in Docker
 
- * `docker compose run --rm php-server bin/browscap-site generate-statistics`
- * `docker-compose run --rm php-server bin/browscap-site delete-old-download-logs`
+ * `make generate-statistics`
+ * `make delete-old-download-logs`
+ * `make test` or pass additional options with `make test OPTS="--testdox"`
+ * `make cs` or pass additional options with `make cs OPTS="-s"`
+ * `make static-analysis` or pass additional options with `make static-analysis OPTS="--show-info=true"`
 
 ## Creating a Browscap Release
 

@@ -15,6 +15,9 @@ COPY ./composer.json ./composer.lock /var/www/
 FROM app_base AS development_deps
 WORKDIR /var/www
 
+COPY ./tests /var/www/tests
+COPY ./phpcs.xml.dist ./phpunit.xml.dist ./psalm.xml.dist /var/www/
+
 COPY --from=composer_base /usr/bin/composer /usr/bin/composer
 RUN composer validate && composer install
 

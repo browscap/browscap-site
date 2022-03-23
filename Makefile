@@ -19,5 +19,20 @@ run: build ## Run the environment so you can visit it locally
 
 clean: ## Clean up stuff
 	docker compose down --remove-orphans
-	docker-compose rm -f
+	docker compose rm -f
 	rm -Rf vendor
+
+generate-statistics: ## Generate statistics in the database
+	docker compose run --rm php-server bin/browscap-site generate-statistics
+
+delete-old-download-logs: ## Deletes outdated/old download logs
+	docker compose run --rm php-server bin/browscap-site delete-old-download-logs
+
+cs: ## Coding standards check
+	docker compose run --rm --no-deps php-server vendor/bin/phpcs $(OPTS)
+
+static-analysis: ## Static analysis check
+	docker compose run --rm --no-deps php-server vendor/bin/psalm $(OPTS)
+
+test: ## Tests
+	docker compose run --rm --no-deps php-server vendor/bin/phpunit $(OPTS)
