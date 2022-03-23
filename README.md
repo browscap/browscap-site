@@ -7,7 +7,7 @@ This is the website for the Browser Capabilities Project.
 ## Requirements
 
  - Docker
- - Docker Compose
+ - Docker Compose 2+ with buildx
 
 ## Installation
 
@@ -16,8 +16,7 @@ The initial installation process looks like this:
 ```bash
 $ git clone git@github.com:browscap/browscap-site.git
 $ cd browscap-site
-$ docker-compose build
-$ docker-compose run php-server composer install
+$ make build
 ```
 
 This automatically installs, builds and generates metadata for whichever browscap version is specified in the
@@ -26,10 +25,10 @@ This automatically installs, builds and generates metadata for whichever browsca
 ## Running the site
 
 ```bash
-$ docker-compose up
+$ make run
 ```
 
-This will run in the foreground, so to exit, Ctrl+C.
+This will run in the background, so to exit, `docker compose down`.
 
 When it's running, you can visit http://localhost:8080/ to view the site.
 
@@ -46,24 +45,27 @@ Updating to the latest browscap-site and browscap should be as simple as:
 
 ```bash
 $ git pull
-$ docker-compose run php-server composer install
+$ make build
 ```
 
-If you're already running the containers, Ctrl+C, then rebuild.
+## Composer commands
 
-## Completely reset Docker Containers
+For `composer update`, `composer require` etc., it is recommended to do so inside the container:
 
 ```bash
-$ docker-compose down
-$ docker-compose rm -f
-$ docker-compose build
+$ docker compose run --rm --no-deps php-server composer update
+```
+
+Then rebuild from scratch:
+
+```bash
+$ make build
 ```
 
 ## Running the CLI scripts in Docker
 
- * `docker-compose run php-server bin/browscap-site generate-statistics`
- * `docker-compose run php-server bin/browscap-site generate-build`
- * `docker-compose run php-server bin/browscap-site delete-old-download-logs`
+ * `docker compose run --rm php-server bin/browscap-site generate-statistics`
+ * `docker-compose run --rm php-server bin/browscap-site delete-old-download-logs`
 
 ## Creating a Browscap Release
 

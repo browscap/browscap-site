@@ -6,17 +6,18 @@ volumes:
 
 services:
     php-server:
-        build: docker/php
-        working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public public/index.php
-        environment:
-            docker: "true"
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+            target: development_server
         ports:
-            - 8080:8080
+            - "8080:8080"
         volumes:
-            - .:/var/www:ro
-            - ./cache:/var/www/cache
-            - ./vendor:/var/www/vendor
+            - ./bin:/var/www/bin:ro
+            - ./config:/var/www/config:ro
+            - ./public:/var/www/public:ro
+            - ./src:/var/www/src:ro
+            - ./views:/var/www/views:ro
             - ./composer.json:/var/www/composer.json
             - ./composer.lock:/var/www/composer.lock
         depends_on:
