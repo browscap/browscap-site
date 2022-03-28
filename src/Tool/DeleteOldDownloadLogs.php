@@ -31,8 +31,8 @@ class DeleteOldDownloadLogs
             $this->pdo->rollBack();
 
             throw $e;
+        } finally {
+            $this->pdo->exec('OPTIMIZE TABLE downloadLog');
         }
-
-        $this->pdo->exec('OPTIMIZE TABLE downloadlog');
     }
 }
