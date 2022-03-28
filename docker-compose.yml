@@ -10,6 +10,8 @@ services:
             context: .
             dockerfile: docker/php/Dockerfile
             target: development_server
+        environment:
+            BC_BUILD_LOG: 100
         ports:
             - "8080:8080"
         volumes:
