@@ -1,26 +1,25 @@
-version: '3.7'
-
-volumes:
-    logs:
-        driver: local
-
 services:
     php-server:
-        build: docker/php
-        working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public public/index.php
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+            target: development_server
         environment:
-            docker: "true"
+            BC_BUILD_LOG: 100
         ports:
-            - 8080:8080
+            - "8080:80"
         volumes:
-            - .:/var/www:ro
-            - ./cache:/var/www/cache
-            - ./vendor:/var/www/vendor
-            - ./composer.json:/var/www/composer.json
-            - ./composer.lock:/var/www/composer.lock
+            - ./bin:/app/bin:ro
+            - ./config:/app/config:ro
+            - ./public:/app/public:ro
+            - ./src:/app/src:ro
+            - ./views:/app/views:ro
+            - ./composer.json:/app/composer.json
+            - ./composer.lock:/app/composer.lock
         depends_on:
             - db
+        extra_hosts:
+            - host.docker.internal:host-gateway
 
     db:
         image: mysql:5.6 # ClearDB uses 5.6

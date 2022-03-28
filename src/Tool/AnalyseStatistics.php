@@ -48,7 +48,7 @@ class AnalyseStatistics
         $this->pdo->exec(sprintf('TRUNCATE %s', $dataTable));
 
         $sql = <<<'SQL'
-INSERT INTO $dataTable
+INSERT INTO %s
 SELECT
     DATE_FORMAT(downloadDate, '%s') AS `date`,
     COUNT(*) AS count
@@ -59,7 +59,7 @@ WHERE
 GROUP BY DATE_FORMAT(downloadDate, '%s')
 SQL;
 
-        $stmt = $this->pdo->prepare(sprintf($sql, $dateFormat, $dateFormat));
+        $stmt = $this->pdo->prepare(sprintf($sql, $dataTable, $dateFormat, $dateFormat));
         $stmt->bindValue('sinceDate', $since->format('Y-m-d ') . ' 00:00:00');
         $stmt->execute();
     }
