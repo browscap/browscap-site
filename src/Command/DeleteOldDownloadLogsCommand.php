@@ -7,7 +7,9 @@ namespace BrowscapSite\Command;
 use BrowscapSite\Tool\DeleteOldDownloadLogs;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class DeleteOldDownloadLogsCommand extends Command
@@ -31,7 +33,18 @@ final class DeleteOldDownloadLogsCommand extends Command
     {
         $this
             ->setName('delete-old-download-logs')
-            ->setDescription('Deletes old download logs to free up space in DB');
+            ->setDescription('Deletes old download logs to free up space in DB')
+            ->setDefinition(
+                new InputDefinition([
+                    new InputOption(
+                        'older-than-months',
+                        null,
+                        InputOption::VALUE_OPTIONAL,
+                        'How many months to keep',
+                        12
+                    ),
+                ])
+            );
     }
 
     /**
@@ -44,7 +57,12 @@ final class DeleteOldDownloadLogsCommand extends Command
     {
         $output->writeln('<info>Deleting old download logs...</info>');
 
-        $this->deleteOldDownloadLogs->__invoke();
+        $olderThanMonths = (int) $input->getOption('older-than-months');
+        if ($olderThanMonths <= 0) {
+            $olderThanMonths = 12;
+        }
+
+        $this->deleteOldDownloadLogs->__invoke($olderThanMonths);
 
         $output->writeln('<info>All done.</info>');
 

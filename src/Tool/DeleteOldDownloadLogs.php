@@ -19,12 +19,15 @@ class DeleteOldDownloadLogs
     /**
      * @throws Throwable
      */
-    public function __invoke(): void
+    public function __invoke(int $deleteOlderThan): void
     {
         $this->pdo->beginTransaction();
 
         try {
-            $this->pdo->exec('DELETE FROM downloadLog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL 12 MONTH)');
+            $this->pdo->exec(sprintf(
+                'DELETE FROM downloadLog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL %d MONTH)',
+                $deleteOlderThan
+            ));
 
             $this->pdo->commit();
         } catch (Throwable $e) {
