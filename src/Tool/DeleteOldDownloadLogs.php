@@ -7,6 +7,8 @@ namespace BrowscapSite\Tool;
 use LazyPDO\LazyPDO as PDO;
 use Throwable;
 
+use function sprintf;
+
 class DeleteOldDownloadLogs
 {
     private PDO $pdo;
