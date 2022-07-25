@@ -75,16 +75,16 @@
         },
         {
             "name": "brick/varexporter",
-            "version": "0.3.5",
+            "version": "0.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/varexporter.git",
-                "reference": "05241f28dfcba2b51b11e2d750e296316ebbe518"
+                "reference": "3e263cd718d242594c52963760fee2059fd5833c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/varexporter/zipball/05241f28dfcba2b51b11e2d750e296316ebbe518",
-                "reference": "05241f28dfcba2b51b11e2d750e296316ebbe518",
+                "url": "https://api.github.com/repos/brick/varexporter/zipball/3e263cd718d242594c52963760fee2059fd5833c",
+                "reference": "3e263cd718d242594c52963760fee2059fd5833c",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^8.5 || ^9.0",
-                "vimeo/psalm": "4.4.1"
+                "vimeo/psalm": "4.23.0"
             },
             "type": "library",
             "autoload": {
@@ -112,9 +112,15 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/varexporter/issues",
-                "source": "https://github.com/brick/varexporter/tree/0.3.5"
+                "source": "https://github.com/brick/varexporter/tree/0.3.7"
             },
-            "time": "2021-02-10T13:53:07+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/BenMorel",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-06-29T23:37:57+00:00"
         },
         {
             "name": "browscap/browscap",
@@ -880,23 +886,23 @@
         },
         {
             "name": "laminas/laminas-config-aggregator",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-config-aggregator.git",
-                "reference": "8f1b66dd825dff95026844bdcf4ea0f5b604e907"
+                "reference": "929f6714f87407b4e3f1be35485ead6044127f9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-config-aggregator/zipball/8f1b66dd825dff95026844bdcf4ea0f5b604e907",
-                "reference": "8f1b66dd825dff95026844bdcf4ea0f5b604e907",
+                "url": "https://api.github.com/repos/laminas/laminas-config-aggregator/zipball/929f6714f87407b4e3f1be35485ead6044127f9d",
+                "reference": "929f6714f87407b4e3f1be35485ead6044127f9d",
                 "shasum": ""
             },
             "require": {
-                "brick/varexporter": "^0.3.2",
-                "laminas/laminas-stdlib": "^2.7.7 || ^3.1.0",
-                "php": "^7.3 || ~8.0.0 || ~8.1.0",
-                "webimpress/safe-writer": "^1.0.2 || ^2.0.1"
+                "brick/varexporter": "^0.3.7",
+                "laminas/laminas-stdlib": "^3.10.1",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "webimpress/safe-writer": "^2.2.0"
             },
             "conflict": {
                 "nikic/php-parser": "<4.12",
@@ -904,12 +910,11 @@
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.3.0",
-                "laminas/laminas-config": "^2.6 || ^3.0",
-                "laminas/laminas-servicemanager": "^2.7.7 || ^3.1.1",
-                "malukenho/docheader": "^0.1.5",
-                "phpunit/phpunit": "^9.5.9",
-                "psalm/plugin-phpunit": "^0.15.1",
-                "vimeo/psalm": "^4.6"
+                "laminas/laminas-config": "^3.7.0",
+                "laminas/laminas-servicemanager": "^3.15.1",
+                "phpunit/phpunit": "^9.5.21",
+                "psalm/plugin-phpunit": "^0.17.0",
+                "vimeo/psalm": "^4.24.0"
             },
             "suggest": {
                 "laminas/laminas-config": "Allows loading configuration from XML, INI, YAML, and JSON files",
@@ -946,7 +951,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-10-26T10:59:53+00:00"
+            "time": "2022-07-24T15:41:06+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
