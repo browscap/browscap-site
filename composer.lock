@@ -213,40 +213,39 @@
         },
         {
             "name": "browscap/browscap-php",
-            "version": "7.0.0",
+            "version": "7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/browscap/browscap-php.git",
-                "reference": "81f1ff43580d07a5871f69a8bb5a7f9fb62c2ce6"
+                "reference": "a0f730d9587b2137bcb73c8d3992a0325603783f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/81f1ff43580d07a5871f69a8bb5a7f9fb62c2ce6",
-                "reference": "81f1ff43580d07a5871f69a8bb5a7f9fb62c2ce6",
+                "url": "https://api.github.com/repos/browscap/browscap-php/zipball/a0f730d9587b2137bcb73c8d3992a0325603783f",
+                "reference": "a0f730d9587b2137bcb73c8d3992a0325603783f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.4.1",
-                "league/flysystem": "^2.3.2 || ^3.0.0",
+                "guzzlehttp/guzzle": "^7.4.5",
+                "league/flysystem": "^2.4.5 || ^3.0.18",
                 "matthiasmullie/scrapbook": "^1.4.8",
-                "monolog/monolog": "^2.3.5",
+                "monolog/monolog": "^2.5.0 || ^3.0.0",
                 "php": ">=7.4.3,<8.2.0",
                 "psr/log": "^1.1.4 || ^2.0.0 || ^3.0.0",
-                "psr/simple-cache": "^1.0.1",
-                "symfony/console": "^5.4.0 || ^6.0.0",
-                "symfony/filesystem": "^5.4.0 || ^6.0.0"
+                "psr/simple-cache": "^1.0.1 || ^2.0.0 || ^3.0.0",
+                "symfony/console": "^v5.4.8 || ^v6.0.8",
+                "symfony/filesystem": "^v5.4.7 || ^v6.0.7"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0.0",
-                "ergebnis/composer-normalize": "^2.18.0",
                 "mikey179/vfsstream": "^v1.6.10",
                 "phpstan/extension-installer": "^1.1.0",
-                "phpstan/phpstan": "^1.2.0",
-                "phpstan/phpstan-beberlei-assert": "^1.0.0",
+                "phpstan/phpstan": "^1.6.3",
+                "phpstan/phpstan-beberlei-assert": "^1.0.1",
                 "phpstan/phpstan-deprecation-rules": "^1.0.0",
-                "phpstan/phpstan-phpunit": "^1.0.0",
-                "phpunit/phpunit": "^9.5.10"
+                "phpstan/phpstan-phpunit": "^1.1.1",
+                "phpunit/phpunit": "^9.5.20"
             },
             "suggest": {
                 "ext-curl": "to use curl requests to get the ini file"
@@ -290,7 +289,7 @@
                 "issues": "https://github.com/browscap/browscap-php/issues",
                 "source": "https://github.com/browscap/browscap-php"
             },
-            "time": "2022-02-23T09:15:10+00:00"
+            "time": "2022-07-25T13:26:31+00:00"
         },
         {
             "name": "ergebnis/json-normalizer",
@@ -1260,16 +1259,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "1a941703dfb649f9b821e7bc425e782f576a805e"
+                "reference": "ed0ecc7f9b5c2f4a9872185846974a808a3b052a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1a941703dfb649f9b821e7bc425e782f576a805e",
-                "reference": "1a941703dfb649f9b821e7bc425e782f576a805e",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/ed0ecc7f9b5c2f4a9872185846974a808a3b052a",
+                "reference": "ed0ecc7f9b5c2f4a9872185846974a808a3b052a",
                 "shasum": ""
             },
             "require": {
@@ -1330,7 +1329,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.1.1"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.2.0"
             },
             "funding": [
                 {
@@ -1346,7 +1345,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-18T09:59:40+00:00"
+            "time": "2022-07-26T07:26:36+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -2690,7 +2689,7 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
@@ -2737,7 +2736,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.1.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.1.1"
             },
             "funding": [
                 {
@@ -2757,20 +2756,20 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v6.0.6",
+            "version": "v6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "52b888523545b0b4049ab9ce48766802484d7046"
+                "reference": "3132d2f43ca799c2aa099f9738d98228c56baa5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/52b888523545b0b4049ab9ce48766802484d7046",
-                "reference": "52b888523545b0b4049ab9ce48766802484d7046",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/3132d2f43ca799c2aa099f9738d98228c56baa5d",
+                "reference": "3132d2f43ca799c2aa099f9738d98228c56baa5d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=8.1",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-mbstring": "~1.8"
             },
@@ -2800,7 +2799,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v6.0.6"
+                "source": "https://github.com/symfony/filesystem/tree/v6.1.0"
             },
             "funding": [
                 {
@@ -2816,7 +2815,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-02T12:58:14+00:00"
+            "time": "2022-05-21T13:34:40+00:00"
         },
         {
             "name": "symfony/finder",
@@ -3290,16 +3289,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "24d9dc654b83e91aa59f9d167b131bc3b5bea24c"
+                "reference": "4b426aac47d6427cc1a1d0f7e2ac724627f5966c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/24d9dc654b83e91aa59f9d167b131bc3b5bea24c",
-                "reference": "24d9dc654b83e91aa59f9d167b131bc3b5bea24c",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/4b426aac47d6427cc1a1d0f7e2ac724627f5966c",
+                "reference": "4b426aac47d6427cc1a1d0f7e2ac724627f5966c",
                 "shasum": ""
             },
             "require": {
@@ -3353,7 +3352,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v2.5.1"
+                "source": "https://github.com/symfony/service-contracts/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -3369,7 +3368,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-13T20:07:29+00:00"
+            "time": "2022-05-30T19:17:29+00:00"
         },
         {
             "name": "symfony/string",
