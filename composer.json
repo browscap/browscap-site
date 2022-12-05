@@ -57,7 +57,7 @@
         "doctrine/coding-standard": "^9.0",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^9.5",
-        "psalm/plugin-phpunit": "^0.17.0",
+        "psalm/plugin-phpunit": "^0.18.3",
         "roave/security-advisories": "dev-latest",
         "vimeo/psalm": "^4.15"
     },
