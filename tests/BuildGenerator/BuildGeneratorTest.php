@@ -26,20 +26,15 @@ final class BuildGeneratorTest extends TestCase
 {
     private vfsStreamDirectory $filesystem;
 
-    /** @var GeneratorInterface&MockObject */
-    private $browscapBuildGenerator;
+    private GeneratorInterface&MockObject $browscapBuildGenerator;
 
-    /** @var MetadataBuilder&MockObject */
-    private $metadataBuilder;
+    private MetadataBuilder&MockObject $metadataBuilder;
 
-    /** @var DeterminePackageVersion&MockObject */
-    private $determinePackageVersion;
+    private DeterminePackageVersion&MockObject $determinePackageVersion;
 
-    /** @var DeterminePackageReleaseDate&MockObject */
-    private $determinePackageReleaseDate;
+    private DeterminePackageReleaseDate&MockObject $determinePackageReleaseDate;
 
-    /** @var UserAgentTool&MockObject */
-    private $userAgentTool;
+    private UserAgentTool&MockObject $userAgentTool;
 
     private TestSimpleIO $io;
 
@@ -62,7 +57,7 @@ final class BuildGeneratorTest extends TestCase
             $this->metadataBuilder,
             $this->determinePackageVersion,
             $this->determinePackageReleaseDate,
-            $this->userAgentTool
+            $this->userAgentTool,
         );
     }
 
@@ -96,7 +91,7 @@ final class BuildGeneratorTest extends TestCase
                 '  - Updating cache',
                 '<info>All done</info>',
             ],
-            $this->io->output
+            $this->io->output,
         );
     }
 
@@ -110,7 +105,7 @@ final class BuildGeneratorTest extends TestCase
         mkdir($this->filesystem->url() . '/build', 0777, true);
         file_put_contents(
             $this->filesystem->url() . '/build/metadata.php',
-            '<?php return ["version" => "1002002"];'
+            '<?php return ["version" => "1002002"];',
         );
         $packageVersion     = '1.2.3';
         $packageBuildNumber = '1002003';
@@ -135,7 +130,7 @@ final class BuildGeneratorTest extends TestCase
                 '  - Updating cache',
                 '<info>All done</info>',
             ],
-            $this->io->output
+            $this->io->output,
         );
     }
 
@@ -148,7 +143,7 @@ final class BuildGeneratorTest extends TestCase
         mkdir($this->filesystem->url() . '/build', 0777, true);
         file_put_contents(
             $this->filesystem->url() . '/build/metadata.php',
-            '<?php return ["version" => "1002003"];'
+            '<?php return ["version" => "1002003"];',
         );
         $packageVersion = '1.2.3';
         $this->determinePackageVersion->expects(self::once())
@@ -163,7 +158,7 @@ final class BuildGeneratorTest extends TestCase
 
         self::assertEquals(
             ['<info>Current build 1002003 is up to date</info>'],
-            $this->io->output
+            $this->io->output,
         );
     }
 

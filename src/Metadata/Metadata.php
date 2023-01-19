@@ -6,6 +6,7 @@ namespace BrowscapSite\Metadata;
 
 use DateTimeImmutable;
 use Exception;
+use Psl\Type;
 use Webmozart\Assert\Assert;
 
 /**
@@ -37,34 +38,25 @@ final class Metadata
         $this->metadataArray = $metadataArray;
     }
 
-    /**
-     * @param mixed[] $array
-     */
+    /** @param mixed[] $array */
     public static function fromArray(array $array): self
     {
-        Assert::keyExists($array, 'version');
-        Assert::keyExists($array, 'released');
-        Assert::keyExists($array, 'filesizes');
-
-        Assert::string($array['version']);
-        Assert::string($array['released']);
-        Assert::isArray($array['filesizes']);
-
-        Assert::keyExists($array['filesizes'], 'BrowsCapINI');
-        Assert::keyExists($array['filesizes'], 'Full_BrowsCapINI');
-        Assert::keyExists($array['filesizes'], 'Lite_BrowsCapINI');
-        Assert::keyExists($array['filesizes'], 'PHP_BrowsCapINI');
-        Assert::keyExists($array['filesizes'], 'Full_PHP_BrowsCapINI');
-        Assert::keyExists($array['filesizes'], 'Lite_PHP_BrowsCapINI');
-        Assert::keyExists($array['filesizes'], 'BrowsCapXML');
-        Assert::keyExists($array['filesizes'], 'BrowsCapCSV');
-        Assert::keyExists($array['filesizes'], 'BrowsCapJSON');
-        Assert::keyExists($array['filesizes'], 'BrowsCapZIP');
-
-        Assert::allInteger($array['filesizes']);
-
-        /** @psalm-suppress ArgumentTypeCoercion */
-        return new self($array);
+        return new self(Type\shape([
+            'version' => Type\string(),
+            'released' => Type\string(),
+            'filesizes' => Type\shape([
+                'BrowsCapINI' => Type\int(),
+                'Full_BrowsCapINI' => Type\int(),
+                'Lite_BrowsCapINI' => Type\int(),
+                'PHP_BrowsCapINI' => Type\int(),
+                'Full_PHP_BrowsCapINI' => Type\int(),
+                'Lite_PHP_BrowsCapINI' => Type\int(),
+                'BrowsCapXML' => Type\int(),
+                'BrowsCapCSV' => Type\int(),
+                'BrowsCapJSON' => Type\int(),
+                'BrowsCapZIP' => Type\int(),
+            ]),
+        ])->assert($array));
     }
 
     public function version(): string
@@ -72,9 +64,7 @@ final class Metadata
         return $this->metadataArray['version'];
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function released(): DateTimeImmutable
     {
         return new DateTimeImmutable($this->metadataArray['released']);
@@ -85,7 +75,7 @@ final class Metadata
         Assert::keyExists(
             $this->metadataArray['filesizes'],
             $fileKey,
-            'File key specified was invalid'
+            'File key specified was invalid',
         );
 
         return $this->metadataArray['filesizes'][$fileKey];

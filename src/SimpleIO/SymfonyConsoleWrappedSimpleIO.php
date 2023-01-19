@@ -8,11 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class SymfonyConsoleWrappedSimpleIO implements SimpleIOInterface
 {
-    private OutputInterface $consoleOutput;
-
-    public function __construct(OutputInterface $consoleOutput)
+    public function __construct(private OutputInterface $consoleOutput)
     {
-        $this->consoleOutput = $consoleOutput;
     }
 
     public function write(string $message): void

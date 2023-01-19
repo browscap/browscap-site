@@ -14,11 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class DeleteOldDownloadLogsCommand extends Command
 {
-    private DeleteOldDownloadLogs $deleteOldDownloadLogs;
-
-    public function __construct(DeleteOldDownloadLogs $deleteOldDownloadLogs)
+    public function __construct(private DeleteOldDownloadLogs $deleteOldDownloadLogs)
     {
-        $this->deleteOldDownloadLogs = $deleteOldDownloadLogs;
         parent::__construct();
     }
 
@@ -41,9 +38,9 @@ final class DeleteOldDownloadLogsCommand extends Command
                         null,
                         InputOption::VALUE_OPTIONAL,
                         'How many months to keep',
-                        12
+                        12,
                     ),
-                ])
+                ]),
             );
     }
 

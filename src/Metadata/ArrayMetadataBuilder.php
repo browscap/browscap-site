@@ -13,18 +13,11 @@ use function round;
 use function unlink;
 use function var_export;
 
-/**
- * @psalm-import-type MetadataArray from Metadata
- */
+/** @psalm-import-type MetadataArray from Metadata */
 final class ArrayMetadataBuilder implements MetadataBuilder
 {
-    private ParserInterface $parser;
-    private string $buildDir;
-
-    public function __construct(ParserInterface $parser, string $buildDir)
+    public function __construct(private ParserInterface $parser, private string $buildDir)
     {
-        $this->parser   = $parser;
-        $this->buildDir = $buildDir;
     }
 
     public function build(): void
@@ -49,7 +42,7 @@ final class ArrayMetadataBuilder implements MetadataBuilder
                     'BrowsCapJSON' => $this->getKbSize($this->buildDir . '/browscap.json'),
                     'BrowsCapZIP' => $this->getKbSize($this->buildDir . '/browscap.zip'),
                 ],
-            ]
+            ],
         );
 
         $this->niceDelete($this->buildDir . '/../cache/browscap.ini');

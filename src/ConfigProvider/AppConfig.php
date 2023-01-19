@@ -31,6 +31,7 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 use MatthiasMullie\Scrapbook\Adapters\Flysystem;
 use MatthiasMullie\Scrapbook\Psr16\SimpleCache;
 use Monolog\Handler\ErrorLogHandler;
+use Monolog\Level;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -167,15 +168,15 @@ final class AppConfig
                         new SimpleCache(
                             new Flysystem(
                                 new Filesystem(
-                                    new LocalFilesystemAdapter(__DIR__ . '/../../cache')
-                                )
-                            )
+                                    new LocalFilesystemAdapter(__DIR__ . '/../../cache'),
+                                ),
+                            ),
                         ),
-                        $container->get(LoggerInterface::class)
+                        $container->get(LoggerInterface::class),
                     );
                 },
                 LoggerInterface::class => static function (ContainerInterface $container): LoggerInterface {
-                    $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Logger::NOTICE);
+                    $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Level::Notice->value);
                     $logger   = new Logger('browscan-site');
                     $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
@@ -197,7 +198,7 @@ final class AppConfig
                 RateLimiter::class => static function (ContainerInterface $container): PdoRateLimiter {
                     return new PdoRateLimiter(
                         $container->get(PDO::class),
-                        $container->get(self::BAN_CONFIGURATION)
+                        $container->get(self::BAN_CONFIGURATION),
                     );
                 },
                 Metadata::class => static function (): Metadata {
@@ -208,7 +209,7 @@ final class AppConfig
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
                         $container->get(self::BROWSCAP_FILES_LIST),
-                        $container->get(self::BAN_CONFIGURATION)
+                        $container->get(self::BAN_CONFIGURATION),
                     ));
                 },
                 UserAgentLookupHandler::class => static function (ContainerInterface $container) {
@@ -216,7 +217,7 @@ final class AppConfig
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
                         $container->get(UserAgentTool::class),
-                        true
+                        true,
                     ));
                 },
                 StreamHandler::class => static function (ContainerInterface $container) {
@@ -224,37 +225,37 @@ final class AppConfig
                         $container->get(RateLimiter::class),
                         $container->get(Metadata::class),
                         $container->get(self::BROWSCAP_FILES_LIST),
-                        __DIR__ . '/../../vendor/build'
+                        __DIR__ . '/../../vendor/build',
                     ));
                 },
                 StatsHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new StatsHandler(
                         $container->get(Renderer::class),
-                        $container->get(PDO::class)
+                        $container->get(PDO::class),
                     ));
                 },
                 VersionHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionHandler(
                         $container->get(Renderer::class),
-                        $container->get(Metadata::class)
+                        $container->get(Metadata::class),
                     ));
                 },
                 VersionNumberHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionNumberHandler(
                         $container->get(Renderer::class),
-                        $container->get(Metadata::class)
+                        $container->get(Metadata::class),
                     ));
                 },
                 VersionXmlHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new VersionXmlHandler(
                         $container->get(Metadata::class),
-                        $container->get(self::BROWSCAP_FILES_LIST)
+                        $container->get(self::BROWSCAP_FILES_LIST),
                     ));
                 },
                 Renderer::class => static function (ContainerInterface $container): Renderer {
                     return new TwigRenderer(
                         $container->get(Twig::class),
-                        new HtmlResponse('', 200)
+                        new HtmlResponse('', 200),
                     );
                 },
                 BuildGenerator::class => BuildGeneratorFactory::class,

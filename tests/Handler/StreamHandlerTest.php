@@ -24,8 +24,7 @@ use function uniqid;
 /** @covers \BrowscapSite\Handler\StreamHandler */
 final class StreamHandlerTest extends TestCase
 {
-    /** @var RateLimiter&MockObject */
-    private $rateLimiter;
+    private RateLimiter&MockObject $rateLimiter;
     private vfsStreamDirectory $filesystem;
 
     public function setUp(): void
@@ -55,10 +54,10 @@ final class StreamHandlerTest extends TestCase
             $this->rateLimiter,
             TestHelper::createMetadataForTesting(),
             AppConfig::DEFAULT_FILES_LIST,
-            $this->filesystem->url()
+            $this->filesystem->url(),
         ))->handle(
             (new ServerRequest(['REMOTE_ADDR' => $clientIp, 'HTTP_USER_AGENT' => $clientUserAgent]))
-                ->withQueryParams(['q' => $requestedFile])
+                ->withQueryParams(['q' => $requestedFile]),
         );
 
         self::assertEquals($streamFileContents, $response->getBody()->__toString());

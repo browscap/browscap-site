@@ -14,6 +14,7 @@ use Exception;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
@@ -24,20 +25,16 @@ use function is_dir;
 use function mkdir;
 use function sprintf;
 
-/**
- * @codeCoverageIgnore
- */
+/** @codeCoverageIgnore */
 final class BuildGeneratorFactory
 {
     private const BUILD_DIRECTORY    = __DIR__ . '/../../vendor/build';
     private const RESOURCE_DIRECTORY = __DIR__ . '/../../vendor/browscap/browscap/resources/';
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function __invoke(ContainerInterface $container): BuildGenerator
     {
-        $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Logger::NOTICE);
+        $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Level::Notice->value);
 
         $stream = new StreamHandler('php://output', $logLevel);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
@@ -62,16 +59,16 @@ final class BuildGeneratorFactory
                     self::BUILD_DIRECTORY,
                     $logger,
                     (new FullCollectionFactory())->createCollection($logger, self::BUILD_DIRECTORY),
-                    new DataCollectionFactory($logger)
+                    new DataCollectionFactory($logger),
                 );
             },
             new ArrayMetadataBuilder(
                 new IniParser(self::BUILD_DIRECTORY . '/browscap.ini'),
-                self::BUILD_DIRECTORY
+                self::BUILD_DIRECTORY,
             ),
             new ComposerDeterminePackageVersion(),
             new ComposerLockDeterminePackageReleaseDate(),
-            $container->get(UserAgentTool::class)
+            $container->get(UserAgentTool::class),
         );
     }
 }

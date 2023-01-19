@@ -8,19 +8,15 @@ use BrowscapSite\ConfigProvider\AppConfig;
 use DateTime;
 use LazyPDO\LazyPDO as PDO;
 
-/**
- * @psalm-import-type BanConfiguration from AppConfig
- */
+/** @psalm-import-type BanConfiguration from AppConfig */
 final class PdoRateLimiter implements RateLimiter
 {
-    private PDO $pdo;
     /** @psalm-var BanConfiguration */
     private array $banConfiguration;
 
     /** @psalm-param BanConfiguration $banConfiguration */
-    public function __construct(PDO $pdo, array $banConfiguration)
+    public function __construct(private PDO $pdo, array $banConfiguration)
     {
-        $this->pdo              = $pdo;
         $this->banConfiguration = $banConfiguration;
     }
 

@@ -9,13 +9,8 @@ use Slim\Views\Twig;
 
 final class TwigRenderer implements Renderer
 {
-    private Twig $twig;
-    private ResponseInterface $baseResponse;
-
-    public function __construct(Twig $twig, ResponseInterface $baseResponse)
+    public function __construct(private Twig $twig, private ResponseInterface $baseResponse)
     {
-        $this->twig         = $twig;
-        $this->baseResponse = $baseResponse;
     }
 
     /** @param mixed[] $params */

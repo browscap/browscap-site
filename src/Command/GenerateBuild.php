@@ -12,12 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GenerateBuild extends Command
 {
-    private BuildGenerator $buildGenerator;
-
-    public function __construct(BuildGenerator $buildGenerator)
+    public function __construct(private BuildGenerator $buildGenerator)
     {
         parent::__construct();
-        $this->buildGenerator = $buildGenerator;
     }
 
     public function configure(): void
@@ -30,7 +27,7 @@ final class GenerateBuild extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->buildGenerator->__invoke(
-            new SymfonyConsoleWrappedSimpleIO($output)
+            new SymfonyConsoleWrappedSimpleIO($output),
         );
 
         return 0;
