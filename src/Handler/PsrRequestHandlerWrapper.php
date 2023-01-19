@@ -10,11 +10,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class PsrRequestHandlerWrapper
 {
-    private RequestHandlerInterface $requestHandler;
-
-    public function __construct(RequestHandlerInterface $requestHandler)
+    public function __construct(private RequestHandlerInterface $requestHandler)
     {
-        $this->requestHandler = $requestHandler;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, mixed $mixed): ResponseInterface

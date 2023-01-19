@@ -11,16 +11,11 @@ use function sprintf;
 
 class DeleteOldDownloadLogs
 {
-    private PDO $pdo;
-
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->pdo = $pdo;
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function __invoke(int $deleteOlderThan): void
     {
         $this->pdo->beginTransaction();
@@ -28,7 +23,7 @@ class DeleteOldDownloadLogs
         try {
             $this->pdo->exec(sprintf(
                 'DELETE FROM downloadLog WHERE downloadDate <= SUBDATE(NOW(), INTERVAL %d MONTH)',
-                $deleteOlderThan
+                $deleteOlderThan,
             ));
 
             $this->pdo->commit();

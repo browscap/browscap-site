@@ -11,7 +11,7 @@ abstract class TestHelper
 {
     public const EXAMPLE_RELEASE_VERSION = '1001001'; // 1.1.1
 
-    public static function createMetadataForTesting(string $version = self::EXAMPLE_RELEASE_VERSION, ?DateTimeImmutable $date = null): Metadata
+    public static function createMetadataForTesting(string $version = self::EXAMPLE_RELEASE_VERSION, DateTimeImmutable|null $date = null): Metadata
     {
         if ($date === null) {
             $date = new DateTimeImmutable();

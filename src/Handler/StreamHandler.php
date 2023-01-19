@@ -21,29 +21,19 @@ use function fopen;
 use function sha1;
 use function strtolower;
 
-/**
- * @psalm-import-type FilesList from AppConfig
- */
+/** @psalm-import-type FilesList from AppConfig */
 final class StreamHandler implements RequestHandlerInterface
 {
-    private RateLimiter $rateLimiter;
-    private Metadata $metadata;
     /** @psalm-var FilesList */
     private array $fileList;
-    private string $buildDirectory;
 
     /** @psalm-param FilesList $fileList */
-    public function __construct(RateLimiter $rateLimiter, Metadata $metadata, array $fileList, string $buildDirectory)
+    public function __construct(private RateLimiter $rateLimiter, private Metadata $metadata, array $fileList, private string $buildDirectory)
     {
-        $this->rateLimiter    = $rateLimiter;
-        $this->metadata       = $metadata;
-        $this->fileList       = $fileList;
-        $this->buildDirectory = $buildDirectory;
+        $this->fileList = $fileList;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getQueryParams();
@@ -121,7 +111,7 @@ final class StreamHandler implements RequestHandlerInterface
         return $serverParams['HTTP_USER_AGENT'];
     }
 
-    private function getFilenameFromCode(string $browscapCode): ?string
+    private function getFilenameFromCode(string $browscapCode): string|null
     {
         foreach ($this->fileList as $fileset) {
             foreach ($fileset as $existingCode => $info) {

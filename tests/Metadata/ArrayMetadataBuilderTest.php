@@ -17,13 +17,10 @@ use function array_walk;
 
 use const DATE_RFC2822;
 
-/**
- * @covers \BrowscapSite\Metadata\ArrayMetadataBuilder
- */
+/** @covers \BrowscapSite\Metadata\ArrayMetadataBuilder */
 final class ArrayMetadataBuilderTest extends TestCase
 {
-    /** @var ParserInterface&MockObject */
-    private $parser;
+    private ParserInterface&MockObject $parser;
 
     private vfsStreamDirectory $filesystem;
 
@@ -35,7 +32,7 @@ final class ArrayMetadataBuilderTest extends TestCase
         $this->filesystem      = vfsStream::setup();
         $this->metadataBuilder = new ArrayMetadataBuilder(
             $this->parser,
-            $this->filesystem->url()
+            $this->filesystem->url(),
         );
     }
 
@@ -69,7 +66,7 @@ final class ArrayMetadataBuilderTest extends TestCase
                 vfsStream::newFile($filename)
                     ->withContent(LargeFileContent::withKilobytes($kbSize))
                     ->at($this->filesystem);
-            }
+            },
         );
 
         $this->metadataBuilder->build();
@@ -92,7 +89,7 @@ final class ArrayMetadataBuilderTest extends TestCase
                     'BrowsCapZIP' => 10,
                 ],
             ],
-            require $this->filesystem->url() . '/metadata.php'
+            require $this->filesystem->url() . '/metadata.php',
         );
     }
 }

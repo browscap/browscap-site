@@ -19,13 +19,8 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
 {
     private const INI_FILE = __DIR__ . '/../../vendor/build/full_php_browscap.ini';
 
-    private CacheInterface $cache;
-    private LoggerInterface $logger;
-
-    public function __construct(CacheInterface $cache, LoggerInterface $logger)
+    public function __construct(private CacheInterface $cache, private LoggerInterface $logger)
     {
-        $this->cache  = $cache;
-        $this->logger = $logger;
     }
 
     /**
@@ -41,7 +36,7 @@ final class BrowscapPhpUserAgentTool implements UserAgentTool
             new Client([
                 'handler' => Proxy::wrapSync(new CurlMultiHandler(), new CurlHandler()),
                 'headers' => ['User-Agent' => 'browscap.org BrowscapPhpUserAgentTool wrapper'],
-            ])
+            ]),
         );
         $updater->convertFile(self::INI_FILE);
     }

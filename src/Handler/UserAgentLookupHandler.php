@@ -23,17 +23,8 @@ use function random_bytes;
 
 final class UserAgentLookupHandler implements RequestHandlerInterface
 {
-    private Renderer $renderer;
-    private Metadata $metadata;
-    private UserAgentTool $userAgentTool;
-    private bool $checkCsrf;
-
-    public function __construct(Renderer $renderer, Metadata $metadata, UserAgentTool $userAgentTool, bool $checkCsrf = true)
+    public function __construct(private Renderer $renderer, private Metadata $metadata, private UserAgentTool $userAgentTool, private bool $checkCsrf = true)
     {
-        $this->renderer      = $renderer;
-        $this->metadata      = $metadata;
-        $this->userAgentTool = $userAgentTool;
-        $this->checkCsrf     = $checkCsrf;
     }
 
     /**
@@ -63,13 +54,11 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
                 'ua' => $userAgent,
                 'csrfToken' => $this->csrfSet(),
                 'version' => $this->metadata->version(),
-            ]
+            ],
         );
     }
 
-    /**
-     * @param mixed[] $uaInfo
-     */
+    /** @param mixed[] $uaInfo */
     private function convertBooleansToStrings(array &$uaInfo): void
     {
         foreach ($uaInfo as $key => $value) {
@@ -102,9 +91,7 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
         }
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     private function csrfSet(): string
     {
         $csrfToken             = bin2hex(random_bytes(32));

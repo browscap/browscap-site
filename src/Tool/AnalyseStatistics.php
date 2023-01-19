@@ -14,16 +14,11 @@ use function sprintf;
 
 class AnalyseStatistics
 {
-    private PDO $pdo;
-
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->pdo = $pdo;
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function __invoke(): void
     {
         $this->pdo->beginTransaction();
@@ -32,9 +27,13 @@ class AnalyseStatistics
             $this->truncateInsert('downloadsPerMonth', new DateTime('24 months ago'), '%Y-%m-\0\1');
             $this->truncateInsert('downloadsLastMonth', new DateTime('30 days ago'), '%Y-%m-%d');
 
-            $this->pdo->commit();
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->commit();
+            }
         } catch (Throwable $e) {
-            $this->pdo->rollBack();
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
 
             throw $e;
         }

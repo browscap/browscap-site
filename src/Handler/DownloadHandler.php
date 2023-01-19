@@ -20,8 +20,6 @@ use function number_format;
  */
 final class DownloadHandler implements RequestHandlerInterface
 {
-    private Renderer $renderer;
-    private Metadata $metadata;
     /** @psalm-var FilesList */
     private array $fileList;
     /** @psalm-var BanConfiguration */
@@ -31,17 +29,13 @@ final class DownloadHandler implements RequestHandlerInterface
      * @psalm-param FilesList $fileList
      * @psalm-param BanConfiguration $banConfiguration
      */
-    public function __construct(Renderer $renderer, Metadata $metadata, array $fileList, array $banConfiguration)
+    public function __construct(private Renderer $renderer, private Metadata $metadata, array $fileList, array $banConfiguration)
     {
-        $this->renderer         = $renderer;
-        $this->metadata         = $metadata;
         $this->fileList         = $fileList;
         $this->banConfiguration = $banConfiguration;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->renderer->render(
@@ -51,7 +45,7 @@ final class DownloadHandler implements RequestHandlerInterface
                 'version' => $this->metadata->version(),
                 'releaseDate' => $this->metadata->released()->format('jS M Y'),
                 'banConfig' => $this->banConfiguration,
-            ]
+            ],
         );
     }
 

@@ -26,21 +26,16 @@ final class VersionXmlHandler implements RequestHandlerInterface
         . 'updated browscap.ini file. The project\'s data is also available in many other formats that make it useful '
         . 'in a variety of situations. Last updated: %s';
 
-    private Metadata $metadata;
-
     /** @psalm-var FilesList */
     private array $fileList;
 
     /** @psalm-param FilesList $fileList */
-    public function __construct(Metadata $metadata, array $fileList)
+    public function __construct(private Metadata $metadata, array $fileList)
     {
-        $this->metadata = $metadata;
         $this->fileList = $fileList;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $requestUri = $request->getUri();
@@ -73,7 +68,7 @@ final class VersionXmlHandler implements RequestHandlerInterface
                     $this->metadata->version(),
                     $fileCode,
                     $fileInfo,
-                    $baseUrl
+                    $baseUrl,
                 ));
             }
         }
@@ -90,16 +85,14 @@ final class VersionXmlHandler implements RequestHandlerInterface
         return $element;
     }
 
-    /**
-     * @psalm-param FilesListItem $fileInfo
-     */
+    /** @psalm-param FilesListItem $fileInfo */
     private function createFileItem(
         DOMDocument $xml,
         string $pubDate,
         string $version,
         string $fileCode,
         array $fileInfo,
-        string $baseUrl
+        string $baseUrl,
     ): DOMElement {
         $item = $xml->createElement('item');
 

@@ -16,18 +16,11 @@ use function sprintf;
 
 final class StatsHandler implements RequestHandlerInterface
 {
-    private Renderer $renderer;
-    private PDO $pdo;
-
-    public function __construct(Renderer $renderer, PDO $pdo)
+    public function __construct(private Renderer $renderer, private PDO $pdo)
     {
-        $this->renderer = $renderer;
-        $this->pdo      = $pdo;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->renderer->render(
@@ -35,7 +28,7 @@ final class StatsHandler implements RequestHandlerInterface
             [
                 'downloadsPerDay' => $this->getDownloadsPerDay(),
                 'downloadsPerMonth' => $this->getDownloadsPerMonth(),
-            ]
+            ],
         );
     }
 
@@ -70,7 +63,7 @@ final class StatsHandler implements RequestHandlerInterface
         string $tableName,
         string $tableColumnName,
         string $dataColumnName,
-        string $dataColumnFormat
+        string $dataColumnFormat,
     ): array {
         $sql  = sprintf('SELECT * FROM %s ORDER BY %s ASC', $tableName, $tableColumnName);
         $stmt = $this->pdo->query($sql);

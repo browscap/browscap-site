@@ -18,8 +18,7 @@ use PHPUnit\Framework\TestCase;
 /** @covers \BrowscapSite\Handler\DownloadHandler */
 final class DownloadHandlerTest extends TestCase
 {
-    /** @var Renderer&MockObject */
-    private $renderer;
+    private Renderer&MockObject $renderer;
     private Metadata $metadata;
     private DateTimeImmutable $releaseDate;
 
@@ -39,7 +38,7 @@ final class DownloadHandlerTest extends TestCase
             $this->renderer,
             $this->metadata,
             AppConfig::DEFAULT_FILES_LIST,
-            AppConfig::DEFAULT_BAN_CONFIGURATION
+            AppConfig::DEFAULT_BAN_CONFIGURATION,
         );
 
         $expectedResponse = new HtmlResponse('', 200);
@@ -110,7 +109,7 @@ final class DownloadHandlerTest extends TestCase
                     'version' => TestHelper::EXAMPLE_RELEASE_VERSION,
                     'releaseDate' => $this->releaseDate->format('jS M Y'),
                     'banConfig' => AppConfig::DEFAULT_BAN_CONFIGURATION,
-                ]
+                ],
             )
             ->willReturn($expectedResponse);
 

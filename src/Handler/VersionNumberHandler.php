@@ -13,26 +13,18 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class VersionNumberHandler implements RequestHandlerInterface
 {
-    private Renderer $renderer;
-
-    private Metadata $metadata;
-
-    public function __construct(Renderer $renderer, Metadata $metadata)
+    public function __construct(private Renderer $renderer, private Metadata $metadata)
     {
-        $this->renderer = $renderer;
-        $this->metadata = $metadata;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->renderer->render(
             'version-number.html',
             [
                 'version' => $this->metadata->version(),
-            ]
+            ],
         );
     }
 }

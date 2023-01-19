@@ -25,29 +25,19 @@ use const DATE_ATOM;
 
 final class BuildGenerator
 {
-    private string $buildDirectory;
     /** @psalm-var callable():GeneratorInterface */
     private $buildGeneratorLazyFactory;
-    private MetadataBuilder $metadataBuilder;
-    private DeterminePackageVersion $determinePackageVersion;
-    private DeterminePackageReleaseDate $determinePackageReleaseDate;
-    private UserAgentTool $userAgentTool;
 
     /** @psalm-param callable():GeneratorInterface $buildGeneratorLazyFactory */
     public function __construct(
-        string $buildDirectory,
+        private string $buildDirectory,
         callable $buildGeneratorLazyFactory,
-        MetadataBuilder $metadataBuilder,
-        DeterminePackageVersion $determinePackageVersion,
-        DeterminePackageReleaseDate $determinePackageReleaseDate,
-        UserAgentTool $userAgentTool
+        private MetadataBuilder $metadataBuilder,
+        private DeterminePackageVersion $determinePackageVersion,
+        private DeterminePackageReleaseDate $determinePackageReleaseDate,
+        private UserAgentTool $userAgentTool,
     ) {
-        $this->buildDirectory              = $buildDirectory;
-        $this->buildGeneratorLazyFactory   = $buildGeneratorLazyFactory;
-        $this->metadataBuilder             = $metadataBuilder;
-        $this->determinePackageVersion     = $determinePackageVersion;
-        $this->determinePackageReleaseDate = $determinePackageReleaseDate;
-        $this->userAgentTool               = $userAgentTool;
+        $this->buildGeneratorLazyFactory = $buildGeneratorLazyFactory;
     }
 
     /**
@@ -94,7 +84,7 @@ final class BuildGenerator
         return $this->convertPackageVersionToBuildNumber($this->determinePackageVersion->__invoke($packageName));
     }
 
-    private function getCurrentBuildNumber(): ?int
+    private function getCurrentBuildNumber(): int|null
     {
         $metadataFile = $this->buildDirectory . '/metadata.php';
 
