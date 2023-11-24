@@ -243,7 +243,7 @@ final class AppConfig
                 },
                 PrivacyHandler::class => static function (ContainerInterface $container) {
                     return new PsrRequestHandlerWrapper(new PrivacyHandler(
-                        $container->get(Renderer::class)
+                        $container->get(Renderer::class),
                     ));
                 },
                 VersionNumberHandler::class => static function (ContainerInterface $container) {

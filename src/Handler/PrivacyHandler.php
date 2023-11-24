@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BrowscapSite\Handler;
 
-use BrowscapSite\Metadata\Metadata;
 use BrowscapSite\Renderer\Renderer;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
