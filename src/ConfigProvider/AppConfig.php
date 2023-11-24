@@ -7,6 +7,7 @@ namespace BrowscapSite\ConfigProvider;
 use BrowscapSite\BuildGenerator\BuildGenerator;
 use BrowscapSite\BuildGenerator\BuildGeneratorFactory;
 use BrowscapSite\Handler\DownloadHandler;
+use BrowscapSite\Handler\PrivacyHandler;
 use BrowscapSite\Handler\PsrRequestHandlerWrapper;
 use BrowscapSite\Handler\StatsHandler;
 use BrowscapSite\Handler\StreamHandler;
@@ -238,6 +239,11 @@ final class AppConfig
                     return new PsrRequestHandlerWrapper(new VersionHandler(
                         $container->get(Renderer::class),
                         $container->get(Metadata::class),
+                    ));
+                },
+                PrivacyHandler::class => static function (ContainerInterface $container) {
+                    return new PsrRequestHandlerWrapper(new PrivacyHandler(
+                        $container->get(Renderer::class)
                     ));
                 },
                 VersionNumberHandler::class => static function (ContainerInterface $container) {

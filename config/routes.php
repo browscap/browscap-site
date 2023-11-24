@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use BrowscapSite\Handler\DownloadHandler;
+use BrowscapSite\Handler\PrivacyHandler;
 use BrowscapSite\Handler\StatsHandler;
 use BrowscapSite\Handler\StreamHandler;
 use BrowscapSite\Handler\UserAgentLookupHandler;
@@ -19,4 +20,5 @@ return static function (App $app): void {
     $app->any('/version', VersionHandler::class);
     $app->any('/version-number', VersionNumberHandler::class);
     $app->any('/version.xml', VersionXmlHandler::class);
+    $app->any('/privacy', PrivacyHandler::class);
 };
