@@ -2304,16 +2304,16 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "5176fc8d3d5f9d640f64ed47d2301921c1ae183f"
+                "reference": "c339d56e136713aab532718eff453663b4b38efe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/5176fc8d3d5f9d640f64ed47d2301921c1ae183f",
-                "reference": "5176fc8d3d5f9d640f64ed47d2301921c1ae183f",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/c339d56e136713aab532718eff453663b4b38efe",
+                "reference": "c339d56e136713aab532718eff453663b4b38efe",
                 "shasum": ""
             },
             "require": {
@@ -2328,7 +2328,7 @@
             "require-dev": {
                 "ext-pcntl": "*",
                 "friendsofphp/php-cs-fixer": ">=2.0",
-                "phpunit/phpunit": ">=9.0",
+                "phpunit/phpunit": ">=10.0",
                 "squizlabs/php_codesniffer": ">=3.0"
             },
             "suggest": {
@@ -2392,7 +2392,7 @@
             ],
             "support": {
                 "issues": "https://github.com/matthiasmullie/scrapbook/issues",
-                "source": "https://github.com/matthiasmullie/scrapbook/tree/1.5.2"
+                "source": "https://github.com/matthiasmullie/scrapbook/tree/1.5.3"
             },
             "funding": [
                 {
@@ -2400,7 +2400,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-10T09:32:25+00:00"
+            "time": "2024-04-02T13:33:01+00:00"
         },
         {
             "name": "mimmi20/ua-browser-type",
