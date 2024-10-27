@@ -1,5 +1,5 @@
-FROM composer:2.2 AS composer_base
-FROM php:8.1-apache AS app_base
+FROM composer:2.8 AS composer_base
+FROM php:8.3-apache AS app_base
 
 RUN apt-get update -y \
   && apt-get install -y libicu-dev zlib1g-dev libzip-dev \

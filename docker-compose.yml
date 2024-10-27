@@ -22,7 +22,7 @@ services:
             - host.docker.internal:host-gateway
 
     db:
-        image: mysql:5.6 # ClearDB uses 5.6
+        image: mysql:8.0 # JawsDB uses 8.0
         command: --default-authentication-plugin=mysql_native_password
         environment:
             MYSQL_ROOT_PASSWORD: password
