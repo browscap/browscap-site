@@ -28,7 +28,9 @@ session_start();
 $container = require __DIR__ . '/../config/container.php';
 assert($container instanceof ContainerInterface);
 $app = AppFactory::createFromContainer($container);
+/** @psalm-suppress InvalidArgument */
 (require __DIR__ . '/../config/middleware.php')($app);
+/** @psalm-suppress InvalidArgument */
 (require __DIR__ . '/../config/routes.php')($app);
 
 $app->run();

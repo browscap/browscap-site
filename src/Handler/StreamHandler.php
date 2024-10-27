@@ -41,7 +41,7 @@ final class StreamHandler implements RequestHandlerInterface
 
         // Convert requested short code to the filename
         $file = $this->getFilenameFromCode($browscapVersion);
-        if (! $file) {
+        if ($file === null || $file === '') {
             return $this->failed(404, 'The version requested could not be found');
         }
 

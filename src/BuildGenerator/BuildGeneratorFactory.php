@@ -34,7 +34,7 @@ final class BuildGeneratorFactory
     /** @throws Exception */
     public function __invoke(ContainerInterface $container): BuildGenerator
     {
-        $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Level::Notice->value);
+        $logLevel = (int) ((string) getenv('BC_BUILD_LOG') !== '' ? getenv('BC_BUILD_LOG') : Level::Notice->value);
 
         $stream = new StreamHandler('php://output', $logLevel);
         $stream->setFormatter(new LineFormatter('%message%' . "\n"));
