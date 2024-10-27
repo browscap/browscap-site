@@ -29,13 +29,9 @@ use Webmozart\Assert\Assert;
  */
 final class Metadata
 {
-    /** @psalm-var MetadataArray */
-    private array $metadataArray;
-
     /** @psalm-param MetadataArray $metadataArray */
-    private function __construct(array $metadataArray)
+    private function __construct(private array $metadataArray)
     {
-        $this->metadataArray = $metadataArray;
     }
 
     /** @param mixed[] $array */

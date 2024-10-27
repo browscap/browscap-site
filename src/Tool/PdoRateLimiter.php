@@ -11,13 +11,9 @@ use LazyPDO\LazyPDO as PDO;
 /** @psalm-import-type BanConfiguration from AppConfig */
 final class PdoRateLimiter implements RateLimiter
 {
-    /** @psalm-var BanConfiguration */
-    private array $banConfiguration;
-
     /** @psalm-param BanConfiguration $banConfiguration */
-    public function __construct(private PDO $pdo, array $banConfiguration)
+    public function __construct(private PDO $pdo, private array $banConfiguration)
     {
-        $this->banConfiguration = $banConfiguration;
     }
 
     /**

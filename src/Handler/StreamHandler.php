@@ -24,13 +24,9 @@ use function strtolower;
 /** @psalm-import-type FilesList from AppConfig */
 final class StreamHandler implements RequestHandlerInterface
 {
-    /** @psalm-var FilesList */
-    private array $fileList;
-
     /** @psalm-param FilesList $fileList */
-    public function __construct(private RateLimiter $rateLimiter, private Metadata $metadata, array $fileList, private string $buildDirectory)
+    public function __construct(private RateLimiter $rateLimiter, private Metadata $metadata, private array $fileList, private string $buildDirectory)
     {
-        $this->fileList = $fileList;
     }
 
     /** @throws Exception */
