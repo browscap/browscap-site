@@ -26,13 +26,9 @@ final class VersionXmlHandler implements RequestHandlerInterface
         . 'updated browscap.ini file. The project\'s data is also available in many other formats that make it useful '
         . 'in a variety of situations. Last updated: %s';
 
-    /** @psalm-var FilesList */
-    private array $fileList;
-
     /** @psalm-param FilesList $fileList */
-    public function __construct(private Metadata $metadata, array $fileList)
+    public function __construct(private Metadata $metadata, private array $fileList)
     {
-        $this->fileList = $fileList;
     }
 
     /** @throws Exception */

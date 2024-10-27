@@ -24,13 +24,9 @@ use function strtolower;
 /** @psalm-import-type FilesList from AppConfig */
 final class StreamHandler implements RequestHandlerInterface
 {
-    /** @psalm-var FilesList */
-    private array $fileList;
-
     /** @psalm-param FilesList $fileList */
-    public function __construct(private RateLimiter $rateLimiter, private Metadata $metadata, array $fileList, private string $buildDirectory)
+    public function __construct(private RateLimiter $rateLimiter, private Metadata $metadata, private array $fileList, private string $buildDirectory)
     {
-        $this->fileList = $fileList;
     }
 
     /** @throws Exception */
@@ -45,7 +41,7 @@ final class StreamHandler implements RequestHandlerInterface
 
         // Convert requested short code to the filename
         $file = $this->getFilenameFromCode($browscapVersion);
-        if (! $file) {
+        if ($file === null || $file === '') {
             return $this->failed(404, 'The version requested could not be found');
         }
 

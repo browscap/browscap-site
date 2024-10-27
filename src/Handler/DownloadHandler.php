@@ -20,19 +20,12 @@ use function number_format;
  */
 final class DownloadHandler implements RequestHandlerInterface
 {
-    /** @psalm-var FilesList */
-    private array $fileList;
-    /** @psalm-var BanConfiguration */
-    private array $banConfiguration;
-
     /**
      * @psalm-param FilesList $fileList
      * @psalm-param BanConfiguration $banConfiguration
      */
-    public function __construct(private Renderer $renderer, private Metadata $metadata, array $fileList, array $banConfiguration)
+    public function __construct(private Renderer $renderer, private Metadata $metadata, private array $fileList, private array $banConfiguration)
     {
-        $this->fileList         = $fileList;
-        $this->banConfiguration = $banConfiguration;
     }
 
     /** @throws Exception */

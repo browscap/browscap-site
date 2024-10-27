@@ -5,7 +5,7 @@ if (!getenv('HEROKU')) {
     return [];
 }
 
-$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$url = parse_url(getenv("JAWSDB_URL"));
 
 return [
     'debug' => getenv('DEBUG') === '1',

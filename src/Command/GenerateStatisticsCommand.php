@@ -35,7 +35,7 @@ final class GenerateStatisticsCommand extends Command
      * (non-PHPdoc).
      *
      * @see \Symfony\Component\Console\Command\Command::execute()
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

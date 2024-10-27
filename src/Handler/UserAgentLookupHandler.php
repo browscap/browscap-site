@@ -84,7 +84,8 @@ final class UserAgentLookupHandler implements RequestHandlerInterface
         if (
             ! is_array($parsedBody)
             || ! array_key_exists('csrfToken', $parsedBody)
-            || ! $csrfTokenFromSession
+            || $csrfTokenFromSession === null
+            || $csrfTokenFromSession === ''
             || ! hash_equals($csrfTokenFromSession, $parsedBody['csrfToken'])
         ) {
             throw new RuntimeException('CSRF token not correct...');

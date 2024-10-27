@@ -177,7 +177,7 @@ final class AppConfig
                     );
                 },
                 LoggerInterface::class => static function (ContainerInterface $container): LoggerInterface {
-                    $logLevel = (int) (getenv('BC_BUILD_LOG') ?: Level::Notice->value);
+                    $logLevel = (int) ((string) getenv('BC_BUILD_LOG') !== '' ? getenv('BC_BUILD_LOG') : Level::Notice->value);
                     $logger   = new Logger('browscan-site');
                     $logger->pushHandler(new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $logLevel));
 
