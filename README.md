@@ -2,7 +2,7 @@
 
 [![Continuous Integration](https://github.com/browscap/browscap-site/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/browscap/browscap-site/actions/workflows/continuous-integration.yml) [![Heroku](https://pyheroku-badge.herokuapp.com/?app=browscap&path=/&style=flat)](https://browscap.org/)
 
-This is the website for the Browser Capabilities Project.
+This is the website for the Browser Capabilities Project at [browscap.org](https://browscap.org).
 
 ## Requirements
 
