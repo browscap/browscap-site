@@ -29,7 +29,7 @@ class BrowscapSiteConsole extends Application
 
         foreach ($commands as $command) {
             /** @noinspection UnusedFunctionResultInspection */
-            $this->add($command);
+            $this->addCommand($command);
         }
     }
 }
